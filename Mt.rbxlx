@@ -540,7 +540,12 @@ local screen = MScreen:Init()
 
 local window = MWindow:Init(screen)
 window:SetName("MainWindow")
-window:SetTitle("window")]]></ProtectedString>
+window:SetTitle("window")
+window.Content.Position = UDim2.fromOffset(0,0)
+
+local dialog = MWindow:Init(screen)
+dialog:SetName("Dialog")
+dialog:SetTitle("dialog")]]></ProtectedString>
 					<int64 name="SourceAssetId">-1</int64>
 					<BinaryString name="Tags"></BinaryString>
 					<UniqueId name="UniqueId">5b19d14ef55ae6bc0249fc2c00162b32</UniqueId>
@@ -968,31 +973,81 @@ return mtwidgets]]></ProtectedString>
 						<ProtectedString name="Source"><![CDATA[local repstrg = game:GetService("ReplicatedStorage")
 local MObject = require(repstrg.Mt.MtCore.MObject)
 
-local MWidget = MObject:Init({},{
+local MWidget = {
 	ClassName = "MWidget", -- See Mt.MtCore.MObject
 	Name = "widget",       -- ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^
-	
-	Init = function(self,parent,_obj)
-		local _obj = MObject.Init(self,parent,_obj)
-		
-		self.Content = Instance.new("Frame")
-		self.Content.Name = self.Name
-		self.Content.BorderSizePixel = 0
-		self.Content.BackgroundColor3 = Color3.new(1,1,1)
-		self.Content.Size = UDim2.fromScale(0.25,0.25)
-		
-		return _obj
-	end,
-	
-	SetName = function(self,name)
-		self.Content.Name = name
-		MObject.SetName(self,name)
-	end,
-	
-	SetHidden = function(self,hidden)
-		self.Content.Visible = not hidden
-	end,
-})
+}
+
+MWidget.Init = function(self,parent,_obj)
+	local _obj = MObject.Init(self,parent,_obj)
+
+	_obj.Content = Instance.new("Frame")
+	_obj.Content.Name = _obj.Name
+	_obj.Content.BorderSizePixel = 0
+	_obj.Content.BackgroundColor3 = Color3.new(1,1,1)
+	_obj.Content.Size = UDim2.fromScale(0.25,0.25)
+
+	_obj.SizeConstraint = Instance.new("UISizeConstraint")
+	_obj.SizeConstraint.Parent = _obj.Content
+	MWidget.SetSizeLimit(_obj,
+		Vector2.new(10,10),
+		Vector2.new(3000,3000)
+	)
+
+	return _obj
+end
+
+MWidget.SetSizeLimit = function(self,min,max)
+	self.SizeConstraint.MinSize = min
+	self.SizeConstraint.MaxSize = max
+end
+
+MWidget.SetMinimumSize = function(self,size)
+	self:SetSizeLimit(size,self.SizeConstraint.MaxSize)
+end
+
+MWidget.SetMinimumWidth= function(self,width)
+	self:SetMinimumSize(Vector2.new(
+		width,
+		self.SizeConstraint.MinimumSize.Y
+		))
+end
+
+MWidget.SetMinimumHeight=function(self,height)
+	self:SetMinimumSize(Vector2.new(
+		self.SizeConstraint.MinimumSize.X,
+		height
+		))
+end
+
+MWidget.SetMaximumSize = function(self,size)
+	self:SetSizeLimit(self.SizeConstraint.MinSize,size)
+end
+
+MWidget.SetMaximumWidth= function(self,width)
+	self:SetMaximumSize(Vector2.new(
+		width,
+		self.SizeConstraint.MinimumSize.Y
+		))
+end
+
+MWidget.SetMaxmimumHeight=function(self,height)
+	self:SetMaximumSize(Vector2.new(
+		self.SizeConstraint.MinimumSize.X,
+		height
+		))
+end
+
+MWidget.SetName = function(self,name)
+	self.Content.Name = name
+	MObject.SetName(self,name)
+end
+
+MWidget.SetHidden = function(self,hidden)
+	self.Content.Visible = not hidden
+end
+
+MWidget = MObject:Init({},MWidget)
 
 return MWidget]]></ProtectedString>
 						<int64 name="SourceAssetId">-1</int64>
@@ -1000,7 +1055,7 @@ return MWidget]]></ProtectedString>
 						<UniqueId name="UniqueId">05c44930bd9fb73402486df700201f98</UniqueId>
 					</Properties>
 				</Item>
-				<Item class="ModuleScript" referent="RBXEF5C6BEA086F42A5A04B0052443A4A18">
+				<Item class="ModuleScript" referent="RBX6A580D46778340FFBA7949C8F902461B">
 					<Properties>
 						<BinaryString name="AttributesSerialize"></BinaryString>
 						<Content name="LinkedSource"><null></null></Content>
@@ -1013,262 +1068,144 @@ local plr = game:GetService("Players").LocalPlayer or nil
 
 local MWidget = require(repstrg.Mt.MtWidgets.MWidget)
 local MtEnum  = require(repstrg.Mt.MtCore.MtEnum)
+local MWindowResizeRegion = require(repstrg.Mt.MtWidgets.MWindowResizeRegion)
 local DraggableObject = require(repstrg.Mt["3rd-party"].DraggableObject)
 
-function _getMouseButton1Pressed(pressedButtons)
-	for i,button in ipairs(pressedButtons) do
-		if button.UserInputType == Enum.UserInputType.MouseButton1 then return true end
-	end
-	return false
-end
+local _getMouseButton1Pressed = require(repstrg.Mt.MtCore)._getMouseButton1Pressed
 
-local MWindow = MWidget:Init({},{
+local Windows = {}
+
+local MWindow = {
 	ClassName = "MWindow", -- See Mt.MtCore.MObject
 	Name = "window",       -- ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^
-	
+
 	Title = "window", -- Window title (string) (Read-only (Use SetTitle())
-	
-	Init = function(self,screen,_obj)
-		local _obj = MWidget.Init(self,{},_obj)
-		
-		self.Screen = screen
-		self.Screen:SetOverrideTopbar(false)
-		self.Screen:AddWidget(_obj)
-		
-		self:InitGui()
-		self:InitWindowFunctionality()
-		
-		return _obj
-	end,
-	
-	SetPositionFromScale = function(self,x,y)
-		local screenSize = self.Screen:GetScreenSize()
-		self.Content.Position = UDim2.fromOffset(
-			x*screenSize.X,
-			y*screenSize.Y
-		)
-	end,
-	
-	SetSizeFromScale = function(self,x,y)
-		local screenSize = self.Screen:GetScreenSize()
-		self.Content.Size = UDim2.fromOffset(
-			x*screenSize.X,
-			y*screenSize.Y
-		)
-	end,
-	
-	InitGui = function(self)
-		self:SetPositionFromScale(0.5,0.5)
-		self:SetSizeFromScale(
-			self.Content.Size.X.Scale,
-			self.Content.Size.Y.Scale
-		)
-		
-		local uicorner = Instance.new("UICorner")
-		uicorner.Parent = self.Content
-		
-		self.Handle = script.handle:Clone()
-		self.TitleLabel = self.Handle.title
-		self.MaxButton = self.Handle.buttons.maximize
-		self.CloseButton = self.Handle.buttons.close
-		self.Layout = self.Handle.UIListLayout
-		self.Padding = self.Handle.UIPadding
-		self.Handle.Parent = self.Content
-	end,
-	
-	InitResize = function(self)
-		local resizeRegionsFolder = Instance.new("Folder")
-		resizeRegionsFolder.Parent = self.Content
-		resizeRegionsFolder.Name = "resizeRegions"
-		
-		local draggingValue = Instance.new("ObjectValue")
-		draggingValue.Parent = resizeRegionsFolder
-		draggingValue.Name = "Dragging"
-		
-		local cursors = {
-			[MtEnum.Orientation.Horizontal]      = "rbxtemp://1",
-			[MtEnum.Orientation.Vertical]        = "rbxtemp://0",
-			[MtEnum.Orientation.DiagonalRight]   = "rbxtemp://2",
-			[MtEnum.Orientation.DiagonalLeft]    = "rbxtemp://4"
-		}
-		
-		local function CreateResizeRegion(name,x,y,sx,sy,orientation,osx,osy)
-			name = name.."ResizeRegion"
-			
-			osx = osx or 0
-			osy = osy or 0
-			
-			self[name] = Instance.new("Frame")
-			self[name].Parent = resizeRegionsFolder
-			self[name].Name = name
-			self[name].BackgroundTransparency = 1
-			self[name].BorderSizePixel = 0
-			self[name].Position = UDim2.fromScale(x,y)
-			self[name].Size = UDim2.new(sx,osx,sy,osy)
-			
-			self[name]:SetAttribute("SideOrientation",orientation)
-			self[name]:SetAttribute("Cursor",cursors[orientation])
-			
-			self[name].MouseEnter:Connect(function()
-				if plr and not draggingValue.Value then
-					local mouse = plr:GetMouse()
-					mouse.Icon = self[name]:GetAttribute("Cursor")
-				end
-			end)
-			
-			self[name].MouseLeave:Connect(function()
-				if plr and not draggingValue.Value then
-					local mouse = plr:GetMouse()
-					mouse.Icon = ""
-				end
-			end)
-			
-			local sizeDragFunc
-			if orientation == MtEnum.Orientation.Horizontal and x == 1 then
-				function sizeDragFunc(x,y,click)
-					self.Content.Size = UDim2.fromOffset(
-						x,
-						self.Content.Size.Y.Offset
-					)
-				end
-			elseif orientation == MtEnum.Orientation.Horizontal and x == 0 then
-				function sizeDragFunc(x,y,click)
-					self.Content.Position = UDim2.fromOffset(
-						x,
-						self.Content.Position.Y.Offset
-					)
-					self.Content.Size = UDim2.fromOffset(
-						x,
-						self.Content.Size.Y.Offset
-					)
-				end
-			elseif orientation == MtEnum.Orientation.Vertical and y == 1 then
-				function sizeDragFunc(x,y,click)
-					self.Content.Size = UDim2.fromOffset(
-						self.Content.Size.X.Offset,
-						y
-					)
-				end
-			elseif orientation == MtEnum.Orientation.Vertical and y == 0 then
-				function sizeDragFunc(x,y,click)
-					self.Content.Position = UDim2.fromOffset(
-						self.Content.Position.X.Offset,
-						y
-					)
-					self.Content.Size = UDim2.fromOffset(
-						self.Content.Size.X.Offset,
-						self.Content.Size.Y.Offset+y
-					)
-				end
-			end
-			
-			self[name].InputBegan:Connect(function(input)
-				if input.UserInputType == Enum.UserInputType.MouseButton1 then
-					local clickLocation = uis:GetMouseLocation()
-					local windowSizeX = self.Content.Size.X.Offset
-					local windowSizeY = self.Content.Size.Y.Offset
-					local xoff = clickLocation.X - windowSizeX
-					local yoff = clickLocation.Y - windowSizeY
-					--[[
-					local windowPosX = self.Content.Position.X.Offset
-					local windowPosY = self.Content.Position.Y.Offset
-					local xpos = clickLocation.X - windowPosX
-					local ypos = clickLocation.Y - windowPosY
-					--]]
-					
-					draggingValue.Value = self[name]
-					local mouse = plr:GetMouse()
-					mouse.Icon = self[name]:GetAttribute("Cursor")
+}
 
-					while _getMouseButton1Pressed(uis:GetMouseButtonsPressed()) do
-						local location = uis:GetMouseLocation()
-						
-						sizeDragFunc(location.X-xoff,location.Y-yoff,clickLocation)
+MWindow.Init = function(self,screen,_obj)
+	local _obj = MWidget.Init(self,screen,_obj)
 
-						print(
-							"window size x: "..tostring(location.X-xoff)..
-							"\n\t\t\t\twindow: "..tostring(self.Content.Size)
-						)
+	_obj.Screen = screen
+	_obj.Screen:AddWidget(_obj)
 
-						task.wait(0.025)
-					end
-					
-					mouse.Icon = ""
-					draggingValue.Value = nil
-				end
-			end)
-			
-			return self[name]
-		end
-		
-		local function CreateCornerResizeRegion(name,x,y,osx,osy)
-			local orientation
-			if x == y then
-				orientation = MtEnum.Orientation.DiagonalLeft
-			else
-				orientation = MtEnum.Orientation.DiagonalRight
-			end
-			
-			CreateResizeRegion(name.."Corner",x,y,0,0,orientation,osx,osy)
-		end
-		
-		CreateResizeRegion("Left",0,0,0,1,MtEnum.Orientation.Horizontal,5,0)
-		CreateResizeRegion("Right",1,0,0,1,MtEnum.Orientation.Horizontal,-5,0)
-		CreateResizeRegion("Top",0,0,1,0,MtEnum.Orientation.Vertical,0,5)
-		CreateResizeRegion("Bottom",0,1,1,0,MtEnum.Orientation.Vertical,0,-5)
-		
-		CreateCornerResizeRegion("TopLeft",0,0,5,5)
-		CreateCornerResizeRegion("TopRight",1,0,-5,5)
-		CreateCornerResizeRegion("BottomLeft",0,1,5,-5)
-		CreateCornerResizeRegion("BottomRight",1,1,-5,-5)
-	end,
+	_obj.Resizing = Instance.new("BindableEvent")
+	_obj.Moving   = Instance.new("BindableEvent")
+
+	MWindow.InitGui(_obj)
+	MWindow.InitWindowFunctionality(_obj)
+
+	table.insert(Windows,_obj)
+
+	return _obj
+end
+
+MWindow.SetPositionFromScale = function(self,x,y)
+	local screenSize = self.Screen:GetScreenSize()
+	self.Content.Position = UDim2.fromOffset(
+		x*screenSize.X,
+		y*screenSize.Y
+	)
+end
+
+MWindow.SetSizeFromScale = function(self,x,y)
+	local screenSize = self.Screen:GetScreenSize()
+	self.Content.Size = UDim2.fromOffset(
+		x*screenSize.X,
+		y*screenSize.Y
+	)
+end
+
+MWindow.InitGui = function(self)
+	self:SetPositionFromScale(0.5,0.5)
+	self:SetSizeFromScale(
+		self.Content.Size.X.Scale,
+		self.Content.Size.Y.Scale
+	)
+
+	local uicorner = Instance.new("UICorner")
+	uicorner.Parent = self.Content
 	
-	InitWindowFunctionality = function(self)
-		self:InitResize()
-		
-		self.Handle.InputBegan:Connect(function(input)
-			if self.Content:FindFirstChild("resizeRegions").Dragging.Value then
-				return
-			end
-			
-			if input.UserInputType == Enum.UserInputType.MouseButton1 then
-				local sWidth = self.Screen:GetScreenWidth()
-				local clickLocation = uis:GetMouseLocation()
-				local windowPosX = self.Content.Position.X.Offset
-				local windowPosY = self.Content.Position.Y.Offset
-				local xoff = clickLocation.X - windowPosX
-				local yoff = clickLocation.Y - windowPosY
-				
-				while _getMouseButton1Pressed(uis:GetMouseButtonsPressed()) do
-					local location = uis:GetMouseLocation()
-					
-					self.Content.Position = UDim2.fromOffset(
-						location.X-xoff,
-						location.Y-yoff
-					)
-					
-					task.wait(0.025)
-				end
-			end
+	self.Stroke = Instance.new("UIStroke")
+	self.Stroke.Parent = self.Content
+	self.Stroke.Color = script.handle.BackgroundColor3
+	self.Stroke.Thickness = 3
+
+	self.Handle = script.handle:Clone()
+	self.TitleLabel = self.Handle.title
+	self.MaxButton = self.Handle.buttons.maximize
+	self.CloseButton = self.Handle.buttons.close
+	self.Layout = self.Handle.UIListLayout
+	self.Padding = self.Handle.UIPadding
+	self.Handle.Parent = self.Content
+
+	self:SetMinimumSize(Vector2.new(150,self.Handle.Size.Y.Offset))
+end
+
+MWindow.InitResize = function(self)
+	self.ResizeRegions = {}
+	self.ResizeRegions.LeftResizeRegion = MWindowResizeRegion:Init(0,0,MtEnum.Side.Left,0,1,5,0,self)
+	self.ResizeRegions.RightResizeRegion= MWindowResizeRegion:Init(1,0,MtEnum.Side.Right,0,1,-5,0,self)
+	self.ResizeRegions.TopResizeRegion  = MWindowResizeRegion:Init(0,0,MtEnum.Side.Top,1,0,0,5,self)
+	self.ResizeRegions.BottomResizeRegion=MWindowResizeRegion:Init(0,1,MtEnum.Side.Bottom,1,0,0,-5,self)
+
+	for i,v in pairs(self.ResizeRegions) do
+		v.Resizing.Event:Connect(function(size)
+			self.NormalSize = size
+			self.Resizing:Fire(size)
 		end)
-		
-		self.CloseButton.MouseButton1Click:Connect(function()
-			self.Content.AnchorPoint = Vector2.new()
-			self.Content:TweenSize(
-				UDim2.fromOffset(0,0),
-				Enum.EasingDirection.In,
-				Enum.EasingStyle.Back,
-				0.2,
-				true,
-				function()
-					self:SetHidden(true)
-				end
-			)
-			
-			self:SetHidden(true)
-		end)
-		
-		self.MaxButton.MouseButton1Click:Connect(function()
+	end
+end
+
+MWindow.InitWindowFunctionality = function(self)
+	self:InitResize()
+
+	self.Handle.InputBegan:Connect(function(input)
+		if self.Content:FindFirstChild("resizeRegions").Dragging.Value then
+			return
+		end
+
+		if input.UserInputType == Enum.UserInputType.MouseButton1 then
+			local clickLocation = uis:GetMouseLocation()
+			local windowPosX = self.Content.Position.X.Offset
+			local windowPosY = self.Content.Position.Y.Offset
+			local xoff = clickLocation.X - windowPosX
+			local yoff = clickLocation.Y - windowPosY
+
+			while _getMouseButton1Pressed(nil,uis:GetMouseButtonsPressed()) do
+				local location = uis:GetMouseLocation()
+
+				self.Content.Position = UDim2.fromOffset(
+					location.X-xoff,
+					location.Y-yoff
+				)
+
+				self.Moving:Fire(self.Content.Position,location)
+
+				task.wait(0.025)
+			end
+		end
+	end)
+
+	self.Moving.Event:Connect(function(pos)
+		self.NormalPosition = pos
+	end)
+
+	self.CloseButton.MouseButton1Click:Connect(function()
+		self.Content:TweenSize(
+			UDim2.fromOffset(0,0),
+			Enum.EasingDirection.In,
+			Enum.EasingStyle.Back,
+			0.2,
+			true,
+			function()
+				self:SetHidden(true)
+			end
+		)
+	end)
+
+	self.MaxButton:SetAttribute("MaximizeState",true)
+	self.MaxButton.MouseButton1Click:Connect(function()
+		if self.MaxButton:GetAttribute("MaximizeState") then
 			self.Content.Position = UDim2.fromOffset(0,0)
 			self.Content:TweenSize(
 				UDim2.fromOffset(
@@ -1280,21 +1217,42 @@ local MWindow = MWidget:Init({},{
 				0.2,
 				true
 			)
-		end)
-	end,
-	
-	SetTitle = function(self,title)
-		self.Title = title
-		self.TitleLabel.Text = self.Title
-	end,
-})
+			self.MaxButton.Image = "http://www.roblox.com/asset/?id=9194909505"
+		else
+			self.Content:TweenSizeAndPosition(
+				self.NormalSize,
+				self.NormalPosition,
+				Enum.EasingDirection.Out,
+				Enum.EasingStyle.Back,
+				0.2,
+				true
+			)
+			self.MaxButton.Image = "rbxassetid://9194908204"
+		end
+
+		self.MaxButton:SetAttribute(
+			"MaximizeState",
+			not self.MaxButton:GetAttribute("MaximizeState")
+		)
+	end)
+
+	self.NormalSize = self.Content.Size
+	self.NormalPosition = self.Content.Position
+end
+
+MWindow.SetTitle = function(self,title)
+	self.Title = title
+	self.TitleLabel.Text = self.Title
+end
+
+MWindow = MWidget:Init({},MWindow)
 
 return MWindow]]></ProtectedString>
 						<int64 name="SourceAssetId">-1</int64>
 						<BinaryString name="Tags"></BinaryString>
-						<UniqueId name="UniqueId">394d6b5c869900ca02492c0a0018991a</UniqueId>
+						<UniqueId name="UniqueId">1fb9260fbeb8d7670258d171000278e2</UniqueId>
 					</Properties>
-					<Item class="Frame" referent="RBX066197A71C224ABBBF440863008126EE">
+					<Item class="Frame" referent="RBXDBA28B86F7CA4F7ABDBCAACBB259FCFC">
 						<Properties>
 							<bool name="Active">false</bool>
 							<Vector2 name="AnchorPoint">
@@ -1345,11 +1303,11 @@ return MWindow]]></ProtectedString>
 							<int64 name="SourceAssetId">-1</int64>
 							<token name="Style">0</token>
 							<BinaryString name="Tags"></BinaryString>
-							<UniqueId name="UniqueId">29dccafe008ad55d024f65f0004f7a95</UniqueId>
+							<UniqueId name="UniqueId">1fb9260fbeb8d7670258d171000278de</UniqueId>
 							<bool name="Visible">true</bool>
 							<int name="ZIndex">1</int>
 						</Properties>
-						<Item class="UICorner" referent="RBX6268694671F54AD7AB9E1FBDF59E72E9">
+						<Item class="UICorner" referent="RBXC89393665BE6478DBAEBCBECE3FA3B0D">
 							<Properties>
 								<BinaryString name="AttributesSerialize"></BinaryString>
 								<UDim name="CornerRadius">
@@ -1359,10 +1317,10 @@ return MWindow]]></ProtectedString>
 								<string name="Name">UICorner</string>
 								<int64 name="SourceAssetId">-1</int64>
 								<BinaryString name="Tags"></BinaryString>
-								<UniqueId name="UniqueId">29dccafe008ad55d024f65f0004f7a9c</UniqueId>
+								<UniqueId name="UniqueId">1fb9260fbeb8d7670258d171000278e6</UniqueId>
 							</Properties>
 						</Item>
-						<Item class="UIPadding" referent="RBX6F62D3C528F441D7AC482295F02C8C70">
+						<Item class="UIPadding" referent="RBXAC5C993EDC364E83ACF3CFC1C99C37FA">
 							<Properties>
 								<BinaryString name="AttributesSerialize"></BinaryString>
 								<string name="Name">UIPadding</string>
@@ -1384,10 +1342,10 @@ return MWindow]]></ProtectedString>
 								</UDim>
 								<int64 name="SourceAssetId">-1</int64>
 								<BinaryString name="Tags"></BinaryString>
-								<UniqueId name="UniqueId">29dccafe008ad55d024f65f0004f7aa1</UniqueId>
+								<UniqueId name="UniqueId">1fb9260fbeb8d7670258d171000278eb</UniqueId>
 							</Properties>
 						</Item>
-						<Item class="TextLabel" referent="RBXC3C1320C98E64DF58F85482F321F6631">
+						<Item class="TextLabel" referent="RBX419FB1623C4042A098DDCD21FED731FF">
 							<Properties>
 								<bool name="Active">false</bool>
 								<Vector2 name="AnchorPoint">
@@ -1461,12 +1419,12 @@ return MWindow]]></ProtectedString>
 								<bool name="TextWrapped">true</bool>
 								<token name="TextXAlignment">0</token>
 								<token name="TextYAlignment">1</token>
-								<UniqueId name="UniqueId">29dccafe008ad55d024f65f0004f7a99</UniqueId>
+								<UniqueId name="UniqueId">1fb9260fbeb8d7670258d171000278e3</UniqueId>
 								<bool name="Visible">true</bool>
 								<int name="ZIndex">1</int>
 							</Properties>
 						</Item>
-						<Item class="UIListLayout" referent="RBX5108EB9FB8E34B0CA0306763DEAD28F5">
+						<Item class="UIListLayout" referent="RBX9800F31A98D94A75BA8D54B09CD7545B">
 							<Properties>
 								<BinaryString name="AttributesSerialize"></BinaryString>
 								<token name="FillDirection">0</token>
@@ -1479,11 +1437,11 @@ return MWindow]]></ProtectedString>
 								<token name="SortOrder">2</token>
 								<int64 name="SourceAssetId">-1</int64>
 								<BinaryString name="Tags"></BinaryString>
-								<UniqueId name="UniqueId">29dccafe008ad55d024f65f0004f7a9f</UniqueId>
+								<UniqueId name="UniqueId">1fb9260fbeb8d7670258d171000278e9</UniqueId>
 								<token name="VerticalAlignment">0</token>
 							</Properties>
 						</Item>
-						<Item class="Frame" referent="RBXF46E666700A94E95B8D8E343C564C0D3">
+						<Item class="Frame" referent="RBXAB2FCB22C02B4915AF44593C4B4186EB">
 							<Properties>
 								<bool name="Active">false</bool>
 								<Vector2 name="AnchorPoint">
@@ -1534,11 +1492,11 @@ return MWindow]]></ProtectedString>
 								<int64 name="SourceAssetId">-1</int64>
 								<token name="Style">0</token>
 								<BinaryString name="Tags"></BinaryString>
-								<UniqueId name="UniqueId">29dccafe008ad55d024f65f0004f7a96</UniqueId>
+								<UniqueId name="UniqueId">1fb9260fbeb8d7670258d171000278df</UniqueId>
 								<bool name="Visible">true</bool>
 								<int name="ZIndex">1</int>
 							</Properties>
-							<Item class="ImageButton" referent="RBX771AB81DADC545EA86D7C87BE9D77D0D">
+							<Item class="ImageButton" referent="RBXB3E700EA7849428A9532E7E458DA4D29">
 								<Properties>
 									<bool name="Active">true</bool>
 									<Vector2 name="AnchorPoint">
@@ -1628,11 +1586,11 @@ return MWindow]]></ProtectedString>
 										<YS>1</YS>
 										<YO>0</YO>
 									</UDim2>
-									<UniqueId name="UniqueId">29dccafe008ad55d024f65f0004f7a97</UniqueId>
+									<UniqueId name="UniqueId">1fb9260fbeb8d7670258d171000278e0</UniqueId>
 									<bool name="Visible">true</bool>
 									<int name="ZIndex">1</int>
 								</Properties>
-								<Item class="UICorner" referent="RBX93C2F3268DA541A7AC1238CAAB8C9768">
+								<Item class="UICorner" referent="RBXE100451C6A4B4573939467D8BBA1F4FB">
 									<Properties>
 										<BinaryString name="AttributesSerialize"></BinaryString>
 										<UDim name="CornerRadius">
@@ -1642,10 +1600,10 @@ return MWindow]]></ProtectedString>
 										<string name="Name">UICorner</string>
 										<int64 name="SourceAssetId">-1</int64>
 										<BinaryString name="Tags"></BinaryString>
-										<UniqueId name="UniqueId">29dccafe008ad55d024f65f0004f7a9d</UniqueId>
+										<UniqueId name="UniqueId">1fb9260fbeb8d7670258d171000278e7</UniqueId>
 									</Properties>
 								</Item>
-								<Item class="UIAspectRatioConstraint" referent="RBX24D33E938810483D96193A7BBA439EE7">
+								<Item class="UIAspectRatioConstraint" referent="RBXF0A2588899DC40418FD1A50DC0CFB3F1">
 									<Properties>
 										<float name="AspectRatio">1</float>
 										<token name="AspectType">1</token>
@@ -1654,23 +1612,28 @@ return MWindow]]></ProtectedString>
 										<string name="Name">UIXAspectRatioConstraint</string>
 										<int64 name="SourceAssetId">-1</int64>
 										<BinaryString name="Tags"></BinaryString>
-										<UniqueId name="UniqueId">29dccafe008ad55d024f65f0004f7a9a</UniqueId>
+										<UniqueId name="UniqueId">1fb9260fbeb8d7670258d171000278e4</UniqueId>
 									</Properties>
 								</Item>
-								<Item class="UIAspectRatioConstraint" referent="RBXBA777BB87B8C453D9A5B91EAE7E2D8D5">
+								<Item class="UISizeConstraint" referent="RBXCF9A145D2CDB4584916EB00C9598B8EE">
 									<Properties>
-										<float name="AspectRatio">1</float>
-										<token name="AspectType">1</token>
 										<BinaryString name="AttributesSerialize"></BinaryString>
-										<token name="DominantAxis">0</token>
-										<string name="Name">UIYAspectRatioConstraint</string>
+										<Vector2 name="MaxSize">
+											<X>INF</X>
+											<Y>INF</Y>
+										</Vector2>
+										<Vector2 name="MinSize">
+											<X>9.99999996e+11</X>
+											<Y>9.99999996e+11</Y>
+										</Vector2>
+										<string name="Name">UISizeConstraint</string>
 										<int64 name="SourceAssetId">-1</int64>
 										<BinaryString name="Tags"></BinaryString>
-										<UniqueId name="UniqueId">4b6ab065be142b53025061130046e565</UniqueId>
+										<UniqueId name="UniqueId">1fb9260fbeb8d7670258d171000278ec</UniqueId>
 									</Properties>
 								</Item>
 							</Item>
-							<Item class="ImageButton" referent="RBX9C16E44D690149BC93C944AA9AC4F0EE">
+							<Item class="ImageButton" referent="RBX33DC09BEB34243BC97A3B19AB17A4621">
 								<Properties>
 									<bool name="Active">true</bool>
 									<Vector2 name="AnchorPoint">
@@ -1760,11 +1723,11 @@ return MWindow]]></ProtectedString>
 										<YS>1</YS>
 										<YO>0</YO>
 									</UDim2>
-									<UniqueId name="UniqueId">29dccafe008ad55d024f65f0004f7a98</UniqueId>
+									<UniqueId name="UniqueId">1fb9260fbeb8d7670258d171000278e1</UniqueId>
 									<bool name="Visible">true</bool>
 									<int name="ZIndex">1</int>
 								</Properties>
-								<Item class="UICorner" referent="RBX6BB64E5E13DE461FB3124A5CD8B63204">
+								<Item class="UICorner" referent="RBXB11B80DC94C8457DBFE221E3F0838342">
 									<Properties>
 										<BinaryString name="AttributesSerialize"></BinaryString>
 										<UDim name="CornerRadius">
@@ -1774,10 +1737,10 @@ return MWindow]]></ProtectedString>
 										<string name="Name">UICorner</string>
 										<int64 name="SourceAssetId">-1</int64>
 										<BinaryString name="Tags"></BinaryString>
-										<UniqueId name="UniqueId">29dccafe008ad55d024f65f0004f7a9e</UniqueId>
+										<UniqueId name="UniqueId">1fb9260fbeb8d7670258d171000278e8</UniqueId>
 									</Properties>
 								</Item>
-								<Item class="UIAspectRatioConstraint" referent="RBX924E843C031A4EDA8925736ACD5B9565">
+								<Item class="UIAspectRatioConstraint" referent="RBX8E82776A6A6343759EE1F5919D028B4A">
 									<Properties>
 										<float name="AspectRatio">1</float>
 										<token name="AspectType">1</token>
@@ -1786,11 +1749,28 @@ return MWindow]]></ProtectedString>
 										<string name="Name">UIXAspectRatioConstraint</string>
 										<int64 name="SourceAssetId">-1</int64>
 										<BinaryString name="Tags"></BinaryString>
-										<UniqueId name="UniqueId">29dccafe008ad55d024f65f0004f7a9b</UniqueId>
+										<UniqueId name="UniqueId">1fb9260fbeb8d7670258d171000278e5</UniqueId>
+									</Properties>
+								</Item>
+								<Item class="UISizeConstraint" referent="RBXF5624B6134F441EBBA4767233AEF70CA">
+									<Properties>
+										<BinaryString name="AttributesSerialize"></BinaryString>
+										<Vector2 name="MaxSize">
+											<X>INF</X>
+											<Y>INF</Y>
+										</Vector2>
+										<Vector2 name="MinSize">
+											<X>9.99999996e+11</X>
+											<Y>9.99999996e+11</Y>
+										</Vector2>
+										<string name="Name">UISizeConstraint</string>
+										<int64 name="SourceAssetId">-1</int64>
+										<BinaryString name="Tags"></BinaryString>
+										<UniqueId name="UniqueId">1fb9260fbeb8d7670258d171000278ed</UniqueId>
 									</Properties>
 								</Item>
 							</Item>
-							<Item class="UIListLayout" referent="RBXB95E7ACD6B234FFC9E9D8947EB5CDF75">
+							<Item class="UIListLayout" referent="RBX4F3F3077F7C94B97BC78843C24C7FF20">
 								<Properties>
 									<BinaryString name="AttributesSerialize"></BinaryString>
 									<token name="FillDirection">0</token>
@@ -1803,12 +1783,176 @@ return MWindow]]></ProtectedString>
 									<token name="SortOrder">2</token>
 									<int64 name="SourceAssetId">-1</int64>
 									<BinaryString name="Tags"></BinaryString>
-									<UniqueId name="UniqueId">29dccafe008ad55d024f65f0004f7aa0</UniqueId>
+									<UniqueId name="UniqueId">1fb9260fbeb8d7670258d171000278ea</UniqueId>
 									<token name="VerticalAlignment">0</token>
 								</Properties>
 							</Item>
 						</Item>
 					</Item>
+				</Item>
+				<Item class="ModuleScript" referent="RBX6423C59EFA1742ABADA05F2134F0982E">
+					<Properties>
+						<BinaryString name="AttributesSerialize"></BinaryString>
+						<Content name="LinkedSource"><null></null></Content>
+						<string name="Name">MWindowResizeRegion</string>
+						<string name="ScriptGuid">{4B0E1833-342E-48B8-9103-F78E30D9A98B}</string>
+						<ProtectedString name="Source"><![CDATA[local repstrg = game:GetService("ReplicatedStorage")
+local MtCore  = require(repstrg.Mt.MtCore)
+local MtEnum  = MtCore.MtEnum
+
+local uis = game:GetService("UserInputService")
+
+local plr = game:GetService("Players").LocalPlayer or nil
+
+local cursors = {
+	[MtEnum.Side.Left]   = "http://www.roblox.com/asset/?id=9199701789",
+	[MtEnum.Side.Top]    = "http://www.roblox.com/asset/?id=9199700882",
+	[MtEnum.Side.Right]  = "http://www.roblox.com/asset/?id=9199701789",
+	[MtEnum.Side.Bottom] = "http://www.roblox.com/asset/?id=9199700882",
+}
+
+local cursorsByResizeSide = {
+	[MtEnum.ResizeSide.None]   = "",
+	[MtEnum.ResizeSide.Left]   = "http://www.roblox.com/asset/?id=9199701789",
+	[MtEnum.ResizeSide.Right]  = "http://www.roblox.com/asset/?id=9199701789",
+	[MtEnum.ResizeSide.Top]    = "http://www.roblox.com/asset/?id=9199700882",
+	[MtEnum.ResizeSide.Bottom] = "http://www.roblox.com/asset/?id=9199700882",
+
+	[MtEnum.ResizeSide.Left + MtEnum.ResizeSide.Top]    = "http://www.roblox.com/asset/?id=9199702778",
+	[MtEnum.ResizeSide.Right+ MtEnum.ResizeSide.Top]    = "http://www.roblox.com/asset/?id=9199703750", -- works for bottom aswell
+	[MtEnum.ResizeSide.Right+ MtEnum.ResizeSide.Bottom] = "http://www.roblox.com/asset/?id=9199702778",
+}
+
+local MWindowResizeRegion = {
+	Name = "ResizeRegion",
+	ClassName = "MWindowResizeRegion",
+}
+
+MWindowResizeRegion.Init = function(self,x,y,side,sx,sy,osx,osy,parent,_obj)
+	local _obj = MtCore.MObject.Init(self,parent,_obj)
+	_obj.Resizing = Instance.new("BindableEvent")
+
+	if not _obj.Parent.Content:FindFirstChild("resizeRegions") then
+		_obj.ResizeRegionsFolder = Instance.new("Folder")
+		_obj.ResizeRegionsFolder.Parent = _obj.Parent.Content
+		_obj.ResizeRegionsFolder.Name = "resizeRegions"
+	else
+		_obj.ResizeRegionsFolder = _obj.Parent.Content.resizeRegions
+	end
+
+	if not _obj.ResizeRegionsFolder:FindFirstChild("Dragging") then
+		_obj.DraggingValue = Instance.new("ObjectValue")
+		_obj.DraggingValue.Parent = _obj.ResizeRegionsFolder
+		_obj.DraggingValue.Name = "Dragging"
+	else
+		_obj.DraggingValue = _obj.ResizeRegionsFolder.Dragging
+	end
+
+	osx = osx or 0
+	osy = osy or 0
+
+	_obj.Region = Instance.new("Frame")
+	_obj.Region.Parent = _obj.ResizeRegionsFolder
+	_obj.Region.Name = side.._obj.Name
+	_obj.Region.BackgroundTransparency = 1
+	_obj.Region.BorderSizePixel = 0
+	_obj.Region.Position = UDim2.fromScale(x,y)
+	_obj.Region.Size = UDim2.new(sx,osx,sy,osy)
+
+	_obj.Cursor = cursors[side]
+
+	_obj.Region.MouseEnter:Connect(function()
+		if plr and not _obj.DraggingValue.Value then
+			local mouse = plr:GetMouse()
+			mouse.Icon = ""
+		end
+	end)
+
+	_obj.Region.MouseLeave:Connect(function()
+		if plr and not _obj.DraggingValue.Value then
+			local mouse = plr:GetMouse()
+			mouse.Icon = _obj.Cursor
+		end
+	end)
+
+	_obj.Region.InputBegan:Connect(function(input)
+		if input.UserInputType == Enum.UserInputType.MouseButton1 then
+			local clickLocation = uis:GetMouseLocation()
+			local wx=_obj.Parent.Content.Position.X.Offset
+			local wy=_obj.Parent.Content.Position.Y.Offset
+			local wsx=_obj.Parent.Content.Size.X.Offset
+			local wsy=_obj.Parent.Content.Size.Y.Offset
+			local imx=clickLocation.X
+			local imy=clickLocation.Y
+
+			_obj.DraggingValue.Value = _obj.Region
+			local sidex=MtEnum.ResizeSide.None
+			local sidey=MtEnum.ResizeSide.None
+
+			if MtCore:_getMouseButton1Pressed(uis:GetMouseButtonsPressed()) then
+				if math.abs(imx-wx)<5 then sidex=MtEnum.ResizeSide.Left end
+				if math.abs(imx-(wx+wsx))<5 then sidex=MtEnum.ResizeSide.Right end
+				if math.abs(imy-wy)<5 then sidey=MtEnum.ResizeSide.Top end
+				if math.abs(imy-(wy+wsy))<5 then sidey=MtEnum.ResizeSide.Bottom end
+			end
+
+			local mouse = plr:GetMouse()
+			mouse.Icon = cursorsByResizeSide[sidex+sidey]
+
+			while MtCore:_getMouseButton1Pressed(uis:GetMouseButtonsPressed()) do
+				local location = uis:GetMouseLocation()
+				local mx=location.X
+				local my=location.Y
+				local incx=mx-imx
+				local incy=my-imy
+				local nx,ny,nsx,nsy
+				if sidex==MtEnum.ResizeSide.None then
+					nx=wx
+					nsx=wsx
+				end
+				if sidex==MtEnum.ResizeSide.Left then
+					nx=wx+(incx)
+					nsx=wsx-(incx)
+				end
+				if sidex==MtEnum.ResizeSide.Right then
+					nx=wx
+					nsx=wsx+(incx)
+				end
+				if sidey==MtEnum.ResizeSide.None then
+					ny=wy
+					nsy=wsy
+				end
+				if sidey==MtEnum.ResizeSide.Top then 
+					ny=wy+(incy)
+					nsy=wsy-(incy)
+				end
+				if sidey==MtEnum.ResizeSide.Bottom then
+					ny=wy
+					nsy=wsy+(incy)
+				end
+				_obj.Parent.Content.Position = UDim2.fromOffset(nx,ny)
+				_obj.Parent.Content.Size = UDim2.fromOffset(nsx,nsy)
+
+				_obj.Resizing:Fire(_obj.Parent.Content.Size,_obj.Parent.Content.Position,location)
+
+				task.wait(0.025)
+			end
+
+			mouse.Icon = ""
+			_obj.DraggingValue.Value = nil
+		end
+	end)
+
+	return _obj
+end
+
+MWindowResizeRegion = MtCore.MObject:Init({},MWindowResizeRegion)
+
+return MWindowResizeRegion]]></ProtectedString>
+						<int64 name="SourceAssetId">-1</int64>
+						<BinaryString name="Tags"></BinaryString>
+						<UniqueId name="UniqueId">1fb9260fbeb8d7670258d17100027951</UniqueId>
+					</Properties>
 				</Item>
 			</Item>
 			<Item class="Folder" referent="RBXEBFD1764A7814CE2B9BB3693E8011C22">
@@ -7565,16 +7709,24 @@ for i,child in ipairs(script:GetChildren()) do
 	end
 end
 
-function _inhert(a,b)
-	-- Includes properties and functions from object b to object a, used for inhertiance
-	
+function mtcore:_inherit(a,b)
+	-- Includes properties and functions from object b to object a, used for inheritance
+
 	for k,v in pairs(b) do
 		if not a[k] then a[k] = v end
 	end
-	
+
 	return a
 end
-mtcore["_inhert"] = _inhert
+
+function mtcore:_getMouseButton1Pressed(pressedButtons)
+	if not pressedButtons then return false end
+	for i,button in ipairs(pressedButtons) do
+		if button.UserInputType == Enum.UserInputType.MouseButton1 then return true end
+	end
+	return false
+end
+
 
 return mtcore]]></ProtectedString>
 					<int64 name="SourceAssetId">-1</int64>
@@ -7595,7 +7747,7 @@ return mtcore]]></ProtectedString>
 		n=n+1
 		keyset[n]=k
 	end
-	
+
 	return keyset
 end
 function _keyInTableExists(t,k)
@@ -7608,99 +7760,99 @@ local MObject = {
 	ClassName = "MObject", -- Object class name (string)
 	Parent = {}, -- Object parent (MObject)
 	Children = {}, -- Object's children (table (array))
-	
+
 	-- Options
 	BlockEvents = false, -- Don't fire signals (boolean)
-	
+
 	-- Events (Read-only)
 	Destroyed = Instance.new("BindableEvent"), -- Fires when the object is destroyed
-	
-	-- Functions
-	Init = function(self,parent,_obj)
-		-- Creates object and returns it
-		
-		_obj = _obj or self
-		setmetatable(_obj, self)
-		self.__index = self
-		
-		for k,v in pairs(self) do
-			if not _keyInTableExists(_obj,k) then
-				_obj[k] = v
-			end
-		end
-		table.sort(_obj)
-		
-		parent = parent or {}
-		self:SetParent(parent)
-		
-		return _obj
-	end,
-	
-	FireEvent = function(self,event)
-		-- Fires an event applying the BlockEvents filter
-		
-		if not self.BlockEvents then event:Fire() end
-	end,
-	
-	Destroy = function(self)
-		-- Fires the destroyed event and destroys the object and all its children
-		
-		self:FireEvent(self.Destroyed)
-		
-		self.Destroyed:Destroy()
-		for i,child in ipairs(self.Children) do child:Destroy() end
-		self = nil
-	end,
-	
-	Clone = function(self)
-		-- Clones the object and returns it (i think)
-		
-		return self
-	end,
-	
-	SetName = function(self,name)
-		self.Name = name
-	end,
-	
-	SetParent = function(self,parent)
-		-- Sets parent for the object
-		
-		parent = parent or {}
-		
-		if self.Parent == {} then
-			table.remove(self.Parent.Children,table.find(self.Parent.Children,self))
-		end
-		
-		self.Parent = parent
-		
-		if parent == {} then
-			table.insert(parent.Children,self)
-		end
-		
-		return nil
-	end,
-	
-	FindFirstChild = function(self,child)
-		-- Finds the inputted child in the object's children list and returns it
-		
-		for i,v in ipairs(self.Children) do
-			if v.Name == child then
-				return v
-			end
-		end
-		
-		return nil
-	end,
-	
-	PrintMembers = function(self)
-		-- Prints all members of the metatable and their types
-		
-		print(self.Name.."'s members:")
-		for k,v in pairs(self) do
-			print(k..": "..typeof(v))
-		end
-	end,
 }
+
+-- Functions
+MObject.Init = function(self,parent,_obj)
+	-- Creates object and returns it
+
+	_obj = _obj or {}
+	setmetatable(_obj, self)
+	self.__index = self
+
+	for k,v in pairs(MObject) do
+		if not _keyInTableExists(_obj,k) then
+			_obj[k] = v
+		end
+	end
+	table.sort(_obj)
+
+	parent = parent or {}
+	MObject.SetParent(_obj,parent)
+
+	return _obj
+end
+
+MObject.FireEvent = function(self,event)
+	-- Fires an event applying the BlockEvents filter
+
+	if not self.BlockEvents then event:Fire() end
+end
+
+MObject.Destroy = function(self)
+	-- Fires the destroyed event and destroys the object and all its children
+
+	self:FireEvent(self.Destroyed)
+
+	self.Destroyed:Destroy()
+	for i,child in ipairs(self.Children) do child:Destroy() end
+	self = nil
+end
+
+MObject.Clone = function(self)
+	-- Clones the object and returns it (i think)
+
+	return self
+end
+
+MObject.SetName = function(self,name)
+	self.Name = name
+end
+
+MObject.SetParent = function(self,parent)
+	-- Sets parent for the object
+
+	parent = parent or {}
+
+	if self.Parent == {} then
+		table.remove(self.Parent.Children,table.find(self.Parent.Children,self))
+	end
+
+	self.Parent = parent
+
+	if parent == {} then
+		table.insert(parent.Children,self)
+	end
+
+	return nil
+end
+
+MObject.FindFirstChild = function(self,child)
+	-- Finds the inputted child in the object's children list and returns it
+
+	for i,v in ipairs(self.Children) do
+		if v.Name == child then
+			return v
+		end
+	end
+
+	return nil
+end
+
+MObject.PrintMembers = function(self)
+	-- Prints all members of the metatable and their types
+
+	print(self.Name.."'s members:")
+	for k,v in pairs(self) do
+		print(k..": "..typeof(v))
+	end
+end
 
 return MObject]]></ProtectedString>
 						<int64 name="SourceAssetId">-1</int64>
@@ -7729,69 +7881,71 @@ return MObject]]></ProtectedString>
 						<ProtectedString name="Source"><![CDATA[local MObject = require(script.Parent.MObject)
 local MWidget = require(script.Parent.Parent.MtWidgets.MWidget)
 
-local MScreen = MObject:Init({},{
+local MScreen = {
 	Name = "screen",
 	ClassName = "MScreen",
 	ScrX=1,
 	ScrY=1,
-	
-	Init = function(self,plr,parent,_obj)
-		local _obj = MObject.Init(self,parent,_obj)
-		
-		self.Player = plr or game:GetService("Players").LocalPlayer
-		
-		self.ScreenGui = Instance.new("ScreenGui")
-		self.ScreenGui.Name = self.Name
-		self.ScreenGui.Parent = self.Player:FindFirstChild("PlayerGui")
-		self:SetOverrideTopbar(true)
-		self.ScreenGui.ResetOnSpawn = false
-		
-		return _obj
-	end,
-	
-	SetName = function(self,name)
-		self.ScreenGui.Name = name
-		MObject.SetName(self,name)
-	end,
-	
-	AddWidget = function(self,widget)
-		MWidget:SetParent(widget,self)
-		widget.Content.Parent = self.ScreenGui
-	end,
-	
-	RemoveWidget = function(self,widget)
-		MWidget:SetParent(widget)
-		widget.Content.Parent = nil
-	end,
-	
-	GetWidgets = function(self)
-		local widgets = {}
-		
-		for i,v in ipairs(self.ScreenGui:GetChildren()) do
-			if v.ClassName == "Frame" then
-				table.insert(widgets,v)
-			end
+}
+
+MScreen.Init = function(self,plr,parent,_obj)
+	local _obj = MObject.Init(self,parent,_obj)
+
+	_obj.Player = plr or game:GetService("Players").LocalPlayer
+
+	_obj.ScreenGui = Instance.new("ScreenGui")
+	_obj.ScreenGui.Name = _obj.Name
+	_obj.ScreenGui.Parent = _obj.Player:FindFirstChild("PlayerGui")
+	MScreen.SetOverrideTopbar(_obj,true)
+	_obj.ScreenGui.ResetOnSpawn = false
+
+	return _obj
+end
+
+MScreen.SetName = function(self,name)
+	self.ScreenGui.Name = name
+	MObject.SetName(self,name)
+end
+
+MScreen.AddWidget = function(self,widget)
+	MWidget:SetParent(widget,self)
+	widget.Content.Parent = self.ScreenGui
+end
+
+MScreen.RemoveWidget = function(self,widget)
+	MWidget:SetParent(widget)
+	widget.Content.Parent = nil
+end
+
+MScreen.GetWidgets = function(self)
+	local widgets = {}
+
+	for i,v in ipairs(self.ScreenGui:GetChildren()) do
+		if v.ClassName == "Frame" then
+			table.insert(widgets,v)
 		end
-		
-		return widgets
-	end,
-	
-	GetScreenSize = function(self)
-		return self.ScreenGui.AbsoluteSize
-	end,
-	
-	GetScreenWidth= function(self)
-		return self:GetScreenSize().X
-	end,
-	
-	GetScreenHeight=function(self)
-		return self:GetScreenSize().Y
-	end,
-	
-	SetOverrideTopbar = function(self,override)
-		self.ScreenGui.IgnoreGuiInset = override
-	end,
-})
+	end
+
+	return widgets
+end
+
+MScreen.GetScreenSize = function(self)
+	return self.ScreenGui.AbsoluteSize
+end
+
+MScreen.GetScreenWidth= function(self)
+	return self:GetScreenSize().X
+end
+
+MScreen.GetScreenHeight=function(self)
+	return self:GetScreenSize().Y
+end
+
+MScreen.SetOverrideTopbar = function(self,override)
+	self.ScreenGui.IgnoreGuiInset = override
+end
+
+MScreen = MObject:Init({},MScreen)
 
 return MScreen]]></ProtectedString>
 						<int64 name="SourceAssetId">-1</int64>
@@ -7799,43 +7953,62 @@ return MScreen]]></ProtectedString>
 						<UniqueId name="UniqueId">07b446ace3d04e1c024bb3e4000e2bc4</UniqueId>
 					</Properties>
 				</Item>
-				<Item class="ModuleScript" referent="RBXA552C0820D9946B287EAD98A37FF24AD">
+				<Item class="ModuleScript" referent="RBX312C04652CCD42FFB5271BBAF2A64121">
 					<Properties>
 						<BinaryString name="AttributesSerialize"></BinaryString>
 						<Content name="LinkedSource"><null></null></Content>
 						<string name="Name">MtEnum</string>
-						<string name="ScriptGuid">{D2CBC460-D238-4136-9CEB-6D11B8987B96}</string>
+						<string name="ScriptGuid">{BABD2DBD-0F67-4090-8368-82CD0831D147}</string>
 						<ProtectedString name="Source"><![CDATA[local MtEnum = {
-	
+
 	Direction = {
 		Left  = "Left",
 		Right = "Right",
 		Up    = "Up",
 		Down  = "Down",
 	},
-	
+
+	Side       = {
+		Left   = "Left",
+		Right  = "Right",
+		Top    = "Top",
+		Bottom = "Bottom"
+	},
+
+	ResizeSide = {
+		-- internal use
+		-- "oh, so that's why it's in numbers."
+
+		None   = 0,
+
+		Left   = 1,
+		Top    = 1,
+		Right  = 2,
+		Bottom = 2
+	},
+
 	Orientation    = {
 		Horizontal = "Horizontal",
 		Vertical   = "Vertical",
 		Diagonal   = "Diagonal",
-		
+
 		DiagonalRight = "DRight",
 		DiagonalLeft  = "DLeft",
 	},
-	
+
 	WindowHandleStyle = {
 		Windows       = "Windows",
 		MacOS         = "MacOS",
 		WindowsDialog = "WindowsDialog",
 		MacOSDialog   = "MacOSDialog",
 	},
-	
+
 }
 
 return MtEnum]]></ProtectedString>
 						<int64 name="SourceAssetId">-1</int64>
 						<BinaryString name="Tags"></BinaryString>
-						<UniqueId name="UniqueId">07b446ace3d04e1c024bb3e4000e2bf5</UniqueId>
+						<UniqueId name="UniqueId">1fb9260fbeb8d7670258d1710006e58c</UniqueId>
 					</Properties>
 				</Item>
 			</Item>
@@ -7853,11 +8026,10 @@ Thanks for using Mt, by MatusGuy (MatusRobloxian)!
 OBJECT INHERTIANCE TREE:
 
 MObject
-    │───MRobloxInstance
-    │───MScreen
+    ├───MRobloxInstance
+    ├───MScreen
     └───MWidget
-        └────MWindow
-
+        └───MWindow
 --]]]]></ProtectedString>
 					<int64 name="SourceAssetId">-1</int64>
 					<BinaryString name="Tags"></BinaryString>
