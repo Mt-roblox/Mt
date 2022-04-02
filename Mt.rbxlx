@@ -80,27 +80,27 @@
 			<Properties>
 				<BinaryString name="AttributesSerialize"></BinaryString>
 				<CoordinateFrame name="CFrame">
-					<X>24.827137</X>
-					<Y>61.1076584</Y>
-					<Z>-13.1518173</Z>
-					<R00>0.0272198282</R00>
-					<R01>-0.892819822</R01>
-					<R02>0.449590892</R02>
-					<R10>-9.31322464e-10</R10>
-					<R11>0.449757546</R11>
-					<R12>0.893150747</R12>
-					<R20>-0.999629498</R20>
-					<R21>-0.0243114103</R21>
-					<R22>0.0122423228</R22>
+					<X>78.735878</X>
+					<Y>14.4161358</Y>
+					<Z>-10.7617636</Z>
+					<R00>-0.970561981</R00>
+					<R01>-0.160243854</R01>
+					<R02>0.179809585</R02>
+					<R10>7.45058149e-09</R10>
+					<R11>0.746557176</R11>
+					<R12>0.66532141</R12>
+					<R20>-0.24085179</R20>
+					<R21>0.645735681</R21>
+					<R22>-0.724579871</R22>
 				</CoordinateFrame>
 				<Ref name="CameraSubject">null</Ref>
 				<token name="CameraType">0</token>
 				<float name="FieldOfView">70</float>
 				<token name="FieldOfViewMode">0</token>
 				<CoordinateFrame name="Focus">
-					<X>23.9279556</X>
-					<Y>59.3213577</Y>
-					<Z>-13.176302</Z>
+					<X>78.3762589</X>
+					<Y>13.0854931</Y>
+					<Z>-9.31260395</Z>
 					<R00>1</R00>
 					<R01>0</R01>
 					<R02>0</R02>
@@ -1080,6 +1080,8 @@ local MWindow = {
 	Name = "window",       -- ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^
 
 	Title = "window", -- Window title (string) (Read-only (Use SetTitle())
+	
+	WindowInteractionState = MtEnum.WindowInteractionState.None -- Window interaction state (string (enum)) (Read-only)
 }
 
 MWindow.Init = function(self,screen,_obj)
@@ -1088,12 +1090,13 @@ MWindow.Init = function(self,screen,_obj)
 	_obj.Screen = screen
 	_obj.Screen:AddWidget(_obj)
 
+	_obj.Interacted=Instance.new("BindableEvent")
 	_obj.Resizing = Instance.new("BindableEvent")
 	_obj.Moving   = Instance.new("BindableEvent")
 
 	MWindow.InitGui(_obj)
 	MWindow.InitWindowFunctionality(_obj)
-
+	
 	table.insert(Windows,_obj)
 
 	return _obj
@@ -1124,7 +1127,7 @@ MWindow.InitGui = function(self)
 
 	local uicorner = Instance.new("UICorner")
 	uicorner.Parent = self.Content
-	
+
 	self.Stroke = Instance.new("UIStroke")
 	self.Stroke.Parent = self.Content
 	self.Stroke.Color = script.handle.BackgroundColor3
@@ -1143,28 +1146,86 @@ end
 
 MWindow.InitResize = function(self)
 	self.ResizeRegions = {}
-	self.ResizeRegions.LeftResizeRegion = MWindowResizeRegion:Init(0,0,MtEnum.Side.Left,0,1,5,0,self)
-	self.ResizeRegions.RightResizeRegion= MWindowResizeRegion:Init(1,0,MtEnum.Side.Right,0,1,-5,0,self)
-	self.ResizeRegions.TopResizeRegion  = MWindowResizeRegion:Init(0,0,MtEnum.Side.Top,1,0,0,5,self)
+	self.ResizeRegions.LeftResizeRegion = MWindowResizeRegion:Init(0,0,MtEnum.Side.Left  ,0,1,5 ,0,self)
+	self.ResizeRegions.RightResizeRegion= MWindowResizeRegion:Init(1,0,MtEnum.Side.Right ,0,1,-5,0,self)
+	self.ResizeRegions.TopResizeRegion  = MWindowResizeRegion:Init(0,0,MtEnum.Side.Top   ,1,0,0 ,5,self)
 	self.ResizeRegions.BottomResizeRegion=MWindowResizeRegion:Init(0,1,MtEnum.Side.Bottom,1,0,0,-5,self)
 
 	for i,v in pairs(self.ResizeRegions) do
 		v.Resizing.Event:Connect(function(size)
 			self.NormalSize = size
+			self.WindowInteractionState = MtEnum.WindowInteractionState.Resizing
 			self.Resizing:Fire(size)
 		end)
+		
+		v.ResizeEnded.Event:Connect(function()
+			self.WindowInteractionState = MtEnum.WindowInteractionState.None
+		end)
+	end
+end
+
+MWindow.IsAnyOtherWindowBeingInteracted = function(self)
+	for i,v in ipairs(Windows) do
+		if v ~= self then
+			if v.WindowInteractionState ~= MtEnum.WindowInteractionState.None then
+				return true
+			end
+		end
+	end
+	return false
+end
+
+MWindow.RefreshWindowZIndex = function()
+	for i,v in ipairs(Windows) do
+		v.Content.ZIndex = i
+		
+		for di,dv in ipairs(v.Content:GetDescendants()) do
+			if dv:IsA("GuiObject") then
+				dv.ZIndex = i
+			end
+		end
+		
+		if i == #Windows then	
+			v.Content.handle.BackgroundColor3 = Color3.fromRGB(0,120,180)
+			v.Content:FindFirstChildOfClass("UIStroke").Color = Color3.fromRGB(0,120,180)
+		else
+			v.Content.handle.BackgroundColor3 = Color3.fromRGB(105, 150, 255)
+			v.Content:FindFirstChildOfClass("UIStroke").Color = Color3.fromRGB(105, 150, 255)
+		end
 	end
 end
 
 MWindow.InitWindowFunctionality = function(self)
 	self:InitResize()
+	
+	--[[
+	self.Content.InputBegan:Connect(function(input)
+		if self:IsAnyOtherWindowBeingInteracted() then
+			return
+		end
+		
+		if input.UserInputType == Enum.UserInputType.MouseButton1 then
+			
+			self:FireEvent(self.Interacted)
+			
+			local i = self.Content.ZIndex
+			table.move(Windows,i,i,#Windows+1)
+			self:RefreshWindowZIndex()
+			table.remove(Windows,#Windows)
+		end
+	end)
+	--]]
 
 	self.Handle.InputBegan:Connect(function(input)
-		if self.Content:FindFirstChild("resizeRegions").Dragging.Value then
+		if
+			self.Content:FindFirstChild("resizeRegions").Dragging.Value or
+			self:IsAnyOtherWindowBeingInteracted()
+		then
 			return
 		end
 
 		if input.UserInputType == Enum.UserInputType.MouseButton1 then
+			
 			local clickLocation = uis:GetMouseLocation()
 			local windowPosX = self.Content.Position.X.Offset
 			local windowPosY = self.Content.Position.Y.Offset
@@ -1178,11 +1239,15 @@ MWindow.InitWindowFunctionality = function(self)
 					location.X-xoff,
 					location.Y-yoff
 				)
+				
+				self.WindowInteractionState = MtEnum.WindowInteractionState.Moving
 
 				self.Moving:Fire(self.Content.Position,location)
 
 				task.wait(0.025)
 			end
+			
+			self.WindowInteractionState = MtEnum.WindowInteractionState.None
 		end
 	end)
 
@@ -1217,7 +1282,7 @@ MWindow.InitWindowFunctionality = function(self)
 				0.2,
 				true
 			)
-			self.MaxButton.Image = "http://www.roblox.com/asset/?id=9194909505"
+			self.MaxButton.Image = "rbxassetid://9194909505"
 		else
 			self.Content:TweenSizeAndPosition(
 				self.NormalSize,
@@ -1798,29 +1863,29 @@ return MWindow]]></ProtectedString>
 						<string name="ScriptGuid">{4B0E1833-342E-48B8-9103-F78E30D9A98B}</string>
 						<ProtectedString name="Source"><![CDATA[local repstrg = game:GetService("ReplicatedStorage")
 local MtCore  = require(repstrg.Mt.MtCore)
-local MtEnum  = MtCore.MtEnum
+local MtEnum  = require(repstrg.Mt.MtCore.MtEnum)
 
 local uis = game:GetService("UserInputService")
 
 local plr = game:GetService("Players").LocalPlayer or nil
 
 local cursors = {
-	[MtEnum.Side.Left]   = "http://www.roblox.com/asset/?id=9199701789",
-	[MtEnum.Side.Top]    = "http://www.roblox.com/asset/?id=9199700882",
-	[MtEnum.Side.Right]  = "http://www.roblox.com/asset/?id=9199701789",
-	[MtEnum.Side.Bottom] = "http://www.roblox.com/asset/?id=9199700882",
+	[MtEnum.Side.Left]   = "rbxassetid://9199701789",
+	[MtEnum.Side.Top]    = "rbxassetid://9199700882",
+	[MtEnum.Side.Right]  = "rbxassetid://9199701789",
+	[MtEnum.Side.Bottom] = "rbxassetid://9199700882",
 }
 
 local cursorsByResizeSide = {
 	[MtEnum.ResizeSide.None]   = "",
-	[MtEnum.ResizeSide.Left]   = "http://www.roblox.com/asset/?id=9199701789",
-	[MtEnum.ResizeSide.Right]  = "http://www.roblox.com/asset/?id=9199701789",
-	[MtEnum.ResizeSide.Top]    = "http://www.roblox.com/asset/?id=9199700882",
-	[MtEnum.ResizeSide.Bottom] = "http://www.roblox.com/asset/?id=9199700882",
+	[MtEnum.ResizeSide.Left]   = "rbxassetid://9199701789",
+	[MtEnum.ResizeSide.Right]  = "rbxassetid://9199701789",
+	[MtEnum.ResizeSide.Top]    = "rbxassetid://9199700882",
+	[MtEnum.ResizeSide.Bottom] = "rbxassetid://9199700882",
 
-	[MtEnum.ResizeSide.Left + MtEnum.ResizeSide.Top]    = "http://www.roblox.com/asset/?id=9199702778",
-	[MtEnum.ResizeSide.Right+ MtEnum.ResizeSide.Top]    = "http://www.roblox.com/asset/?id=9199703750", -- works for bottom aswell
-	[MtEnum.ResizeSide.Right+ MtEnum.ResizeSide.Bottom] = "http://www.roblox.com/asset/?id=9199702778",
+	[MtEnum.ResizeSide.Left + MtEnum.ResizeSide.Top]    = "rbxassetid://9199702778",
+	[MtEnum.ResizeSide.Right+ MtEnum.ResizeSide.Top]    = "rbxassetid://9199703750", -- works for bottom aswell
+	[MtEnum.ResizeSide.Right+ MtEnum.ResizeSide.Bottom] = "rbxassetid://9199702778",
 }
 
 local MWindowResizeRegion = {
@@ -1830,7 +1895,8 @@ local MWindowResizeRegion = {
 
 MWindowResizeRegion.Init = function(self,x,y,side,sx,sy,osx,osy,parent,_obj)
 	local _obj = MtCore.MObject.Init(self,parent,_obj)
-	_obj.Resizing = Instance.new("BindableEvent")
+	_obj.Resizing    = Instance.new("BindableEvent")
+	_obj.ResizeEnded = Instance.new("BindableEvent")
 
 	if not _obj.Parent.Content:FindFirstChild("resizeRegions") then
 		_obj.ResizeRegionsFolder = Instance.new("Folder")
@@ -1864,14 +1930,14 @@ MWindowResizeRegion.Init = function(self,x,y,side,sx,sy,osx,osy,parent,_obj)
 	_obj.Region.MouseEnter:Connect(function()
 		if plr and not _obj.DraggingValue.Value then
 			local mouse = plr:GetMouse()
-			mouse.Icon = ""
+			mouse.Icon = _obj.Cursor
 		end
 	end)
 
 	_obj.Region.MouseLeave:Connect(function()
 		if plr and not _obj.DraggingValue.Value then
 			local mouse = plr:GetMouse()
-			mouse.Icon = _obj.Cursor
+			mouse.Icon = ""
 		end
 	end)
 
@@ -1930,6 +1996,9 @@ MWindowResizeRegion.Init = function(self,x,y,side,sx,sy,osx,osy,parent,_obj)
 					ny=wy
 					nsy=wsy+(incy)
 				end
+				
+				mouse.Icon = cursorsByResizeSide[sidex+sidey]
+				
 				_obj.Parent.Content.Position = UDim2.fromOffset(nx,ny)
 				_obj.Parent.Content.Size = UDim2.fromOffset(nsx,nsy)
 
@@ -1940,6 +2009,8 @@ MWindowResizeRegion.Init = function(self,x,y,side,sx,sy,osx,osy,parent,_obj)
 
 			mouse.Icon = ""
 			_obj.DraggingValue.Value = nil
+			
+			_obj.ResizeEnded:Fire()
 		end
 	end)
 
@@ -7789,10 +7860,14 @@ MObject.Init = function(self,parent,_obj)
 	return _obj
 end
 
-MObject.FireEvent = function(self,event)
+MObject.FireEvent = function(self,event,...)
 	-- Fires an event applying the BlockEvents filter
-
-	if not self.BlockEvents then event:Fire() end
+	
+	if ... then
+		if not self.BlockEvents then event:Fire(table.unpack(...)) end
+	else
+		if not self.BlockEvents then event:Fire() end
+	end
 end
 
 MObject.Destroy = function(self)
@@ -7994,6 +8069,12 @@ return MScreen]]></ProtectedString>
 
 		DiagonalRight = "DRight",
 		DiagonalLeft  = "DLeft",
+	},
+	
+	WindowInteractionState = {
+		None               = "None",
+		Moving             = "Moving",
+		Resizing           = "Resizing"
 	},
 
 	WindowHandleStyle = {
