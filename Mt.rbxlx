@@ -8362,7 +8362,7 @@ end
 local OBJS = {}
 function funcs:_storeObj(obj)
 	local id = obj.OBJID
-	if not id == -1 then
+	if id ~= -1 then
 		OBJS[id] = obj
 	end
 end
