@@ -1095,16 +1095,16 @@ local MWindow = {
 MWindow.Init = function(self,screen,_obj)
 	local _obj = MWidget.Init(self,screen,_obj)
 
-	_obj.Screen = screen
-	_obj.Screen:AddWidget(_obj)
-
 	_obj.Interacted=Instance.new("BindableEvent")
 	_obj.Resizing = Instance.new("BindableEvent")
 	_obj.Moving   = Instance.new("BindableEvent")
-
+	
+	_obj.Screen = screen
 	MWindow.InitGui(_obj)
+	_obj.Screen:AddWidget(_obj)
+	
 	--MWindow.InitWindowFunctionality(_obj)
-
+	
 	return _obj
 end
 
@@ -1897,7 +1897,7 @@ return MWindow]]></ProtectedString>
 						<ProtectedString name="Source"><![CDATA[local repstrg = game:GetService("ReplicatedStorage")
 local MObject  = require(repstrg.Mt.MtCore.MObject)
 local MtEnum  = require(repstrg.Mt.MtCore.MtEnum)
-local _getMouseButton1Pressed = require(repstrg.Mt.MtCore.MtCoreFunctions)._getMouseButton1Pressed()
+local _getMouseButton1Pressed = require(repstrg.Mt.MtCore.MtCoreFunctions)._getMouseButton1Pressed
 
 local uis = game:GetService("UserInputService")
 
@@ -8045,13 +8045,13 @@ MScreen.SetName = function(self,name)
 end
 
 MScreen.AddWidget = function(self,widget)
-	MWidget:SetParent(widget,self)
+	widget:SetParent(self)
 	table.insert(self.Widgets,widget.OBJID)
 	widget.Content.Parent = self.ScreenGui
 end
 
 MScreen.RemoveWidget = function(self,widget)
-	MWidget:SetParent(widget)
+	widget:SetParent()
 	widget.Content.Parent = nil
 end
 
@@ -8248,7 +8248,7 @@ MWindowManager.InitWindowFunctionality = function(self,window)
 				window.WindowInteractionState = MtEnum.WindowInteractionState.Moving
 
 				window.Moving:Fire(window.Content.Position,location)
-				self.WindowMoved:Fire(window)
+				self.WindowMoved:Fire(window.OBJID)
 
 				task.wait(0.025)
 			end
