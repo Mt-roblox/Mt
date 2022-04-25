@@ -80,27 +80,27 @@
 			<Properties>
 				<BinaryString name="AttributesSerialize"></BinaryString>
 				<CoordinateFrame name="CFrame">
-					<X>-47.9265633</X>
-					<Y>29.3218613</Y>
-					<Z>-9.69270611</Z>
-					<R00>0.0616887435</R00>
-					<R01>-0.971724629</R01>
-					<R02>0.227916792</R02>
+					<X>-111.75544</X>
+					<Y>64.0568466</Y>
+					<Z>13.2090063</Z>
+					<R00>-0.0501257479</R00>
+					<R01>-0.928614318</R01>
+					<R02>0.367645353</R02>
 					<R10>-0</R10>
-					<R11>0.228351712</R11>
-					<R12>0.973578811</R12>
-					<R20>-0.998095512</R20>
-					<R21>-0.0600588545</R21>
-					<R22>0.014086728</R22>
+					<R11>0.368108124</R11>
+					<R12>0.929783106</R12>
+					<R20>-0.998742938</R20>
+					<R21>0.046606075</R21>
+					<R22>-0.0184516944</R22>
 				</CoordinateFrame>
 				<Ref name="CameraSubject">null</Ref>
 				<token name="CameraType">0</token>
 				<float name="FieldOfView">70</float>
 				<token name="FieldOfViewMode">0</token>
 				<CoordinateFrame name="Focus">
-					<X>-48.3823967</X>
-					<Y>27.3747044</Y>
-					<Z>-9.72087955</Z>
+					<X>-112.49073</X>
+					<Y>62.1972809</Y>
+					<Z>13.2459097</Z>
 					<R00>1</R00>
 					<R01>0</R01>
 					<R02>0</R02>
@@ -8164,6 +8164,7 @@ local MWidget = require(script.Parent.Parent.MtWidgets.MWidget)
 local MWindowResizeRegion = require(script.Parent.Parent.MtWidgets.MWindowResizeRegion)
 local MtEnum  = require(script.Parent.MtEnum)
 local _getMouseButton1Pressed = require(script.Parent.MtCoreFunctions)._getMouseButton1Pressed
+local _getObjFromId = require(script.Parent.MtCoreFunctions)._getObjFromId
 local uis = game:GetService("UserInputService")
 
 function _dictKeys(t)
@@ -8193,6 +8194,7 @@ MWindowManager.Init = function(self,plr,parent,_obj)
 	
 	_obj.WindowMoved = Instance.new("BindableEvent")
 	_obj.WindowResized = Instance.new("BindableEvent")
+	_obj.WindowInteracted = Instance.new("BindableEvent")
 
 	_obj.Player = plr or game:GetService("Players").LocalPlayer
 
@@ -8217,6 +8219,8 @@ MWindowManager.InitResize = function(self,window)
 			window.NormalSize = size
 			window.WindowInteractionState = MtEnum.WindowInteractionState.Resizing
 			window.Resizing:Fire(size)
+			window.Interacted:Fire()
+			self.WindowResized:Fire(window.OBJID)
 		end)
 
 		v.ResizeEnded.Event:Connect(function()
@@ -8230,7 +8234,6 @@ MWindowManager.InitWindowFunctionality = function(self,window)
 	
 	window.Handle.InputBegan:Connect(function(input)
 		if input.UserInputType == Enum.UserInputType.MouseButton1 then
-
 			local clickLocation = uis:GetMouseLocation()
 			local windowPosX = window.Content.Position.X.Offset
 			local windowPosY = window.Content.Position.Y.Offset
@@ -8248,6 +8251,7 @@ MWindowManager.InitWindowFunctionality = function(self,window)
 				window.WindowInteractionState = MtEnum.WindowInteractionState.Moving
 
 				window.Moving:Fire(window.Content.Position,location)
+				window.Interacted:Fire()
 				self.WindowMoved:Fire(window.OBJID)
 
 				task.wait(0.025)
@@ -8262,6 +8266,7 @@ MWindowManager.InitWindowFunctionality = function(self,window)
 	end)
 
 	window.CloseButton.MouseButton1Click:Connect(function()
+		window.Interacted:Fire()
 		window.Content:TweenSize(
 			UDim2.fromOffset(0,0),
 			Enum.EasingDirection.In,
@@ -8276,6 +8281,7 @@ MWindowManager.InitWindowFunctionality = function(self,window)
 
 	window.MaxButton:SetAttribute("MaximizeState",true)
 	window.MaxButton.MouseButton1Click:Connect(function()
+		window.Interacted:Fire()
 		if window.MaxButton:GetAttribute("MaximizeState") then
 			window.Content.Position = UDim2.fromOffset(0,0)
 			window.Content:TweenSize(
@@ -8309,19 +8315,35 @@ MWindowManager.InitWindowFunctionality = function(self,window)
 
 	window.NormalSize = window.Content.Size
 	window.NormalPosition = window.Content.Position
+	
+	window.Interacted.Event:Connect(function()
+		self.WindowInteracted:Fire(window.OBJID)
+		local i = table.find(self.Widgets,window.OBJID)
+		table.move(
+			self.Widgets,
+			i,
+			i,
+			#self.Widgets+1
+		)
+		self:RefreshFocus()
+	end)
+end
+
+MWindowManager.RefreshFocus = function(self)
+	for zi,window in ipairs(self:GetWidgets()) do
+		local widget = window.Content
+		widget.ZIndex = zi
+		for i,guiobj in ipairs(widget:GetDescendants()) do
+			if guiobj:IsA("GuiObject") then
+				guiobj.ZIndex = zi
+			end
+		end
+	end
 end
 
 MWindowManager.AddWidget = function(self,widget)
 	MScreen.AddWidget(self,widget)
 	self:InitWindowFunctionality(widget)
-	for i,v in ipairs(self:GetWidgets()) do
-		local ck = "WIDGET"..tostring(v.OBJID).."_RESIZECONNECTION"
-		if _keyInTableExists(self,ck) then
-			self[ck] = v.Resizing.Event:Connect(function()
-				self.WindowResized:Fire(v)
-			end)
-		end
-	end
 end
 
 MWindowManager = MScreen:Init(nil,{},MWindowManager)
