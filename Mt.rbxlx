@@ -80,9 +80,9 @@
 			<Properties>
 				<BinaryString name="AttributesSerialize"></BinaryString>
 				<CoordinateFrame name="CFrame">
-					<X>-130.009598</X>
-					<Y>57.5140762</Y>
-					<Z>-16.1278152</Z>
+					<X>-137.739487</X>
+					<Y>50.3885689</Y>
+					<Z>-5.42847443</Z>
 					<R00>-0.788796186</R00>
 					<R01>-0.454621941</R01>
 					<R02>0.41366598</R02>
@@ -98,9 +98,9 @@
 				<float name="FieldOfView">70</float>
 				<token name="FieldOfViewMode">0</token>
 				<CoordinateFrame name="Focus">
-					<X>-130.836929</X>
-					<Y>56.0348015</Y>
-					<Z>-15.0660877</Z>
+					<X>-138.566818</X>
+					<Y>48.9092941</Y>
+					<Z>-4.3667469</Z>
 					<R00>1</R00>
 					<R01>0</R01>
 					<R02>0</R02>
@@ -2022,7 +2022,7 @@ MWindowResizeRegion.Init = function(self,x,y,side,sx,sy,osx,osy,parent,_obj)
 
 			local mouse = plr:GetMouse()
 			mouse.Icon = cursorsByResizeSide[sidex+sidey]
-
+			
 			while _getMouseButton1Pressed(nil,uis:GetMouseButtonsPressed()) do
 				local location = uis:GetMouseLocation()
 				local mx=location.X
@@ -2062,7 +2062,8 @@ MWindowResizeRegion.Init = function(self,x,y,side,sx,sy,osx,osy,parent,_obj)
 
 				_obj.Resizing:Fire(_obj.Parent.Frame,_obj.Parent.Frame.Position,location)
 
-				task.wait(25)
+				task.wait(.025)
+				--print(table.unpack(uis:GetMouseButtonsPressed()))
 			end
 
 			mouse.Icon = ""
@@ -2510,7 +2511,10 @@ MWindowManager.InitWindowFunctionality = function(self,window)
 	self:InitResize(window)
 	
 	window.Handle.Frame.InputBegan:Connect(function(input)
-		if self.WindowBeingInteracted then
+		if
+			self.WindowBeingInteracted or
+			window.WindowInteractionState == MtEnum.WindowInteractionState.Resizing
+		then
 			return
 		end
 		if input.UserInputType == Enum.UserInputType.MouseButton1 then
@@ -2540,8 +2544,8 @@ MWindowManager.InitWindowFunctionality = function(self,window)
 			end
 
 			window.WindowInteractionState = MtEnum.WindowInteractionState.None
+			self.WindowBeingInteracted = false
 		end
-		self.WindowBeingInteracted = false
 	end)
 
 	window.Moving.Event:Connect(function(pos)
@@ -2653,8 +2657,11 @@ end
 function funcs:_getMouseButton1Pressed(pressedButtons)
 	-- get left button pressed, used in many scripts, thats why it's here
 	
-	print(debug.traceback().."\n"..tostring(table.unpack(pressedButtons)))
-	if not pressedButtons then return false end
+	
+	if not pressedButtons or #pressedButtons==0 then
+		return false
+	end
+	--print(debug.traceback().."\n"..tostring(table.unpack(pressedButtons)))
 	for i,button in ipairs(pressedButtons) do
 		if button.UserInputType == Enum.UserInputType.MouseButton1 then return true end
 	end
