@@ -2523,6 +2523,18 @@ end
 MWindowManager.InitWindowFunctionality = function(self,window)
 	self:InitResize(window)
 	
+	window.Frame.InputBegan:Connect(function(input)
+		if
+			self.WindowBeingInteracted or
+			window.WindowInteractionState ~= MtEnum.WindowInteractionState.None
+		then
+			return
+		end
+		if input.UserInputType == Enum.UserInputType.MouseButton1 then
+			window.Interacted:Fire()
+		end
+	end)
+	
 	window.Handle.Frame.InputBegan:Connect(function(input)
 		if
 			self.WindowBeingInteracted or
