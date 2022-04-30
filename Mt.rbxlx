@@ -1954,6 +1954,7 @@ MWindowResizeRegion.Init = function(self,x,y,side,sx,sy,osx,osy,parent,_obj)
 	local _obj = MObject.Init(self,parent,_obj)
 	_obj.Resizing    = Instance.new("BindableEvent")
 	_obj.ResizeEnded = Instance.new("BindableEvent")
+	_obj.ResizeBegan = Instance.new("BindableEvent")
 
 	if not _obj.Parent.Frame:FindFirstChild("resizeRegions") then
 		_obj.ResizeRegionsFolder = Instance.new("Folder")
@@ -2022,6 +2023,8 @@ MWindowResizeRegion.Init = function(self,x,y,side,sx,sy,osx,osy,parent,_obj)
 
 			local mouse = plr:GetMouse()
 			mouse.Icon = cursorsByResizeSide[sidex+sidey]
+			
+			_obj.ResizeBegan:Fire()
 			
 			while _getMouseButton1Pressed(nil,uis:GetMouseButtonsPressed()) do
 				local location = uis:GetMouseLocation()
@@ -2495,16 +2498,26 @@ MWindowManager.InitResize = function(self,window)
 	for i,v in pairs(window.ResizeRegions) do
 		v.Resizing.Event:Connect(function(size)
 			window.NormalSize = size
-			window.WindowInteractionState = MtEnum.WindowInteractionState.Resizing
 			window.Resizing:Fire(size)
 			window.Interacted:Fire()
 			self.WindowResized:Fire(window.OBJID)
 		end)
+		
+		v.ResizeBegan.Event:Connect(function()
+			self:ToggleWindowBeingInteractedState()
+			window.WindowInteractionState = MtEnum.WindowInteractionState.Resizing
+		end)
 
 		v.ResizeEnded.Event:Connect(function()
+			self:ToggleWindowBeingInteractedState()
 			window.WindowInteractionState = MtEnum.WindowInteractionState.None
 		end)
 	end
+end
+
+MWindowManager.ToggleWindowBeingInteractedState = function(self)
+	self.WindowBeingInteracted = not self.WindowBeingInteracted
+	print(self.WindowBeingInteracted)
 end
 
 MWindowManager.InitWindowFunctionality = function(self,window)
@@ -2524,8 +2537,7 @@ MWindowManager.InitWindowFunctionality = function(self,window)
 			local xoff = clickLocation.X - windowPosX
 			local yoff = clickLocation.Y - windowPosY
 			
-			window.Interacted:Fire()
-			self.WindowBeingInteracted = true
+			self:ToggleWindowBeingInteractedState()
 
 			while _getMouseButton1Pressed(nil,uis:GetMouseButtonsPressed()) do
 				local location = uis:GetMouseLocation()
@@ -2539,12 +2551,13 @@ MWindowManager.InitWindowFunctionality = function(self,window)
 
 				window.Moving:Fire(window.Frame.Position,location)
 				self.WindowMoved:Fire(window.OBJID)
+				window.Interacted:Fire()
 
 				task.wait(0.025)
 			end
 
 			window.WindowInteractionState = MtEnum.WindowInteractionState.None
-			self.WindowBeingInteracted = false
+			self:ToggleWindowBeingInteractedState()
 		end
 	end)
 
