@@ -80,27 +80,27 @@
 			<Properties>
 				<BinaryString name="AttributesSerialize"></BinaryString>
 				<CoordinateFrame name="CFrame">
-					<X>-125.99675</X>
-					<Y>58.2390327</Y>
-					<Z>-15.3011971</Z>
-					<R00>0.522914529</R00>
-					<R01>-0.570356786</R01>
-					<R02>0.633445799</R02>
-					<R10>1.49011612e-08</R10>
-					<R11>0.743145049</R11>
-					<R12>0.669130385</R12>
-					<R20>-0.852385104</R20>
-					<R21>-0.34989801</R21>
-					<R22>0.388601363</R22>
+					<X>-130.009598</X>
+					<Y>57.5140762</Y>
+					<Z>-16.1278152</Z>
+					<R00>-0.788796186</R00>
+					<R01>-0.454621941</R01>
+					<R02>0.41366598</R02>
+					<R10>-0</R10>
+					<R11>0.673005342</R11>
+					<R12>0.739637733</R12>
+					<R20>-0.614654899</R20>
+					<R21>0.583423436</R21>
+					<R22>-0.530864</R22>
 				</CoordinateFrame>
 				<Ref name="CameraSubject">null</Ref>
 				<token name="CameraType">0</token>
 				<float name="FieldOfView">70</float>
 				<token name="FieldOfViewMode">0</token>
 				<CoordinateFrame name="Focus">
-					<X>-127.263641</X>
-					<Y>56.9007721</Y>
-					<Z>-16.0783997</Z>
+					<X>-130.836929</X>
+					<Y>56.0348015</Y>
+					<Z>-15.0660877</Z>
 					<R00>1</R00>
 					<R01>0</R01>
 					<R02>0</R02>
@@ -523,7 +523,7 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 			<Item class="LocalScript" referent="RBX3E05F39F45AA4B0ABFD03561188DE75D">
 				<Properties>
 					<BinaryString name="AttributesSerialize"></BinaryString>
-					<bool name="Disabled">true</bool>
+					<bool name="Disabled">false</bool>
 					<Content name="LinkedSource"><null></null></Content>
 					<string name="Name">MtWindowTest</string>
 					<string name="ScriptGuid">{6458014A-116B-482E-8D8B-AE889E404B10}</string>
@@ -587,8 +587,8 @@ dialog:SetTitle("dialog")]]></ProtectedString>
 				<BinaryString name="AttributesSerialize"></BinaryString>
 				<bool name="AutoLocalize">true</bool>
 				<int name="DisplayOrder">0</int>
-				<bool name="Enabled">true</bool>
-				<bool name="IgnoreGuiInset">false</bool>
+				<bool name="Enabled">false</bool>
+				<bool name="IgnoreGuiInset">true</bool>
 				<string name="Name">ScreenGui</string>
 				<bool name="ResetOnSpawn">true</bool>
 				<Ref name="RootLocalizationTable">null</Ref>
@@ -602,7 +602,40 @@ dialog:SetTitle("dialog")]]></ProtectedString>
 				<UniqueId name="UniqueId">5b19d14ef55ae6bc0249fc2c00162b57</UniqueId>
 				<token name="ZIndexBehavior">1</token>
 			</Properties>
-			<Item class="Frame" referent="RBXA78B57D4CE4C4CF89633930639FEAB1B">
+			<Item class="LocalScript" referent="RBX85AA69D0A5954F5BBFC0CB9E06F91157">
+				<Properties>
+					<BinaryString name="AttributesSerialize"></BinaryString>
+					<bool name="Disabled">true</bool>
+					<Content name="LinkedSource"><null></null></Content>
+					<string name="Name">pointTouching</string>
+					<string name="ScriptGuid">{8D1441FB-D939-4137-87CC-41499C72B246}</string>
+					<ProtectedString name="Source"><![CDATA[local uis = game:GetService("UserInputService")
+local a = script.Parent.a
+
+function pointTouching(point: Vector2,areaPos: UDim2,areaSize: UDim2)
+	local px = point.X
+	local py = point.Y
+	local apx = areaPos.X.Offset
+	local apy = areaPos.Y.Offset
+	local asx = areaSize.X.Offset
+	local asy = areaSize.X.Offset
+	--print ("Verify Square Point("..px..","..py..")")
+	--print ("              On   ("..apx..","..apy..","..asx..","..asy..")")
+	return 
+		(px >= apx-asx and px <= (apx + asx)) and
+		(py >= apy-asy and py <= (apy + asy))
+end
+
+while true do
+	print(pointTouching(uis:GetMouseLocation(),a.Position,a.Size))
+	task.wait(0.5)
+end]]></ProtectedString>
+					<int64 name="SourceAssetId">-1</int64>
+					<BinaryString name="Tags"></BinaryString>
+					<UniqueId name="UniqueId">26e4136e9ccdd6e30277e00300689e13</UniqueId>
+				</Properties>
+			</Item>
+			<Item class="Frame" referent="RBX4A1BC5D3DFA84F72B126B9363168F642">
 				<Properties>
 					<bool name="Active">false</bool>
 					<Vector2 name="AnchorPoint">
@@ -614,8 +647,8 @@ dialog:SetTitle("dialog")]]></ProtectedString>
 					<token name="AutomaticSize">0</token>
 					<Color3 name="BackgroundColor3">
 						<R>1</R>
-						<G>0</G>
-						<B>0</B>
+						<G>1</G>
+						<B>1</B>
 					</Color3>
 					<float name="BackgroundTransparency">0</float>
 					<Color3 name="BorderColor3">
@@ -634,9 +667,9 @@ dialog:SetTitle("dialog")]]></ProtectedString>
 					<Ref name="NextSelectionRight">null</Ref>
 					<Ref name="NextSelectionUp">null</Ref>
 					<UDim2 name="Position">
-						<XS>0.381144226</XS>
+						<XS>0</XS>
 						<XO>0</XO>
-						<YS>0.417348623</YS>
+						<YS>0</YS>
 						<YO>0</YO>
 					</UDim2>
 					<Ref name="RootLocalizationTable">null</Ref>
@@ -648,9 +681,10 @@ dialog:SetTitle("dialog")]]></ProtectedString>
 					<token name="SelectionBehaviorUp">0</token>
 					<bool name="SelectionGroup">false</bool>
 					<Ref name="SelectionImageObject">null</Ref>
+					<int name="SelectionOrder">0</int>
 					<UDim2 name="Size">
 						<XS>0</XS>
-						<XO>186</XO>
+						<XO>100</XO>
 						<YS>0</YS>
 						<YO>100</YO>
 					</UDim2>
@@ -658,98 +692,7 @@ dialog:SetTitle("dialog")]]></ProtectedString>
 					<int64 name="SourceAssetId">-1</int64>
 					<token name="Style">0</token>
 					<BinaryString name="Tags"></BinaryString>
-					<UniqueId name="UniqueId">26e4136e9ccdd6e30277e00300689f7b</UniqueId>
-					<bool name="Visible">true</bool>
-					<int name="ZIndex">1</int>
-				</Properties>
-			</Item>
-			<Item class="LocalScript" referent="RBX85AA69D0A5954F5BBFC0CB9E06F91157">
-				<Properties>
-					<BinaryString name="AttributesSerialize"></BinaryString>
-					<bool name="Disabled">false</bool>
-					<Content name="LinkedSource"><null></null></Content>
-					<string name="Name">LocalScript</string>
-					<string name="ScriptGuid">{8D1441FB-D939-4137-87CC-41499C72B246}</string>
-					<ProtectedString name="Source"><![CDATA[local a = script.Parent.a
-local b = script.Parent.b
-
-while true do
-	--pos
-	local ap = a.AbsolutePosition
-	local bp = b.AbsolutePosition
-	
-	--size
-	local as = a.AbsoluteSize
-	local bs = b.AbsoluteSize
-	
-	--center of frames
-	local ac = ap + (as/2)
-	local bc = bp + (bs/2)
-	
-	task.wait(1)
-end]]></ProtectedString>
-					<int64 name="SourceAssetId">-1</int64>
-					<BinaryString name="Tags"></BinaryString>
-					<UniqueId name="UniqueId">26e4136e9ccdd6e30277e00300689e13</UniqueId>
-				</Properties>
-			</Item>
-			<Item class="Frame" referent="RBX91744A5F617D44CABE03BB2CD2A7416B">
-				<Properties>
-					<bool name="Active">false</bool>
-					<Vector2 name="AnchorPoint">
-						<X>0</X>
-						<Y>0</Y>
-					</Vector2>
-					<BinaryString name="AttributesSerialize"></BinaryString>
-					<bool name="AutoLocalize">true</bool>
-					<token name="AutomaticSize">0</token>
-					<Color3 name="BackgroundColor3">
-						<R>0</R>
-						<G>0.333333343</G>
-						<B>1</B>
-					</Color3>
-					<float name="BackgroundTransparency">0</float>
-					<Color3 name="BorderColor3">
-						<R>0.105882362</R>
-						<G>0.164705887</G>
-						<B>0.207843155</B>
-					</Color3>
-					<token name="BorderMode">0</token>
-					<int name="BorderSizePixel">1</int>
-					<bool name="ClipsDescendants">false</bool>
-					<bool name="Draggable">false</bool>
-					<int name="LayoutOrder">0</int>
-					<string name="Name">b</string>
-					<Ref name="NextSelectionDown">null</Ref>
-					<Ref name="NextSelectionLeft">null</Ref>
-					<Ref name="NextSelectionRight">null</Ref>
-					<Ref name="NextSelectionUp">null</Ref>
-					<UDim2 name="Position">
-						<XS>0.415793598</XS>
-						<XO>0</XO>
-						<YS>0.330605477</YS>
-						<YO>0</YO>
-					</UDim2>
-					<Ref name="RootLocalizationTable">null</Ref>
-					<float name="Rotation">0</float>
-					<bool name="Selectable">false</bool>
-					<token name="SelectionBehaviorDown">0</token>
-					<token name="SelectionBehaviorLeft">0</token>
-					<token name="SelectionBehaviorRight">0</token>
-					<token name="SelectionBehaviorUp">0</token>
-					<bool name="SelectionGroup">false</bool>
-					<Ref name="SelectionImageObject">null</Ref>
-					<UDim2 name="Size">
-						<XS>0</XS>
-						<XO>100</XO>
-						<YS>0</YS>
-						<YO>189</YO>
-					</UDim2>
-					<token name="SizeConstraint">0</token>
-					<int64 name="SourceAssetId">-1</int64>
-					<token name="Style">0</token>
-					<BinaryString name="Tags"></BinaryString>
-					<UniqueId name="UniqueId">26e4136e9ccdd6e30277e0030068a0ea</UniqueId>
+					<UniqueId name="UniqueId">0f5ecc5d7b07e12c027e99c900028c7e</UniqueId>
 					<bool name="Visible">true</bool>
 					<int name="ZIndex">1</int>
 				</Properties>
@@ -1033,6 +976,7 @@ return mtwidgets]]></ProtectedString>
 						<string name="ScriptGuid">{6C7FCB0E-3E63-4CEB-A66E-534210256E09}</string>
 						<ProtectedString name="Source"><![CDATA[local repstrg = game:GetService("ReplicatedStorage")
 local MObject = require(repstrg.Mt.MtCore.MObject)
+local uis = game:GetService("UserInputService")
 
 local MWidget = {
 	ClassName = "MWidget", -- See Mt.MtCore.MObject
@@ -1108,28 +1052,26 @@ MWidget.SetHidden = function(self,hidden)
 	self.Frame.Visible = not hidden
 end
 
-MWidget.IsTouching = function(self,frame): boolean
-	local a1 = self.Frame.AbsolutePosition.Y
-	local b1 = frame.AbsolutePosition.Y
-	
-	local a2 = a1 + self.Frame.AbsoluteSize.Y
-	local b2 = b1 + frame.AbsoluteSize.Y
-	
-	print(self.Frame.Name,frame.Name)
-	
-	return (b1 <= a1 and b2 <= a1) or (a2 <= b1 and a2 <= b2)
+MWidget._PointTouchingArea = function(self,point: Vector2,areaPos: UDim2,areaSize: UDim2)
+	local px = point.X
+	local py = point.Y
+	local apx = areaPos.X.Offset
+	local apy = areaPos.Y.Offset
+	local asx = areaSize.X.Offset
+	local asy = areaSize.X.Offset
+	--print ("Verify Square Point("..px..","..py..")")
+	--print ("              On   ("..apx..","..apy..","..asx..","..asy..")")
+	return 
+		(px >= apx-asx and px <= (apx + asx)) and
+		(py >= apy-asy and py <= (apy + asy))
 end
 
-MWidget.GetTouchingWidgets = function(self): {GuiObject}
-	local frames = {}
-	for i,frame in ipairs(self.Frame.Parent:GetChildren()) do
-		if frame:IsA("GuiObject") then
-			if self:IsTouching(frame) and frame~=self.Frame then
-				table.insert(frames,frame)
-			end
-		end
-	end
-	return frames
+MWidget.IsPointInsideWidget = function(self,point:Vector2)
+	self:_PointTouchingArea(point,self.Frame.Position,self.Frame.Size)
+end
+
+MWidget.IsBeingHovered = function(self)
+	self:IsPointInsideWidget(uis:GetMouseLocation())
 end
 
 MWidget = MObject:Init({},MWidget,-1)
@@ -1213,15 +1155,19 @@ MWindow.InitGui = function(self)
 	self.Stroke.Color = script.handle.BackgroundColor3
 	self.Stroke.Thickness = 3
 
-	self.Handle = script.handle:Clone()
-	self.TitleLabel = self.Handle.title
-	self.MaxButton = self.Handle.buttons.maximize
-	self.CloseButton = self.Handle.buttons.close
-	self.Layout = self.Handle.UIListLayout
-	self.Padding = self.Handle.UIPadding
-	self.Handle.Parent = self.Frame
+	local handle = script.handle:Clone()
+	self.Handle = MWidget:Init(self)
+	self.Handle.SizeConstraint.Parent = handle
+	self.Handle.Frame = handle
+	
+	self.TitleLabel = handle.title
+	self.MaxButton = handle.buttons.maximize
+	self.CloseButton = handle.buttons.close
+	self.Layout = handle.UIListLayout
+	self.Padding = handle.UIPadding
+	handle.Parent = self.Frame
 
-	self:SetMinimumSize(Vector2.new(150,self.Handle.Size.Y.Offset))
+	self:SetMinimumSize(Vector2.new(150,handle.Size.Y.Offset))
 end
 
 MWindow.InitResize = function(self)
@@ -1445,6 +1391,7 @@ return MWindow]]></ProtectedString>
 							<token name="SelectionBehaviorUp">0</token>
 							<bool name="SelectionGroup">false</bool>
 							<Ref name="SelectionImageObject">null</Ref>
+							<int name="SelectionOrder">0</int>
 							<UDim2 name="Size">
 								<XS>1</XS>
 								<XO>0</XO>
@@ -1548,6 +1495,7 @@ return MWindow]]></ProtectedString>
 								<token name="SelectionBehaviorUp">0</token>
 								<bool name="SelectionGroup">false</bool>
 								<Ref name="SelectionImageObject">null</Ref>
+								<int name="SelectionOrder">0</int>
 								<UDim2 name="Size">
 									<XS>0.800000012</XS>
 									<XO>0</XO>
@@ -1644,6 +1592,7 @@ return MWindow]]></ProtectedString>
 								<token name="SelectionBehaviorUp">0</token>
 								<bool name="SelectionGroup">false</bool>
 								<Ref name="SelectionImageObject">null</Ref>
+								<int name="SelectionOrder">0</int>
 								<UDim2 name="Size">
 									<XS>0.200000003</XS>
 									<XO>-5</XO>
@@ -1726,6 +1675,7 @@ return MWindow]]></ProtectedString>
 									<token name="SelectionBehaviorUp">0</token>
 									<bool name="SelectionGroup">false</bool>
 									<Ref name="SelectionImageObject">null</Ref>
+									<int name="SelectionOrder">0</int>
 									<UDim2 name="Size">
 										<XS>0.5</XS>
 										<XO>0</XO>
@@ -1868,6 +1818,7 @@ return MWindow]]></ProtectedString>
 									<token name="SelectionBehaviorUp">0</token>
 									<bool name="SelectionGroup">false</bool>
 									<Ref name="SelectionImageObject">null</Ref>
+									<int name="SelectionOrder">0</int>
 									<UDim2 name="Size">
 										<XS>0.5</XS>
 										<XO>0</XO>
@@ -1975,8 +1926,6 @@ local _getMouseButton1Pressed = require(repstrg.Mt.MtCore.MtCoreFunctions)._getM
 
 local uis = game:GetService("UserInputService")
 
-local plr = game:GetService("Players").LocalPlayer or nil
-
 local cursors = {
 	[MtEnum.Side.Left]   = "rbxassetid://9199701789",
 	[MtEnum.Side.Top]    = "rbxassetid://9199700882",
@@ -2009,7 +1958,7 @@ MWindowResizeRegion.Init = function(self,x,y,side,sx,sy,osx,osy,parent,_obj)
 	if not _obj.Parent.Frame:FindFirstChild("resizeRegions") then
 		_obj.ResizeRegionsFolder = Instance.new("Folder")
 		_obj.ResizeRegionsFolder.Parent = _obj.Parent.Frame
-		_obj.ResizeRegionsFolder.Name = "ResizeRegions"
+		_obj.ResizeRegionsFolder.Name = "resizeRegions"
 	else
 		_obj.ResizeRegionsFolder = _obj.Parent.Frame.resizeRegions
 	end
@@ -2034,7 +1983,8 @@ MWindowResizeRegion.Init = function(self,x,y,side,sx,sy,osx,osy,parent,_obj)
 	_obj.Region.Size = UDim2.new(sx,osx,sy,osy)
 
 	_obj.Cursor = cursors[side]
-
+	
+	local plr = game:GetService("Players").LocalPlayer or nil
 	_obj.Region.MouseEnter:Connect(function()
 		if plr and not _obj.DraggingValue.Value then
 			local mouse = plr:GetMouse()
@@ -2521,8 +2471,7 @@ end
 local MWindowManager = {
 	Name = "windowmanager",
 	ClassName = "MWindowManager",
-	ScrX=1,
-	ScrY=1,
+	WindowBeingInteracted = false
 }
 
 MWindowManager.Init = function(self,plr,parent,_obj)
@@ -2560,9 +2509,8 @@ end
 MWindowManager.InitWindowFunctionality = function(self,window)
 	self:InitResize(window)
 	
-	window.Handle.InputBegan:Connect(function(input)
-		print(window:GetTouchingWidgets())
-		if not table.find(self.Widgets,window.OBJID) == #self.Widgets and #window:GetTouchingWidgets()==0 then
+	window.Handle.Frame.InputBegan:Connect(function(input)
+		if self.WindowBeingInteracted then
 			return
 		end
 		if input.UserInputType == Enum.UserInputType.MouseButton1 then
@@ -2571,6 +2519,9 @@ MWindowManager.InitWindowFunctionality = function(self,window)
 			local windowPosY = window.Frame.Position.Y.Offset
 			local xoff = clickLocation.X - windowPosX
 			local yoff = clickLocation.Y - windowPosY
+			
+			window.Interacted:Fire()
+			self.WindowBeingInteracted = true
 
 			while _getMouseButton1Pressed(nil,uis:GetMouseButtonsPressed()) do
 				local location = uis:GetMouseLocation()
@@ -2583,7 +2534,6 @@ MWindowManager.InitWindowFunctionality = function(self,window)
 				window.WindowInteractionState = MtEnum.WindowInteractionState.Moving
 
 				window.Moving:Fire(window.Frame.Position,location)
-				window.Interacted:Fire()
 				self.WindowMoved:Fire(window.OBJID)
 
 				task.wait(0.025)
@@ -2591,6 +2541,7 @@ MWindowManager.InitWindowFunctionality = function(self,window)
 
 			window.WindowInteractionState = MtEnum.WindowInteractionState.None
 		end
+		self.WindowBeingInteracted = false
 	end)
 
 	window.Moving.Event:Connect(function(pos)
@@ -2701,7 +2652,8 @@ end
 
 function funcs:_getMouseButton1Pressed(pressedButtons)
 	-- get left button pressed, used in many scripts, thats why it's here
-
+	
+	print(debug.traceback().."\n"..tostring(table.unpack(pressedButtons)))
 	if not pressedButtons then return false end
 	for i,button in ipairs(pressedButtons) do
 		if button.UserInputType == Enum.UserInputType.MouseButton1 then return true end
