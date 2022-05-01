@@ -1357,7 +1357,7 @@ return MWindow]]></ProtectedString>
 							<token name="AutomaticSize">0</token>
 							<Color3 name="BackgroundColor3">
 								<R>0</R>
-								<G>0.470588267</G>
+								<G>0.470588237</G>
 								<B>0.70588237</B>
 							</Color3>
 							<float name="BackgroundTransparency">0</float>
@@ -2517,7 +2517,6 @@ end
 
 MWindowManager.ToggleWindowBeingInteractedState = function(self)
 	self.WindowBeingInteracted = not self.WindowBeingInteracted
-	print(self.WindowBeingInteracted)
 end
 
 MWindowManager.InitWindowFunctionality = function(self,window)
@@ -2643,17 +2642,36 @@ MWindowManager.RefreshFocus = function(self)
 	for zi,window in ipairs(self:GetWidgets()) do
 		local widget = window.Frame
 		widget.ZIndex = zi
+		
 		for i,guiobj in ipairs(widget:GetDescendants()) do
 			if guiobj:IsA("GuiObject") then
 				guiobj.ZIndex = zi
 			end
 		end
+		
+		local handleC,buttonC = self:ZIndex2Color(zi)
+		window.Handle.Frame.BackgroundColor3 = handleC
+		window.Stroke.Color = handleC
+		window.MaxButton.BackgroundColor3 = buttonC
 	end
+end
+
+MWindowManager.ZIndex2Color = function(self,zi): Color3
+	if zi == #self.Widgets then
+		return Color3.fromRGB(0, 120, 180), Color3.fromRGB(0,90,130) -- active window handle and button colours
+	else
+		return Color3.fromRGB(50, 160, 255), Color3.fromRGB(20, 115, 255) -- inactive window handle and button colour
+	end
+end
+
+MWindowManager.DarkenColor3 = function(self,color,amount): Color3
+	return color * 0.5
 end
 
 MWindowManager.AddWidget = function(self,widget)
 	MScreen.AddWidget(self,widget)
 	self:InitWindowFunctionality(widget)
+	self:RefreshFocus()
 end
 
 MWindowManager = MScreen:Init(nil,{},MWindowManager)
