@@ -80,27 +80,27 @@
 			<Properties>
 				<BinaryString name="AttributesSerialize"></BinaryString>
 				<CoordinateFrame name="CFrame">
-					<X>-137.739487</X>
-					<Y>50.3885689</Y>
-					<Z>-5.42847443</Z>
-					<R00>-0.788796186</R00>
-					<R01>-0.454621941</R01>
-					<R02>0.41366598</R02>
-					<R10>-0</R10>
-					<R11>0.673005342</R11>
-					<R12>0.739637733</R12>
-					<R20>-0.614654899</R20>
-					<R21>0.583423436</R21>
-					<R22>-0.530864</R22>
+					<X>-127.626968</X>
+					<Y>65.6887817</Y>
+					<Z>3.44454718</Z>
+					<R00>0.581092715</R00>
+					<R01>-0.63515234</R01>
+					<R02>0.508834839</R02>
+					<R10>-2.98023259e-08</R10>
+					<R11>0.62522918</R11>
+					<R12>0.780441284</R12>
+					<R20>-0.813837469</R20>
+					<R21>-0.453508765</R21>
+					<R22>0.363316059</R22>
 				</CoordinateFrame>
 				<Ref name="CameraSubject">null</Ref>
 				<token name="CameraType">0</token>
 				<float name="FieldOfView">70</float>
 				<token name="FieldOfViewMode">0</token>
 				<CoordinateFrame name="Focus">
-					<X>-138.566818</X>
-					<Y>48.9092941</Y>
-					<Z>-4.3667469</Z>
+					<X>-128.644638</X>
+					<Y>64.1278992</Y>
+					<Z>2.71791506</Z>
 					<R00>1</R00>
 					<R01>0</R01>
 					<R02>0</R02>
@@ -2531,7 +2531,10 @@ MWindowManager.InitWindowFunctionality = function(self,window)
 			return
 		end
 		if input.UserInputType == Enum.UserInputType.MouseButton1 then
+			self:ToggleWindowBeingInteractedState()
+			while _getMouseButton1Pressed(nil,uis:GetMouseButtonsPressed()) do task.wait() end -- (why do i have to do this)
 			window.Interacted:Fire()
+			self:ToggleWindowBeingInteractedState()
 		end
 	end)
 	
@@ -2550,7 +2553,8 @@ MWindowManager.InitWindowFunctionality = function(self,window)
 			local yoff = clickLocation.Y - windowPosY
 			
 			self:ToggleWindowBeingInteractedState()
-
+			
+			window.WindowInteractionState = MtEnum.WindowInteractionState.Moving
 			while _getMouseButton1Pressed(nil,uis:GetMouseButtonsPressed()) do
 				local location = uis:GetMouseLocation()
 
@@ -2558,8 +2562,6 @@ MWindowManager.InitWindowFunctionality = function(self,window)
 					location.X-xoff,
 					location.Y-yoff
 				)
-
-				window.WindowInteractionState = MtEnum.WindowInteractionState.Moving
 
 				window.Moving:Fire(window.Frame.Position,location)
 				self.WindowMoved:Fire(window.OBJID)
