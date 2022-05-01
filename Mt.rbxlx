@@ -1411,7 +1411,7 @@ return MWindow]]></ProtectedString>
 								<BinaryString name="AttributesSerialize"></BinaryString>
 								<UDim name="CornerRadius">
 									<S>0</S>
-									<O>8</O>
+									<O>0</O>
 								</UDim>
 								<string name="Name">UICorner</string>
 								<int64 name="SourceAssetId">-1</int64>
@@ -1469,7 +1469,7 @@ return MWindow]]></ProtectedString>
 								<int name="BorderSizePixel">0</int>
 								<bool name="ClipsDescendants">false</bool>
 								<bool name="Draggable">false</bool>
-								<token name="Font">4</token>
+								<token name="Font">3</token>
 								<Font name="FontFace"></Font>
 								<int name="LayoutOrder">1</int>
 								<float name="LineHeight">1</float>
@@ -1596,7 +1596,7 @@ return MWindow]]></ProtectedString>
 								<UDim2 name="Size">
 									<XS>0.200000003</XS>
 									<XO>-5</XO>
-									<YS>1</YS>
+									<YS>0.850000024</YS>
 									<YO>0</YO>
 								</UDim2>
 								<token name="SizeConstraint">0</token>
@@ -1711,8 +1711,8 @@ return MWindow]]></ProtectedString>
 									<Properties>
 										<BinaryString name="AttributesSerialize"></BinaryString>
 										<UDim name="CornerRadius">
-											<S>0</S>
-											<O>8</O>
+											<S>1</S>
+											<O>4</O>
 										</UDim>
 										<string name="Name">UICorner</string>
 										<int64 name="SourceAssetId">-1</int64>
@@ -1854,8 +1854,8 @@ return MWindow]]></ProtectedString>
 									<Properties>
 										<BinaryString name="AttributesSerialize"></BinaryString>
 										<UDim name="CornerRadius">
-											<S>0</S>
-											<O>8</O>
+											<S>1</S>
+											<O>4</O>
 										</UDim>
 										<string name="Name">UICorner</string>
 										<int64 name="SourceAssetId">-1</int64>
@@ -2063,7 +2063,7 @@ MWindowResizeRegion.Init = function(self,x,y,side,sx,sy,osx,osy,parent,_obj)
 				_obj.Parent.Frame.Position = UDim2.fromOffset(nx,ny)
 				_obj.Parent.Frame.Size = UDim2.fromOffset(nsx,nsy)
 
-				_obj.Resizing:Fire(_obj.Parent.Frame,_obj.Parent.Frame.Position,location)
+				_obj.Resizing:Fire(_obj.Parent.Frame.Size,_obj.Parent.Frame.Position,location)
 
 				task.wait(.025)
 				--print(table.unpack(uis:GetMouseButtonsPressed()))
@@ -2505,11 +2505,13 @@ MWindowManager.InitResize = function(self,window)
 		
 		v.ResizeBegan.Event:Connect(function()
 			self:ToggleWindowBeingInteractedState()
+			print(self.WindowBeingInteracted)
 			window.WindowInteractionState = MtEnum.WindowInteractionState.Resizing
 		end)
 
 		v.ResizeEnded.Event:Connect(function()
 			self:ToggleWindowBeingInteractedState()
+			print(self.WindowBeingInteracted)
 			window.WindowInteractionState = MtEnum.WindowInteractionState.None
 		end)
 	end
@@ -2517,6 +2519,7 @@ end
 
 MWindowManager.ToggleWindowBeingInteractedState = function(self)
 	self.WindowBeingInteracted = not self.WindowBeingInteracted
+	print(self.WindowBeingInteracted)
 end
 
 MWindowManager.InitWindowFunctionality = function(self,window)
@@ -2531,16 +2534,20 @@ MWindowManager.InitWindowFunctionality = function(self,window)
 		end
 		if input.UserInputType == Enum.UserInputType.MouseButton1 then
 			self:ToggleWindowBeingInteractedState()
-			while _getMouseButton1Pressed(nil,uis:GetMouseButtonsPressed()) do task.wait() end -- (why do i have to do this)
+			print(true)
+			while _getMouseButton1Pressed(nil,uis:GetMouseButtonsPressed()) do -- (why do i have to do this)
+				task.wait()
+			end
 			window.Interacted:Fire()
 			self:ToggleWindowBeingInteractedState()
+			print(self.WindowBeingInteracted)
 		end
 	end)
 	
 	window.Handle.Frame.InputBegan:Connect(function(input)
 		if
 			self.WindowBeingInteracted or
-			window.WindowInteractionState == MtEnum.WindowInteractionState.Resizing
+			window.WindowInteractionState ~= MtEnum.WindowInteractionState.None
 		then
 			return
 		end
@@ -2658,9 +2665,9 @@ end
 
 MWindowManager.ZIndex2Color = function(self,zi): Color3
 	if zi == #self.Widgets then
-		return Color3.fromRGB(0, 120, 180), Color3.fromRGB(0,90,130) -- active window handle and button colours
+		return Color3.fromRGB(0, 90, 235), Color3.fromRGB(95, 140, 240) -- active window handle and button colours
 	else
-		return Color3.fromRGB(50, 160, 255), Color3.fromRGB(20, 115, 255) -- inactive window handle and button colour
+		return Color3.fromRGB(125, 150, 225), Color3.fromRGB(80, 120, 230) -- inactive window handle and button colour
 	end
 end
 
