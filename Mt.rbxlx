@@ -80,18 +80,18 @@
 			<Properties>
 				<BinaryString name="AttributesSerialize"></BinaryString>
 				<CoordinateFrame name="CFrame">
-					<X>-127.626968</X>
-					<Y>65.6887817</Y>
-					<Z>3.44454718</Z>
-					<R00>0.581092715</R00>
-					<R01>-0.63515234</R01>
-					<R02>0.508834839</R02>
-					<R10>-2.98023259e-08</R10>
-					<R11>0.62522918</R11>
-					<R12>0.780441284</R12>
-					<R20>-0.813837469</R20>
-					<R21>-0.453508765</R21>
-					<R22>0.363316059</R22>
+					<X>-128.8358</X>
+					<Y>65.6821594</Y>
+					<Z>3.96199512</Z>
+					<R00>0.988399744</R00>
+					<R01>0.11802654</R01>
+					<R02>-0.0955810174</R02>
+					<R10>-0</R10>
+					<R11>0.629340351</R11>
+					<R12>0.777129829</R12>
+					<R20>0.15187493</R20>
+					<R21>-0.768114924</R21>
+					<R22>0.622039795</R22>
 				</CoordinateFrame>
 				<Ref name="CameraSubject">null</Ref>
 				<token name="CameraType">0</token>
@@ -544,7 +544,11 @@ window.Frame.Position = UDim2.fromOffset(0,0)
 
 local dialog = MWindow:Init(screen)
 dialog:SetName("Dialog")
-dialog:SetTitle("dialog")]]></ProtectedString>
+dialog:SetTitle("dialog")
+
+local page = MWindow:Init(screen)
+page:SetName("Page")
+page:SetTitle("page")]]></ProtectedString>
 					<int64 name="SourceAssetId">-1</int64>
 					<BinaryString name="Tags"></BinaryString>
 					<UniqueId name="UniqueId">5b19d14ef55ae6bc0249fc2c00162b32</UniqueId>
@@ -1951,6 +1955,10 @@ local MWindowResizeRegion = {
 }
 
 MWindowResizeRegion.Init = function(self,x,y,side,sx,sy,osx,osy,parent,_obj)
+	if parent.ClassName ~= "MWindow" then
+		error("Mt error: MWindowResizeRegions must be parented to an MWindow.")
+	end
+	
 	local _obj = MObject.Init(self,parent,_obj)
 	_obj.Resizing    = Instance.new("BindableEvent")
 	_obj.ResizeEnded = Instance.new("BindableEvent")
@@ -2026,7 +2034,7 @@ MWindowResizeRegion.Init = function(self,x,y,side,sx,sy,osx,osy,parent,_obj)
 			
 			_obj.ResizeBegan:Fire()
 			
-			while _getMouseButton1Pressed(nil,uis:GetMouseButtonsPressed()) do
+			while _getMouseButton1Pressed(nil,uis:GetMouseButtonsPressed()) and _obj.Parent.Screen.WindowBeingInteracted do
 				local location = uis:GetMouseLocation()
 				local mx=location.X
 				local my=location.Y
@@ -2192,10 +2200,6 @@ MObject.Init = function(self,parent,_obj,_id)
 			_obj[k] = v
 		end
 	end
-	table.sort(_obj)
-
-	parent = parent or {}
-	MObject.SetParent(_obj,parent)
 	
 	if _id then
 		_obj.OBJID = _id
@@ -2203,6 +2207,9 @@ MObject.Init = function(self,parent,_obj,_id)
 		_obj.OBJID = OBJIDS
 		OBJIDS += 1
 	end
+
+	parent = parent or {}
+	MObject.SetParent(_obj,parent)
 	
 	_storeObj(nil,_obj)
 
@@ -2274,7 +2281,7 @@ MObject.PrintMembers = function(self)
 
 	print(self.Name.."'s members:")
 	for k,v in pairs(self) do
-		print(k..": "..typeof(v))
+		print(k..": "..typeof(v).." = "..v)
 	end
 end
 
@@ -2505,13 +2512,11 @@ MWindowManager.InitResize = function(self,window)
 		
 		v.ResizeBegan.Event:Connect(function()
 			self:ToggleWindowBeingInteractedState()
-			print(self.WindowBeingInteracted)
 			window.WindowInteractionState = MtEnum.WindowInteractionState.Resizing
 		end)
 
 		v.ResizeEnded.Event:Connect(function()
 			self:ToggleWindowBeingInteractedState()
-			print(self.WindowBeingInteracted)
 			window.WindowInteractionState = MtEnum.WindowInteractionState.None
 		end)
 	end
@@ -2534,13 +2539,12 @@ MWindowManager.InitWindowFunctionality = function(self,window)
 		end
 		if input.UserInputType == Enum.UserInputType.MouseButton1 then
 			self:ToggleWindowBeingInteractedState()
-			print(true)
-			while _getMouseButton1Pressed(nil,uis:GetMouseButtonsPressed()) do -- (why do i have to do this)
+			while _getMouseButton1Pressed(nil,uis:GetMouseButtonsPressed()) and self.WindowBeingInteracted do
+				-- (why do i have to do this)
 				task.wait()
 			end
 			window.Interacted:Fire()
 			self:ToggleWindowBeingInteractedState()
-			print(self.WindowBeingInteracted)
 		end
 	end)
 	
@@ -2561,7 +2565,7 @@ MWindowManager.InitWindowFunctionality = function(self,window)
 			self:ToggleWindowBeingInteractedState()
 			
 			window.WindowInteractionState = MtEnum.WindowInteractionState.Moving
-			while _getMouseButton1Pressed(nil,uis:GetMouseButtonsPressed()) do
+			while _getMouseButton1Pressed(nil,uis:GetMouseButtonsPressed()) and self.WindowBeingInteracted do
 				local location = uis:GetMouseLocation()
 
 				window.Frame.Position = UDim2.fromOffset(
