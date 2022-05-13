@@ -532,17 +532,6 @@ local plr = game:GetService("Players").LocalPlayer
 
 --game:GetService("UserInputService").MouseIconEnabled = false
 
-local MtMouseController = require(repstrg.Mt.MtCore.MtMouseController)
-MtMouseController:ChangeCursor("http://www.roblox.com/asset/?id=9199702764")
-local preview = plr.PlayerGui:WaitForChild("ScreenGui").ImageLabel
-
-game:GetService("RunService").RenderStepped:Connect(function()
-	local mouse = plr:GetMouse()
-	mouse.Icon=MtMouseController:GetCursor()
-	print(mouse.Icon)
-	preview.Image=MtMouseController:GetCursor()
-end)
-
 local MWindow = require(repstrg.Mt.MtWidgets.MWindow)
 local MWindowManager = require(repstrg.Mt.MtCore.MWindowManager)
 
@@ -670,101 +659,6 @@ end]]></ProtectedString>
 					<int64 name="SourceAssetId">-1</int64>
 					<BinaryString name="Tags"></BinaryString>
 					<UniqueId name="UniqueId">26e4136e9ccdd6e30277e00300689e13</UniqueId>
-				</Properties>
-			</Item>
-			<Item class="ImageLabel" referent="RBXAAB1B3680E1C4B948FDE9AA14F2B8562">
-				<Properties>
-					<bool name="Active">false</bool>
-					<Vector2 name="AnchorPoint">
-						<X>0</X>
-						<Y>0</Y>
-					</Vector2>
-					<BinaryString name="AttributesSerialize"></BinaryString>
-					<bool name="AutoLocalize">true</bool>
-					<token name="AutomaticSize">0</token>
-					<Color3 name="BackgroundColor3">
-						<R>1</R>
-						<G>1</G>
-						<B>1</B>
-					</Color3>
-					<float name="BackgroundTransparency">1</float>
-					<Color3 name="BorderColor3">
-						<R>0.105882362</R>
-						<G>0.164705887</G>
-						<B>0.207843155</B>
-					</Color3>
-					<token name="BorderMode">0</token>
-					<int name="BorderSizePixel">1</int>
-					<bool name="ClipsDescendants">false</bool>
-					<bool name="Draggable">false</bool>
-					<Content name="Image"><url>rbxasset://textures/advancedMove.png</url></Content>
-					<Color3 name="ImageColor3">
-						<R>1</R>
-						<G>1</G>
-						<B>1</B>
-					</Color3>
-					<Vector2 name="ImageRectOffset">
-						<X>0</X>
-						<Y>0</Y>
-					</Vector2>
-					<Vector2 name="ImageRectSize">
-						<X>0</X>
-						<Y>0</Y>
-					</Vector2>
-					<float name="ImageTransparency">0</float>
-					<int name="LayoutOrder">0</int>
-					<string name="Name">ImageLabel</string>
-					<Ref name="NextSelectionDown">null</Ref>
-					<Ref name="NextSelectionLeft">null</Ref>
-					<Ref name="NextSelectionRight">null</Ref>
-					<Ref name="NextSelectionUp">null</Ref>
-					<UDim2 name="Position">
-						<XS>0</XS>
-						<XO>0</XO>
-						<YS>0.843993783</YS>
-						<YO>0</YO>
-					</UDim2>
-					<token name="ResampleMode">0</token>
-					<Ref name="RootLocalizationTable">null</Ref>
-					<float name="Rotation">0</float>
-					<token name="ScaleType">3</token>
-					<bool name="Selectable">false</bool>
-					<token name="SelectionBehaviorDown">0</token>
-					<token name="SelectionBehaviorLeft">0</token>
-					<token name="SelectionBehaviorRight">0</token>
-					<token name="SelectionBehaviorUp">0</token>
-					<bool name="SelectionGroup">false</bool>
-					<Ref name="SelectionImageObject">null</Ref>
-					<int name="SelectionOrder">0</int>
-					<UDim2 name="Size">
-						<XS>0</XS>
-						<XO>100</XO>
-						<YS>0</YS>
-						<YO>100</YO>
-					</UDim2>
-					<token name="SizeConstraint">0</token>
-					<Rect2D name="SliceCenter">
-						<min>
-							<X>0</X>
-							<Y>0</Y>
-						</min>
-						<max>
-							<X>0</X>
-							<Y>0</Y>
-						</max>
-					</Rect2D>
-					<float name="SliceScale">1</float>
-					<int64 name="SourceAssetId">-1</int64>
-					<BinaryString name="Tags"></BinaryString>
-					<UDim2 name="TileSize">
-						<XS>1</XS>
-						<XO>0</XO>
-						<YS>1</YS>
-						<YO>0</YO>
-					</UDim2>
-					<UniqueId name="UniqueId">11014c28a2288ea7028eebe90020d631</UniqueId>
-					<bool name="Visible">true</bool>
-					<int name="ZIndex">1</int>
 				</Properties>
 			</Item>
 		</Item>
@@ -1970,22 +1864,23 @@ local uis = game:GetService("UserInputService")
 local rs = game:GetService("RunService")
 
 local cursors = {
-	[MtEnum.Side.Left]   = "rbxassetid://9199701789",
-	[MtEnum.Side.Top]    = "rbxassetid://9199700882",
-	[MtEnum.Side.Right]  = "rbxassetid://9199701789",
-	[MtEnum.Side.Bottom] = "rbxassetid://9199700882",
+	[MtEnum.Side.Left]   = "rbxasset://textures/StudioUIEditor/icon_resize2.png",
+	[MtEnum.Side.Top]    = "rbxasset://textures/StudioUIEditor/icon_resize4.png",
+	[MtEnum.Side.Right]  = "rbxasset://textures/StudioUIEditor/icon_resize2.png",
+	[MtEnum.Side.Bottom] = "rbxasset://textures/StudioUIEditor/icon_resize4.png",
 }
 
 local cursorsByResizeSide = {
 	[MtEnum.ResizeSide.None]   = "",
-	[MtEnum.ResizeSide.Left]   = "rbxassetid://9199701789",
-	[MtEnum.ResizeSide.Right]  = "rbxassetid://9199701789",
-	[MtEnum.ResizeSide.Top]    = "rbxassetid://9199700882",
-	[MtEnum.ResizeSide.Bottom] = "rbxassetid://9199700882",
+	[{MtEnum.ResizeSide.Left,0}]   = "rbxasset://textures/StudioUIEditor/icon_resize2.png",
+	[{MtEnum.ResizeSide.Right,0}]  = "rbxasset://textures/StudioUIEditor/icon_resize4.png",
+	[{0,MtEnum.ResizeSide.Top}]    = "rbxasset://textures/StudioUIEditor/icon_resize2.png",
+	[{0,MtEnum.ResizeSide.Bottom}] = "rbxasset://textures/StudioUIEditor/icon_resize4.png",
 
-	[MtEnum.ResizeSide.Left + MtEnum.ResizeSide.Top]    = "rbxassetid://9199702778",
-	[MtEnum.ResizeSide.Right+ MtEnum.ResizeSide.Top]    = "rbxassetid://9199703750", -- works for bottom aswell
-	[MtEnum.ResizeSide.Right+ MtEnum.ResizeSide.Bottom] = "rbxassetid://9199702778",
+	[{MtEnum.ResizeSide.Left,MtEnum.ResizeSide.Top}]     = "rbxasset://textures/StudioUIEditor/icon_resize3.png",
+	[{MtEnum.ResizeSide.Right,MtEnum.ResizeSide.Top}]    = "rbxasset://textures/StudioUIEditor/icon_resize1.png",
+	[{MtEnum.ResizeSide.Right,MtEnum.ResizeSide.Bottom}] = "rbxasset://textures/StudioUIEditor/icon_resize3.png",
+	[{MtEnum.ResizeSide.Left,MtEnum.ResizeSide.Bottom}]  = "rbxasset://textures/StudioUIEditor/icon_resize1.png",
 }
 
 local MWindowResizeRegion = {
@@ -2040,7 +1935,7 @@ MWindowResizeRegion.Init = function(self,x,y,side,sx,sy,osx,osy,parent,_obj)
 	_obj.Region.MouseEnter:Connect(function()
 		if MWindowResizeRegion.CanChangeCursor(_obj) then
 			local mouse = plr:GetMouse()
-			MtMouseController:ChangeCursor("rbxasset://textures/ArrowCursor.png")
+			MtMouseController:ChangeCursor(_obj.Cursor)
 		end
 	end)
 
@@ -2074,7 +1969,7 @@ MWindowResizeRegion.Init = function(self,x,y,side,sx,sy,osx,osy,parent,_obj)
 			
 			_obj.ResizeBegan:Fire()
 			local mouse = plr:GetMouse()
-			MtMouseController:ChangeCursor("rbxasset://textures/ArrowCursor.png")
+			print(MWindowResizeRegion.GetCursorFromResizeSide(sidex,sidey),sidex,sidey)
 			
 			while _getMouseButton1Pressed(nil,uis:GetMouseButtonsPressed()) and _obj.Parent.Screen.WindowBeingInteracted do
 				local location = uis:GetMouseLocation()
@@ -2112,12 +2007,13 @@ MWindowResizeRegion.Init = function(self,x,y,side,sx,sy,osx,osy,parent,_obj)
 				_obj.Parent.Frame.Size = UDim2.fromOffset(nsx,nsy)
 
 				_obj.Resizing:Fire(_obj.Parent.Frame.Size,_obj.Parent.Frame.Position,location)
+				MtMouseController:ChangeCursor(MWindowResizeRegion.GetCursorFromResizeSide(sidex,sidey))
 
 				task.wait(.025)
 				--print(table.unpack(uis:GetMouseButtonsPressed()))
 			end
 
-			--MtMouseController:ResetCursor()
+			MtMouseController:ResetCursor()
 			_obj.DraggingValue.Value = nil
 			
 			_obj.ResizeEnded:Fire()
@@ -2135,6 +2031,19 @@ end
 
 MWindowResizeRegion.SetXRayEnabled = function(self,enabled:boolean)
 	self.XRay.Enabled = enabled
+end
+
+MWindowResizeRegion.GetCursorFromResizeSide = function(x:number,y:number):string
+	-- static function
+	-- haha no x and y aren't coordinates they're MtEnum.ResizeSide enums.
+	
+	if x==0 and y==0 then return "" end -- none
+	
+	if x~=0 and y==0 then return "rbxasset://textures/StudioUIEditor/icon_resize2.png" end -- horizontal
+	if y~=0 and x==0 then return "rbxasset://textures/StudioUIEditor/icon_resize4.png" end -- vertical
+	
+	if x==y then return "rbxasset://textures/StudioUIEditor/icon_resize3.png" end -- diagonal north-east
+	if x~=y then return "rbxasset://textures/StudioUIEditor/icon_resize1.png" end -- diagonal north-west
 end
 
 MWindowResizeRegion = MObject:Init({},MWindowResizeRegion,-1)
@@ -2824,15 +2733,10 @@ local MtMouseController = {}
 
 local cursor = ""
 
---[[
-local preview = plr.PlayerGui:WaitForChild("ScreenGui").ImageLabel
 
 game:GetService("RunService").RenderStepped:Connect(function()
 	mouse.Icon=cursor
-	print(mouse.Icon)
-	preview.Image=cursor
 end)
---]]
 
 function MtMouseController:GetCursor(): string
 	return cursor
