@@ -1870,6 +1870,7 @@ local cursors = {
 	[MtEnum.Side.Bottom] = "rbxasset://textures/StudioUIEditor/icon_resize4.png",
 }
 
+--[[
 local cursorsByResizeSide = {
 	[MtEnum.ResizeSide.None]   = "",
 	[{MtEnum.ResizeSide.Left,0}]   = "rbxasset://textures/StudioUIEditor/icon_resize2.png",
@@ -1882,6 +1883,7 @@ local cursorsByResizeSide = {
 	[{MtEnum.ResizeSide.Right,MtEnum.ResizeSide.Bottom}] = "rbxasset://textures/StudioUIEditor/icon_resize3.png",
 	[{MtEnum.ResizeSide.Left,MtEnum.ResizeSide.Bottom}]  = "rbxasset://textures/StudioUIEditor/icon_resize1.png",
 }
+--]]
 
 local MWindowResizeRegion = {
 	Name = "ResizeRegion",
@@ -1969,7 +1971,6 @@ MWindowResizeRegion.Init = function(self,x,y,side,sx,sy,osx,osy,parent,_obj)
 			
 			_obj.ResizeBegan:Fire()
 			local mouse = plr:GetMouse()
-			print(MWindowResizeRegion.GetCursorFromResizeSide(sidex,sidey),sidex,sidey)
 			
 			while _getMouseButton1Pressed(nil,uis:GetMouseButtonsPressed()) and _obj.Parent.Screen.WindowBeingInteracted do
 				local location = uis:GetMouseLocation()
@@ -2502,7 +2503,7 @@ end
 
 MWindowManager.ToggleWindowBeingInteractedState = function(self)
 	self.WindowBeingInteracted = not self.WindowBeingInteracted
-	print(self.WindowBeingInteracted)
+	--print(self.WindowBeingInteracted)
 end
 
 MWindowManager.InitWindowFunctionality = function(self,window)
