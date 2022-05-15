@@ -1,14 +1,14 @@
 <roblox xmlns:xmime="http://www.w3.org/2005/05/xmlmime" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.roblox.com/roblox.xsd" version="4">
 	<External>null</External>
 	<External>nil</External>
-	<Item class="Workspace" referent="RBX7E6F28CC2E374A3BA2BB625B45EDD4ED">
+	<Item class="Workspace" referent="RBX53EA7E7229314AC0A1FDB79ECC19174C">
 		<Properties>
 			<bool name="AllowThirdPartySales">false</bool>
 			<token name="AnimationWeightedBlendFix">0</token>
 			<BinaryString name="AttributesSerialize"></BinaryString>
 			<token name="ClientAnimatorThrottling">0</token>
 			<string name="CollisionGroups">Default^0^-1</string>
-			<Ref name="CurrentCamera">RBXD2A19F0F9CBC46CDA8DDF7DF7DABA539</Ref>
+			<Ref name="CurrentCamera">RBXA1B3CB6693044C6BA4679BAAE94CE570</Ref>
 			<double name="DistributedGameTime">0</double>
 			<bool name="ExplicitAutoJoints">true</bool>
 			<float name="FallenPartsDestroyHeight">-500</float>
@@ -76,31 +76,31 @@
 				</CFrame>
 			</OptionalCoordinateFrame>
 		</Properties>
-		<Item class="Camera" referent="RBXD2A19F0F9CBC46CDA8DDF7DF7DABA539">
+		<Item class="Camera" referent="RBXA1B3CB6693044C6BA4679BAAE94CE570">
 			<Properties>
 				<BinaryString name="AttributesSerialize"></BinaryString>
 				<CoordinateFrame name="CFrame">
-					<X>-143.137527</X>
-					<Y>59.7650375</Y>
-					<Z>89.8277054</Z>
-					<R00>0.302338421</R00>
-					<R01>-0.332259744</R01>
-					<R02>0.893417537</R02>
+					<X>-176.217087</X>
+					<Y>52.8616142</Y>
+					<Z>80.1858749</Z>
+					<R00>0.132157311</R00>
+					<R01>-0.979023159</R01>
+					<R02>0.15507482</R02>
 					<R10>-0</R10>
-					<R11>0.937281787</R11>
-					<R12>0.348572671</R12>
-					<R20>-0.953200758</R20>
-					<R21>-0.105386913</R21>
-					<R22>0.283376247</R22>
+					<R11>0.156447068</R11>
+					<R12>0.987686396</R12>
+					<R20>-0.991228759</R20>
+					<R21>-0.130529985</R21>
+					<R22>0.0206756238</R22>
 				</CoordinateFrame>
 				<Ref name="CameraSubject">null</Ref>
 				<token name="CameraType">0</token>
 				<float name="FieldOfView">70</float>
 				<token name="FieldOfViewMode">0</token>
 				<CoordinateFrame name="Focus">
-					<X>-144.924377</X>
-					<Y>59.0678864</Y>
-					<Z>89.2609482</Z>
+					<X>-176.527237</X>
+					<Y>50.8862381</Y>
+					<Z>80.1445236</Z>
 					<R00>1</R00>
 					<R01>0</R01>
 					<R02>0</R02>
@@ -119,7 +119,7 @@
 				<UniqueId name="UniqueId">0b401e85ede42a620247f9fa0001b43c</UniqueId>
 			</Properties>
 		</Item>
-		<Item class="Part" referent="RBXCF0194BA614A4C9E9C97765C73956112">
+		<Item class="Part" referent="RBX37601051F938469ABC6A2B767F364D6E">
 			<Properties>
 				<bool name="Anchored">true</bool>
 				<BinaryString name="AttributesSerialize"></BinaryString>
@@ -213,7 +213,7 @@
 					<Z>2048</Z>
 				</Vector3>
 			</Properties>
-			<Item class="Texture" referent="RBX0C3A1720013241D6B4FB067A71A66CC7">
+			<Item class="Texture" referent="RBXEA7AE8C157B94146A2E5C9BC3C54959A">
 				<Properties>
 					<BinaryString name="AttributesSerialize"></BinaryString>
 					<Color3 name="Color3">
@@ -236,7 +236,7 @@
 				</Properties>
 			</Item>
 		</Item>
-		<Item class="Terrain" referent="RBX7A7615B802DB4E78AB962C4213B17377">
+		<Item class="Terrain" referent="RBX3058C934826C44B08258462D490F0491">
 			<Properties>
 				<token name="AcquisitionMethod">0</token>
 				<bool name="Anchored">true</bool>
@@ -345,7 +345,7 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 			</Properties>
 		</Item>
 	</Item>
-	<Item class="SoundService" referent="RBX8105080733434239B8871774C211ECE4">
+	<Item class="SoundService" referent="RBX6249D0F66A3949168A4B154B77B608D8">
 		<Properties>
 			<token name="AmbientReverb">0</token>
 			<BinaryString name="AttributesSerialize"></BinaryString>
@@ -359,7 +359,7 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 			<UniqueId name="UniqueId">0b401e85ede42a620247f9fa0001b228</UniqueId>
 		</Properties>
 	</Item>
-	<Item class="NonReplicatedCSGDictionaryService" referent="RBX6345F485DD604AA5935B0806D81D28C2">
+	<Item class="NonReplicatedCSGDictionaryService" referent="RBX01597D5059064D9290299F1F4FE86CCA">
 		<Properties>
 			<BinaryString name="AttributesSerialize"></BinaryString>
 			<string name="Name">NonReplicatedCSGDictionaryService</string>
@@ -368,7 +368,7 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 			<UniqueId name="UniqueId">0b401e85ede42a620247f9fa0001b234</UniqueId>
 		</Properties>
 	</Item>
-	<Item class="CSGDictionaryService" referent="RBX61E9296BA8884180B93033A3314F1928">
+	<Item class="CSGDictionaryService" referent="RBX3CF39AEEED1A4C509C7FB3011233BC9B">
 		<Properties>
 			<BinaryString name="AttributesSerialize"></BinaryString>
 			<string name="Name">CSGDictionaryService</string>
@@ -377,7 +377,7 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 			<UniqueId name="UniqueId">0b401e85ede42a620247f9fa0001b235</UniqueId>
 		</Properties>
 	</Item>
-	<Item class="Chat" referent="RBX4DD2AC05ED38424CB84AE971003FCBA2">
+	<Item class="Chat" referent="RBX06B636E6F5B243DABC2DB11CE79B5FBA">
 		<Properties>
 			<BinaryString name="AttributesSerialize"></BinaryString>
 			<bool name="BubbleChatEnabled">true</bool>
@@ -388,7 +388,7 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 			<UniqueId name="UniqueId">0b401e85ede42a620247f9fa0001b23a</UniqueId>
 		</Properties>
 	</Item>
-	<Item class="TimerService" referent="RBX646E524DA533426FA2448DDCEB7F543A">
+	<Item class="TimerService" referent="RBXF085E5F351644D238849E4CB58CEA5BF">
 		<Properties>
 			<BinaryString name="AttributesSerialize"></BinaryString>
 			<string name="Name">Instance</string>
@@ -397,7 +397,7 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 			<UniqueId name="UniqueId">0b401e85ede42a620247f9fa0001b23b</UniqueId>
 		</Properties>
 	</Item>
-	<Item class="Players" referent="RBX55C8036C7C8F40FE86A2E47BDB8A6783">
+	<Item class="Players" referent="RBX9EAA5E574F7F45869AE62C30E54F192C">
 		<Properties>
 			<BinaryString name="AttributesSerialize"></BinaryString>
 			<bool name="CharacterAutoLoads">true</bool>
@@ -410,7 +410,7 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 			<UniqueId name="UniqueId">0b401e85ede42a620247f9fa0001b23d</UniqueId>
 		</Properties>
 	</Item>
-	<Item class="ReplicatedFirst" referent="RBX18292831008F41EFB8903D9385687EFC">
+	<Item class="ReplicatedFirst" referent="RBX2C79705A387B4FA1B31315C543516645">
 		<Properties>
 			<BinaryString name="AttributesSerialize"></BinaryString>
 			<string name="Name">ReplicatedFirst</string>
@@ -419,7 +419,7 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 			<UniqueId name="UniqueId">0b401e85ede42a620247f9fa0001b241</UniqueId>
 		</Properties>
 	</Item>
-	<Item class="TweenService" referent="RBXD4AD11FFF51C4D369DAAF616E0B69471">
+	<Item class="TweenService" referent="RBX5B7588C227474F01B38C310E4F5C36BE">
 		<Properties>
 			<BinaryString name="AttributesSerialize"></BinaryString>
 			<string name="Name">TweenService</string>
@@ -428,7 +428,7 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 			<UniqueId name="UniqueId">0b401e85ede42a620247f9fa0001b243</UniqueId>
 		</Properties>
 	</Item>
-	<Item class="PermissionsService" referent="RBX77044F195B7F406F817E5491B875D6EE">
+	<Item class="PermissionsService" referent="RBX3BEFFE745269441C8201AEF26856FB32">
 		<Properties>
 			<BinaryString name="AttributesSerialize"></BinaryString>
 			<string name="Name">PermissionsService</string>
@@ -437,7 +437,7 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 			<UniqueId name="UniqueId">0b401e85ede42a620247f9fa0001b247</UniqueId>
 		</Properties>
 	</Item>
-	<Item class="PlayerEmulatorService" referent="RBX482AA12B50544BFB8B13B7AE69D0EB0D">
+	<Item class="PlayerEmulatorService" referent="RBXBBC635002A3E41BABCBF46AC9ACE453D">
 		<Properties>
 			<BinaryString name="AttributesSerialize"></BinaryString>
 			<bool name="CustomPoliciesEnabled">false</bool>
@@ -451,7 +451,7 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 			<UniqueId name="UniqueId">0b401e85ede42a620247f9fa0001b249</UniqueId>
 		</Properties>
 	</Item>
-	<Item class="StudioData" referent="RBX06E55D6CAE744FA195B2CFE067590A18">
+	<Item class="StudioData" referent="RBX4279DA245D2F4AA795DB197DEA23F9BC">
 		<Properties>
 			<BinaryString name="AttributesSerialize"></BinaryString>
 			<int64 name="CommitInflightAuthorId">0</int64>
@@ -466,7 +466,7 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 			<UniqueId name="UniqueId">0b401e85ede42a620247f9fa0001b24b</UniqueId>
 		</Properties>
 	</Item>
-	<Item class="StarterPlayer" referent="RBX00C6E0ACF32D4845AF2DBE596C828F49">
+	<Item class="StarterPlayer" referent="RBX17DF409015F4497ABE4AF8B3A0F3047D">
 		<Properties>
 			<bool name="AllowCustomAnimations">true</bool>
 			<BinaryString name="AttributesSerialize"></BinaryString>
@@ -512,7 +512,7 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 			<UniqueId name="UniqueId">0b401e85ede42a620247f9fa0001b24c</UniqueId>
 			<bool name="UserEmotesEnabled">true</bool>
 		</Properties>
-		<Item class="StarterPlayerScripts" referent="RBX3C733D11CC4D4B828578428555308DA2">
+		<Item class="StarterPlayerScripts" referent="RBXC5EFC3A4E23247BDA0E73256A8305700">
 			<Properties>
 				<BinaryString name="AttributesSerialize"></BinaryString>
 				<string name="Name">StarterPlayerScripts</string>
@@ -520,7 +520,7 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 				<BinaryString name="Tags"></BinaryString>
 				<UniqueId name="UniqueId">0b401e85ede42a620247f9fa0001b445</UniqueId>
 			</Properties>
-			<Item class="LocalScript" referent="RBX3E05F39F45AA4B0ABFD03561188DE75D">
+			<Item class="LocalScript" referent="RBX75556E998ADF425FBD476EA155A6CB37">
 				<Properties>
 					<BinaryString name="AttributesSerialize"></BinaryString>
 					<bool name="Disabled">false</bool>
@@ -550,6 +550,7 @@ window:SetName("MainWindow")
 window:SetTitle("window")
 window.Frame.Position = UDim2.fromOffset(0,0)
 putStuffOnWindow(window,script.window:GetChildren())
+window:PrintMembers()
 
 local dialog = MWindow:Init(screen)
 dialog:SetName("Dialog")
@@ -564,7 +565,7 @@ putStuffOnWindow(page,script.page:GetChildren())]]></ProtectedString>
 					<BinaryString name="Tags"></BinaryString>
 					<UniqueId name="UniqueId">5b19d14ef55ae6bc0249fc2c00162b32</UniqueId>
 				</Properties>
-				<Item class="Folder" referent="RBX8374B2526F3743BB86A9F532069986A8">
+				<Item class="Folder" referent="RBX765CC3208DEE405799D51C1198BDF0B1">
 					<Properties>
 						<BinaryString name="AttributesSerialize"></BinaryString>
 						<string name="Name">window</string>
@@ -572,7 +573,7 @@ putStuffOnWindow(page,script.page:GetChildren())]]></ProtectedString>
 						<BinaryString name="Tags"></BinaryString>
 						<UniqueId name="UniqueId">079fd07efd1f4a0a028fc3eb007b8842</UniqueId>
 					</Properties>
-					<Item class="TextButton" referent="RBX943527E896F24832B53E06BEF8FE5C6F">
+					<Item class="TextButton" referent="RBXF9266655F6FC436D8614CD362E67B082">
 						<Properties>
 							<bool name="Active">true</bool>
 							<Vector2 name="AnchorPoint">
@@ -635,7 +636,7 @@ putStuffOnWindow(page,script.page:GetChildren())]]></ProtectedString>
 							</UDim2>
 							<token name="SizeConstraint">0</token>
 							<int64 name="SourceAssetId">-1</int64>
-							<token name="Style">4</token>
+							<token name="Style">0</token>
 							<BinaryString name="Tags"></BinaryString>
 							<string name="Text">bring up cool dialog&lt;br/&gt;ok fine it doesn&apos;t actually do anything</string>
 							<Color3 name="TextColor3">
@@ -662,7 +663,7 @@ putStuffOnWindow(page,script.page:GetChildren())]]></ProtectedString>
 						</Properties>
 					</Item>
 				</Item>
-				<Item class="Folder" referent="RBX361807438A424D37A35CB402D4603026">
+				<Item class="Folder" referent="RBX7D150168E114488F9A746495F9B87253">
 					<Properties>
 						<BinaryString name="AttributesSerialize"></BinaryString>
 						<string name="Name">dialog</string>
@@ -670,7 +671,7 @@ putStuffOnWindow(page,script.page:GetChildren())]]></ProtectedString>
 						<BinaryString name="Tags"></BinaryString>
 						<UniqueId name="UniqueId">079fd07efd1f4a0a028fc3eb007b8874</UniqueId>
 					</Properties>
-					<Item class="TextBox" referent="RBXAF2726A6E28B496F947AAF7EDCB8776E">
+					<Item class="TextBox" referent="RBX039ADC18E24743908A66F0123BF93AFD">
 						<Properties>
 							<bool name="Active">true</bool>
 							<Vector2 name="AnchorPoint">
@@ -765,7 +766,7 @@ putStuffOnWindow(page,script.page:GetChildren())]]></ProtectedString>
 							<int name="ZIndex">1</int>
 						</Properties>
 					</Item>
-					<Item class="TextLabel" referent="RBX0598AE9E88564A8BA68BDFAAAE5AE0BB">
+					<Item class="TextLabel" referent="RBX83636F57CEF64F70BDC71FC8BB214083">
 						<Properties>
 							<bool name="Active">false</bool>
 							<Vector2 name="AnchorPoint">
@@ -851,7 +852,7 @@ putStuffOnWindow(page,script.page:GetChildren())]]></ProtectedString>
 						</Properties>
 					</Item>
 				</Item>
-				<Item class="Folder" referent="RBXE83217705BF54F8ABC35C31B754E97E4">
+				<Item class="Folder" referent="RBXA05C35BF82F5425F9519DEAA47A780E9">
 					<Properties>
 						<BinaryString name="AttributesSerialize"></BinaryString>
 						<string name="Name">page</string>
@@ -859,7 +860,7 @@ putStuffOnWindow(page,script.page:GetChildren())]]></ProtectedString>
 						<BinaryString name="Tags"></BinaryString>
 						<UniqueId name="UniqueId">079fd07efd1f4a0a028fc3eb007b88c6</UniqueId>
 					</Properties>
-					<Item class="TextLabel" referent="RBX9BFDEA5BAA4C4EF6AB2125E3D87DE898">
+					<Item class="TextLabel" referent="RBX1E3EA31A990141258C648D08DB495D4A">
 						<Properties>
 							<bool name="Active">false</bool>
 							<Vector2 name="AnchorPoint">
@@ -946,7 +947,7 @@ putStuffOnWindow(page,script.page:GetChildren())]]></ProtectedString>
 					</Item>
 				</Item>
 			</Item>
-			<Item class="LocalScript" referent="RBXCB58BA84E2814167BDF330BF66707C86">
+			<Item class="LocalScript" referent="RBXD5D811BB03F84A618A7E076CB0CDFBD0">
 				<Properties>
 					<BinaryString name="AttributesSerialize"></BinaryString>
 					<bool name="Disabled">false</bool>
@@ -967,7 +968,7 @@ end)]]></ProtectedString>
 				</Properties>
 			</Item>
 		</Item>
-		<Item class="StarterCharacterScripts" referent="RBX6B511790DBE546A38501D0B7095E4B97">
+		<Item class="StarterCharacterScripts" referent="RBX3A07D90B2FAD4148B7E14B1228EF9AB4">
 			<Properties>
 				<BinaryString name="AttributesSerialize"></BinaryString>
 				<string name="Name">StarterCharacterScripts</string>
@@ -977,7 +978,7 @@ end)]]></ProtectedString>
 			</Properties>
 		</Item>
 	</Item>
-	<Item class="StarterPack" referent="RBX67CDEB778CFA4C56947E1E1D3FDB549E">
+	<Item class="StarterPack" referent="RBX202147C875D442AA9166215850822D79">
 		<Properties>
 			<BinaryString name="AttributesSerialize"></BinaryString>
 			<string name="Name">StarterPack</string>
@@ -986,7 +987,7 @@ end)]]></ProtectedString>
 			<UniqueId name="UniqueId">0b401e85ede42a620247f9fa0001b24d</UniqueId>
 		</Properties>
 	</Item>
-	<Item class="StarterGui" referent="RBXEC03EE7048D045AEAE3328E1DB6DFB90">
+	<Item class="StarterGui" referent="RBXC646A6848879450F862D245806CF84DD">
 		<Properties>
 			<BinaryString name="AttributesSerialize"></BinaryString>
 			<string name="Name">StarterGui</string>
@@ -998,7 +999,7 @@ end)]]></ProtectedString>
 			<UniqueId name="UniqueId">0b401e85ede42a620247f9fa0001b24e</UniqueId>
 			<token name="VirtualCursorMode">0</token>
 		</Properties>
-		<Item class="ScreenGui" referent="RBX17B1B745E3C849388AA0B843ABE02A05">
+		<Item class="ScreenGui" referent="RBX7A683E7E978D4FE3B4992F462DE02083">
 			<Properties>
 				<BinaryString name="AttributesSerialize"></BinaryString>
 				<bool name="AutoLocalize">true</bool>
@@ -1018,7 +1019,7 @@ end)]]></ProtectedString>
 				<UniqueId name="UniqueId">5b19d14ef55ae6bc0249fc2c00162b57</UniqueId>
 				<token name="ZIndexBehavior">1</token>
 			</Properties>
-			<Item class="Frame" referent="RBXDC0211CC8CA64987A108C0152F708929">
+			<Item class="Frame" referent="RBXFFA8F02128794C359BE9CEA60804BB3B">
 				<Properties>
 					<bool name="Active">false</bool>
 					<Vector2 name="AnchorPoint">
@@ -1080,7 +1081,7 @@ end)]]></ProtectedString>
 					<int name="ZIndex">1</int>
 				</Properties>
 			</Item>
-			<Item class="Frame" referent="RBXC167935560DF4D47A7DF6A62DEBAB037">
+			<Item class="Frame" referent="RBX171C6DF7F1D64B52A29E8B8739411435">
 				<Properties>
 					<bool name="Active">false</bool>
 					<Vector2 name="AnchorPoint">
@@ -1142,7 +1143,7 @@ end)]]></ProtectedString>
 					<int name="ZIndex">1</int>
 				</Properties>
 			</Item>
-			<Item class="Frame" referent="RBX05B94BDC9D274325A5B9683F90C6DE71">
+			<Item class="Frame" referent="RBX8B99948CC92F46D1BEEA39EA239F3EB2">
 				<Properties>
 					<bool name="Active">false</bool>
 					<Vector2 name="AnchorPoint">
@@ -1206,7 +1207,7 @@ end)]]></ProtectedString>
 			</Item>
 		</Item>
 	</Item>
-	<Item class="LocalizationService" referent="RBX76E929BA23574343A7F000BD0932C4FE">
+	<Item class="LocalizationService" referent="RBXD5AAAA567BD34DD5AE63DACE90D5C95F">
 		<Properties>
 			<BinaryString name="AttributesSerialize"></BinaryString>
 			<string name="Name">LocalizationService</string>
@@ -1215,7 +1216,7 @@ end)]]></ProtectedString>
 			<UniqueId name="UniqueId">0b401e85ede42a620247f9fa0001b250</UniqueId>
 		</Properties>
 	</Item>
-	<Item class="TeleportService" referent="RBX6727034D5B064DCE85A50B294D70B964">
+	<Item class="TeleportService" referent="RBXB0378FE723DB4934AC003DD03DC69CC9">
 		<Properties>
 			<BinaryString name="AttributesSerialize"></BinaryString>
 			<string name="Name">Teleport Service</string>
@@ -1224,7 +1225,7 @@ end)]]></ProtectedString>
 			<UniqueId name="UniqueId">0b401e85ede42a620247f9fa0001b254</UniqueId>
 		</Properties>
 	</Item>
-	<Item class="CollectionService" referent="RBXCBCEB3E5670B44F6BBD09B839042B51D">
+	<Item class="CollectionService" referent="RBX0D618E811A4F40AF9C5EC77297F6E379">
 		<Properties>
 			<BinaryString name="AttributesSerialize"></BinaryString>
 			<string name="Name">CollectionService</string>
@@ -1233,7 +1234,7 @@ end)]]></ProtectedString>
 			<UniqueId name="UniqueId">0b401e85ede42a620247f9fa0001b256</UniqueId>
 		</Properties>
 	</Item>
-	<Item class="PhysicsService" referent="RBXA36BCF22316A4CA385BF07C88231A0D7">
+	<Item class="PhysicsService" referent="RBXE9DA07C808D04953A416BFF7F1CF39F3">
 		<Properties>
 			<BinaryString name="AttributesSerialize"></BinaryString>
 			<string name="Name">PhysicsService</string>
@@ -1242,7 +1243,7 @@ end)]]></ProtectedString>
 			<UniqueId name="UniqueId">0b401e85ede42a620247f9fa0001b257</UniqueId>
 		</Properties>
 	</Item>
-	<Item class="Geometry" referent="RBX129305CA0C074A6D9318633C48F8607B">
+	<Item class="Geometry" referent="RBXBCD551903B8C44C3BA54736001636F23">
 		<Properties>
 			<BinaryString name="AttributesSerialize"></BinaryString>
 			<string name="Name">Geometry</string>
@@ -1251,7 +1252,7 @@ end)]]></ProtectedString>
 			<UniqueId name="UniqueId">0b401e85ede42a620247f9fa0001b259</UniqueId>
 		</Properties>
 	</Item>
-	<Item class="InsertService" referent="RBX6D80C0B3C46A476F94ACE0BD5097AAC3">
+	<Item class="InsertService" referent="RBX626DE88FA5BD444B8A998AE9894355C2">
 		<Properties>
 			<bool name="AllowClientInsertModels">false</bool>
 			<bool name="AllowInsertFreeModels">false</bool>
@@ -1261,7 +1262,7 @@ end)]]></ProtectedString>
 			<BinaryString name="Tags"></BinaryString>
 			<UniqueId name="UniqueId">0b401e85ede42a620247f9fa0001b25b</UniqueId>
 		</Properties>
-		<Item class="StringValue" referent="RBX13E57F460AAA499091F088B62AD21C77">
+		<Item class="StringValue" referent="RBX723AEE2EEA68407AB75152BD7CA86E2B">
 			<Properties>
 				<BinaryString name="AttributesSerialize"></BinaryString>
 				<string name="Name">InsertionHash</string>
@@ -1272,7 +1273,7 @@ end)]]></ProtectedString>
 			</Properties>
 		</Item>
 	</Item>
-	<Item class="GamePassService" referent="RBXB6CA9F98B15A4400B5604F3FF34833D8">
+	<Item class="GamePassService" referent="RBX86085B0F45A44DAAA7D0ABED9CAFFD0D">
 		<Properties>
 			<BinaryString name="AttributesSerialize"></BinaryString>
 			<string name="Name">GamePassService</string>
@@ -1281,7 +1282,7 @@ end)]]></ProtectedString>
 			<UniqueId name="UniqueId">0b401e85ede42a620247f9fa0001b25c</UniqueId>
 		</Properties>
 	</Item>
-	<Item class="Debris" referent="RBXBE9FC75ADD6346BB811992F9524474BB">
+	<Item class="Debris" referent="RBX92D97E5047EC47BC9B7933C7396801EB">
 		<Properties>
 			<BinaryString name="AttributesSerialize"></BinaryString>
 			<int name="MaxItems">1000</int>
@@ -1291,7 +1292,7 @@ end)]]></ProtectedString>
 			<UniqueId name="UniqueId">0b401e85ede42a620247f9fa0001b25d</UniqueId>
 		</Properties>
 	</Item>
-	<Item class="CookiesService" referent="RBX69CA68BA594C438FA6B561E6258E0BB5">
+	<Item class="CookiesService" referent="RBXAD43EA8748C74D13864C7515AC42DA24">
 		<Properties>
 			<BinaryString name="AttributesSerialize"></BinaryString>
 			<string name="Name">CookiesService</string>
@@ -1300,7 +1301,7 @@ end)]]></ProtectedString>
 			<UniqueId name="UniqueId">0b401e85ede42a620247f9fa0001b25e</UniqueId>
 		</Properties>
 	</Item>
-	<Item class="VRService" referent="RBX66E9960753E04DBFBC9ACD8439A9E217">
+	<Item class="VRService" referent="RBX29157B8B443644DF8CBA478B7A3AAFAB">
 		<Properties>
 			<BinaryString name="AttributesSerialize"></BinaryString>
 			<string name="Name">VRService</string>
@@ -1309,7 +1310,7 @@ end)]]></ProtectedString>
 			<UniqueId name="UniqueId">0b401e85ede42a620247f9fa0001b268</UniqueId>
 		</Properties>
 	</Item>
-	<Item class="ContextActionService" referent="RBX8FA3F307C65643D6B894F62D06B62A2F">
+	<Item class="ContextActionService" referent="RBX2AB539621860441BA99C6B74DC144400">
 		<Properties>
 			<BinaryString name="AttributesSerialize"></BinaryString>
 			<string name="Name">ContextActionService</string>
@@ -1318,7 +1319,7 @@ end)]]></ProtectedString>
 			<UniqueId name="UniqueId">0b401e85ede42a620247f9fa0001b269</UniqueId>
 		</Properties>
 	</Item>
-	<Item class="ScriptService" referent="RBX658036BEA12F49A08A69BE9BE3EF9A5C">
+	<Item class="ScriptService" referent="RBX1CD69877E45343A1914400F3AE0AA30B">
 		<Properties>
 			<BinaryString name="AttributesSerialize"></BinaryString>
 			<string name="Name">Instance</string>
@@ -1327,7 +1328,7 @@ end)]]></ProtectedString>
 			<UniqueId name="UniqueId">0b401e85ede42a620247f9fa0001b26b</UniqueId>
 		</Properties>
 	</Item>
-	<Item class="AssetService" referent="RBXC24AFE5C529248369502D8C79631A334">
+	<Item class="AssetService" referent="RBX4A06A911044A4E6E8D4F682107596622">
 		<Properties>
 			<BinaryString name="AttributesSerialize"></BinaryString>
 			<string name="Name">AssetService</string>
@@ -1336,7 +1337,7 @@ end)]]></ProtectedString>
 			<UniqueId name="UniqueId">0b401e85ede42a620247f9fa0001b26c</UniqueId>
 		</Properties>
 	</Item>
-	<Item class="TouchInputService" referent="RBX9073365D0A69431088B6BD50024BB124">
+	<Item class="TouchInputService" referent="RBXFD8FA5EACDF1421E9EFFD7E040028A62">
 		<Properties>
 			<BinaryString name="AttributesSerialize"></BinaryString>
 			<string name="Name">TouchInputService</string>
@@ -1345,7 +1346,7 @@ end)]]></ProtectedString>
 			<UniqueId name="UniqueId">0b401e85ede42a620247f9fa0001b26d</UniqueId>
 		</Properties>
 	</Item>
-	<Item class="AnalyticsService" referent="RBX3E0197CE6A7A4D2296D84B5C949B57AE">
+	<Item class="AnalyticsService" referent="RBX7F7F0C2AF07D4B43A42321656810008E">
 		<Properties>
 			<string name="ApiKey"></string>
 			<BinaryString name="AttributesSerialize"></BinaryString>
@@ -1355,7 +1356,7 @@ end)]]></ProtectedString>
 			<UniqueId name="UniqueId">0b401e85ede42a620247f9fa0001b270</UniqueId>
 		</Properties>
 	</Item>
-	<Item class="Selection" referent="RBX5B45E4725C6640B4B918C173122182A9">
+	<Item class="Selection" referent="RBX579C88405A0D45E0AE587E00FFF66906">
 		<Properties>
 			<BinaryString name="AttributesSerialize"></BinaryString>
 			<string name="Name">Selection</string>
@@ -1364,7 +1365,7 @@ end)]]></ProtectedString>
 			<UniqueId name="UniqueId">0b401e85ede42a620247f9fa0001b273</UniqueId>
 		</Properties>
 	</Item>
-	<Item class="ServerScriptService" referent="RBXCE469D0E5ED244CFBECFB878C5729CAC">
+	<Item class="ServerScriptService" referent="RBX9C9B4DD043F14D9AB534164133BF9194">
 		<Properties>
 			<BinaryString name="AttributesSerialize"></BinaryString>
 			<bool name="LoadStringEnabled">false</bool>
@@ -1374,7 +1375,7 @@ end)]]></ProtectedString>
 			<UniqueId name="UniqueId">0b401e85ede42a620247f9fa0001b275</UniqueId>
 		</Properties>
 	</Item>
-	<Item class="ServerStorage" referent="RBXF0EDF972E51C4CCFA6EB011ADDB98DE2">
+	<Item class="ServerStorage" referent="RBXE7257D1F3B1B43B09B79686BF6001896">
 		<Properties>
 			<BinaryString name="AttributesSerialize"></BinaryString>
 			<string name="Name">ServerStorage</string>
@@ -1383,7 +1384,7 @@ end)]]></ProtectedString>
 			<UniqueId name="UniqueId">0b401e85ede42a620247f9fa0001b276</UniqueId>
 		</Properties>
 	</Item>
-	<Item class="ReplicatedStorage" referent="RBX138D37F640444FF28779E4346485CD96">
+	<Item class="ReplicatedStorage" referent="RBX7E8B58965BBE4D9FBC3DD272D66AEB26">
 		<Properties>
 			<BinaryString name="AttributesSerialize"></BinaryString>
 			<string name="Name">ReplicatedStorage</string>
@@ -1391,7 +1392,7 @@ end)]]></ProtectedString>
 			<BinaryString name="Tags"></BinaryString>
 			<UniqueId name="UniqueId">0b401e85ede42a620247f9fa0001b277</UniqueId>
 		</Properties>
-		<Item class="ModuleScript" referent="RBX62B0CE2CB9C048FD8F94762CDF9F6AF5">
+		<Item class="ModuleScript" referent="RBX2AC27EC1FE4C45FABB7F2826F678F477">
 			<Properties>
 				<BinaryString name="AttributesSerialize"></BinaryString>
 				<Content name="LinkedSource"><null></null></Content>
@@ -1420,7 +1421,7 @@ return mt]]></ProtectedString>
 				<BinaryString name="Tags"></BinaryString>
 				<UniqueId name="UniqueId">0b401e85ede42a620247f9fa00027352</UniqueId>
 			</Properties>
-			<Item class="ModuleScript" referent="RBX0E455B5B07D9449CB63050D6C058635B">
+			<Item class="ModuleScript" referent="RBX148A88A101F445A9B846B7165D31663B">
 				<Properties>
 					<BinaryString name="AttributesSerialize"></BinaryString>
 					<Content name="LinkedSource"><null></null></Content>
@@ -1440,7 +1441,7 @@ return mtwidgets]]></ProtectedString>
 					<BinaryString name="Tags"></BinaryString>
 					<UniqueId name="UniqueId">05c44930bd9fb73402486df700201f5d</UniqueId>
 				</Properties>
-				<Item class="ModuleScript" referent="RBX1B45E5284A574E17BD139AC31FE1C063">
+				<Item class="ModuleScript" referent="RBX129DD68AEA6D42E1AAEE3E0A367DD743">
 					<Properties>
 						<BinaryString name="AttributesSerialize"></BinaryString>
 						<Content name="LinkedSource"><null></null></Content>
@@ -1464,8 +1465,6 @@ MWidget.Init = function(self,parent,_obj)
 	_obj.Frame.BackgroundColor3 = Color3.new(1,1,1)
 	_obj.Frame.Size = UDim2.fromScale(0.25,0.25)
 
-	_obj.SizeConstraint = Instance.new("UISizeConstraint")
-	_obj.SizeConstraint.Parent = _obj.Frame
 	MWidget.SetSizeLimit(_obj,
 		Vector2.new(10,10),
 		Vector2.new(3000,3000)
@@ -1474,45 +1473,120 @@ MWidget.Init = function(self,parent,_obj)
 	return _obj
 end
 
-MWidget.SetSizeLimit = function(self,min,max)
-	self.SizeConstraint.MinSize = min
-	self.SizeConstraint.MaxSize = max
+MWidget.LimitCoordinate = function(self,coor:Vector2,min:Vector2,max:Vector2): Vector2
+	min=min or self:GetMinimumSize()
+	max=max or self:GetMaximumSize()
+	
+	if coor.X > max then coor = Vector2.new(max,coor.Y) end
+	if coor.Y > max then coor = Vector2.new(coor.X,max) end
+	
+	if coor.X < min then coor = Vector2.new(min,coor.Y) end
+	if coor.Y < min then coor = Vector2.new(coor.X,min) end
 end
 
-MWidget.SetMinimumSize = function(self,size)
-	self:SetSizeLimit(size,self.SizeConstraint.MaxSize)
+MWidget.SetSize = function(self,newsize:Vector2)
+	newsize = self:LimitCoordinate(newsize)
+	local currentScale: Vector2 = self:GetSizeScale()
+	self.Frame.Size = UDim2.new(
+		currentScale.X,
+		newsize.X,
+		currentScale.Y,
+		newsize.Y
+	)
 end
 
-MWidget.SetMinimumWidth= function(self,width)
+MWidget.Resize = MWidget.SetSize
+
+MWidget.SetSizeFromScale = function(self,newscale:Vector2)
+	local screenSize = self.Screen:GetScreenSize()
+	self:SetSize(Vector2.new(newscale.X*screenSize.X,newscale.Y*screenSize.Y))
+end
+
+MWidget.Rescale = MWidget.SetSizeFromScale
+
+MWidget.SetPosition = function(self,newpos:Vector2)
+	self.Frame.Position = UDim2.fromOffset(newpos.X,newpos.Y)
+end
+
+MWidget.GoTo = MWidget.SetPosition
+MWidget.Move = MWidget.SetPosition
+
+MWidget.SetPositionFromScale = function(self,newscale:Vector2)
+	local screenSize = self.Screen:GetScreenSize()
+	self:SetPosition(Vector2.new(newscale.X*screenSize.X,newscale.Y*screenSize.Y))
+end
+
+MWidget.GetSizeScale = function(self): Vector2
+	return Vector2.new(self.Frame.Size.X.Scale,self.Frame.Size.Y.Scale)
+end
+
+MWidget.SetSizeLimit = function(self,min:Vector2,max:Vector2)
+	self.MinSize = min
+	self.MaxSize = max
+end
+
+MWidget.SetMinimumSize = function(self,size:Vector2)
+	self:SetSizeLimit(size,self.MaxSize)
+end
+
+MWidget.SetMinimumWidth= function(self,width:number)
 	self:SetMinimumSize(Vector2.new(
 		width,
-		self.SizeConstraint.MinimumSize.Y
-		))
+		self.MinSize.Y
+	))
 end
 
-MWidget.SetMinimumHeight=function(self,height)
+MWidget.SetMinimumHeight=function(self,height:number)
 	self:SetMinimumSize(Vector2.new(
-		self.SizeConstraint.MinimumSize.X,
+		self.MinSize.X,
 		height
-		))
+	))
 end
 
-MWidget.SetMaximumSize = function(self,size)
-	self:SetSizeLimit(self.SizeConstraint.MinSize,size)
+MWidget.SetMaximumSize = function(self,size:Vector2)
+	self:SetSizeLimit(self.MinSize,size)
 end
 
-MWidget.SetMaximumWidth= function(self,width)
+MWidget.SetMaximumWidth= function(self,width:number)
 	self:SetMaximumSize(Vector2.new(
 		width,
-		self.SizeConstraint.MinimumSize.Y
-		))
+		self.MinSize.Y
+	))
 end
 
-MWidget.SetMaxmimumHeight=function(self,height)
+MWidget.SetMaxmimumHeight=function(self,height:number)
 	self:SetMaximumSize(Vector2.new(
-		self.SizeConstraint.MinimumSize.X,
+		self.MaxSize.X,
 		height
-		))
+	))
+end
+
+MWidget.GetMaximumWidth=function(self): number
+	return self.MaxSize.X
+end
+
+MWidget.GetMinimumWidth=function(self): number
+	return self.MinSize.X
+end
+
+MWidget.GetMaximumHeight=function(self): number
+	return self.MaxSize.Y
+end
+
+MWidget.GetMinimumHeight=function(self): number
+	return self.MinSize.Y
+end
+
+MWidget.GetMinimumSize=function(self): Vector2
+	return self.MinSize
+end
+
+MWidget.GetMaximumSize=function(self): Vector2
+	return self.MaxSize
+end
+
+MWidget.GetSizeLimit=function(self): Rect
+	return Rect.new(self:GetMinimumSize(),self:GetMaximumSize())
 end
 
 MWidget.SetName = function(self,name)
@@ -1524,25 +1598,24 @@ MWidget.SetHidden = function(self,hidden)
 	self.Frame.Visible = not hidden
 end
 
-MWidget._PointTouchingArea = function(self,point: Vector2,areaPos: UDim2,areaSize: UDim2)
+MWidget.IsPointTouchingArea = function(self,point: Vector2,areaPos: UDim2,areaSize: UDim2): boolean
 	local px = point.X
 	local py = point.Y
 	local apx = areaPos.X.Offset
 	local apy = areaPos.Y.Offset
 	local asx = areaSize.X.Offset
 	local asy = areaSize.X.Offset
-	--print ("Verify Square Point("..px..","..py..")")
-	--print ("              On   ("..apx..","..apy..","..asx..","..asy..")")
+	
 	return 
 		(px >= apx-asx and px <= (apx + asx)) and
 		(py >= apy-asy and py <= (apy + asy))
 end
 
-MWidget.IsPointInsideWidget = function(self,point:Vector2)
-	self:_PointTouchingArea(point,self.Frame.Position,self.Frame.Size)
+MWidget.IsPointInsideWidget = function(self,point:Vector2): boolean
+	self:PointTouchingArea(point,self.Frame.AbsolutePosition,self.Frame.AbsoluteSize)
 end
 
-MWidget.IsBeingHovered = function(self)
+MWidget.IsBeingHovered = function(self):boolean
 	self:IsPointInsideWidget(uis:GetMouseLocation())
 end
 
@@ -1554,7 +1627,7 @@ return MWidget]]></ProtectedString>
 						<UniqueId name="UniqueId">05c44930bd9fb73402486df700201f98</UniqueId>
 					</Properties>
 				</Item>
-				<Item class="ModuleScript" referent="RBX6A580D46778340FFBA7949C8F902461B">
+				<Item class="ModuleScript" referent="RBXB48A27957CA544C7A4E050E6BB3E3915">
 					<Properties>
 						<BinaryString name="AttributesSerialize"></BinaryString>
 						<Content name="LinkedSource"><null></null></Content>
@@ -1578,7 +1651,8 @@ local MWindow = {
 
 	Title = "window", -- Window title (string) (Read-only (Use SetTitle())
 	
-	WindowInteractionState = MtEnum.WindowInteractionState.None -- Window interaction state (string (enum)) (Read-only)
+	WindowInteractionState = MtEnum.WindowInteractionState.None, -- Window interaction state (string (enum)) (Read-only)
+	Maximized = false, -- Is maximized? (boolean) (Read-only)
 }
 
 MWindow.Init = function(self,screen,_obj)
@@ -1597,28 +1671,8 @@ MWindow.Init = function(self,screen,_obj)
 	return _obj
 end
 
-MWindow.SetPositionFromScale = function(self,x,y)
-	local screenSize = self.Screen:GetScreenSize()
-	self.Frame.Position = UDim2.fromOffset(
-		x*screenSize.X,
-		y*screenSize.Y
-	)
-end
-
-MWindow.SetSizeFromScale = function(self,x,y)
-	local screenSize = self.Screen:GetScreenSize()
-	self.Frame.Size = UDim2.fromOffset(
-		x*screenSize.X,
-		y*screenSize.Y
-	)
-end
-
-MWindow.InitGui = function(self)
-	self:SetPositionFromScale(0.5,0.5)
-	self:SetSizeFromScale(
-		self.Frame.Size.X.Scale,
-		self.Frame.Size.Y.Scale
-	)
+function MWindow.InitGui(self)
+	self:SetPositionFromScale(Vector2.new(.25,.25))
 
 	local uicorner = Instance.new("UICorner")
 	uicorner.Parent = self.Frame
@@ -1630,7 +1684,6 @@ MWindow.InitGui = function(self)
 
 	local handle = script.handle:Clone()
 	self.Handle = MWidget:Init(self)
-	self.Handle.SizeConstraint.Parent = handle
 	self.Handle.Frame = handle
 	
 	self.TitleLabel = handle.title
@@ -1743,7 +1796,7 @@ MWindow.InitWindowFunctionality = function(self)
 			local xoff = clickLocation.X - windowPosX
 			local yoff = clickLocation.Y - windowPosY
 
-			while _getMouseButton1Pressed(nil,uis:GetMouseButtonsPressed()) do
+			while _getMouseButton1Pressed(uis:GetMouseButtonsPressed()) do
 				local location = uis:GetMouseLocation()
 
 				self.Frame.Position = UDim2.fromOffset(
@@ -1825,14 +1878,14 @@ MWindow.SetTitle = function(self,title)
 	self.TitleLabel.Text = self.Title
 end
 
-MWindow = MWidget:Init({},MWindow)
+local MWindow = MWidget:Init({},MWindow)
 
 return MWindow]]></ProtectedString>
 						<int64 name="SourceAssetId">-1</int64>
 						<BinaryString name="Tags"></BinaryString>
 						<UniqueId name="UniqueId">1fb9260fbeb8d7670258d171000278e2</UniqueId>
 					</Properties>
-					<Item class="Frame" referent="RBXDBA28B86F7CA4F7ABDBCAACBB259FCFC">
+					<Item class="Frame" referent="RBX1F3D2F6B54FB4CB1B1BDA2B24964EC9B">
 						<Properties>
 							<bool name="Active">false</bool>
 							<Vector2 name="AnchorPoint">
@@ -1893,7 +1946,7 @@ return MWindow]]></ProtectedString>
 							<bool name="Visible">true</bool>
 							<int name="ZIndex">1</int>
 						</Properties>
-						<Item class="UICorner" referent="RBXC89393665BE6478DBAEBCBECE3FA3B0D">
+						<Item class="UICorner" referent="RBX14F95E07A8FD431CA1AFC11D258BCCD6">
 							<Properties>
 								<BinaryString name="AttributesSerialize"></BinaryString>
 								<UDim name="CornerRadius">
@@ -1906,7 +1959,7 @@ return MWindow]]></ProtectedString>
 								<UniqueId name="UniqueId">1fb9260fbeb8d7670258d171000278e6</UniqueId>
 							</Properties>
 						</Item>
-						<Item class="UIPadding" referent="RBXAC5C993EDC364E83ACF3CFC1C99C37FA">
+						<Item class="UIPadding" referent="RBXCBC08B4062634519A09C3D75FD7535D7">
 							<Properties>
 								<BinaryString name="AttributesSerialize"></BinaryString>
 								<string name="Name">UIPadding</string>
@@ -1931,7 +1984,7 @@ return MWindow]]></ProtectedString>
 								<UniqueId name="UniqueId">1fb9260fbeb8d7670258d171000278eb</UniqueId>
 							</Properties>
 						</Item>
-						<Item class="TextLabel" referent="RBX419FB1623C4042A098DDCD21FED731FF">
+						<Item class="TextLabel" referent="RBXDA902012150D44CCBBB6C2B38744182D">
 							<Properties>
 								<bool name="Active">false</bool>
 								<Vector2 name="AnchorPoint">
@@ -2016,7 +2069,7 @@ return MWindow]]></ProtectedString>
 								<int name="ZIndex">1</int>
 							</Properties>
 						</Item>
-						<Item class="UIListLayout" referent="RBX9800F31A98D94A75BA8D54B09CD7545B">
+						<Item class="UIListLayout" referent="RBX4B1AF7C6901F4C4085DA9232417972A9">
 							<Properties>
 								<BinaryString name="AttributesSerialize"></BinaryString>
 								<token name="FillDirection">0</token>
@@ -2033,7 +2086,7 @@ return MWindow]]></ProtectedString>
 								<token name="VerticalAlignment">0</token>
 							</Properties>
 						</Item>
-						<Item class="Frame" referent="RBXAB2FCB22C02B4915AF44593C4B4186EB">
+						<Item class="Frame" referent="RBX42D58B21783A42B7B878AEB2429DAB4D">
 							<Properties>
 								<bool name="Active">false</bool>
 								<Vector2 name="AnchorPoint">
@@ -2094,7 +2147,7 @@ return MWindow]]></ProtectedString>
 								<bool name="Visible">true</bool>
 								<int name="ZIndex">1</int>
 							</Properties>
-							<Item class="ImageButton" referent="RBXB3E700EA7849428A9532E7E458DA4D29">
+							<Item class="ImageButton" referent="RBX1251A4AF01814245841480BFDA6CAAE1">
 								<Properties>
 									<bool name="Active">true</bool>
 									<Vector2 name="AnchorPoint">
@@ -2194,7 +2247,7 @@ return MWindow]]></ProtectedString>
 									<bool name="Visible">true</bool>
 									<int name="ZIndex">1</int>
 								</Properties>
-								<Item class="UICorner" referent="RBXE100451C6A4B4573939467D8BBA1F4FB">
+								<Item class="UICorner" referent="RBXF6098A528D874DCEAFE5BD879FAA6AD4">
 									<Properties>
 										<BinaryString name="AttributesSerialize"></BinaryString>
 										<UDim name="CornerRadius">
@@ -2207,7 +2260,7 @@ return MWindow]]></ProtectedString>
 										<UniqueId name="UniqueId">1fb9260fbeb8d7670258d171000278e7</UniqueId>
 									</Properties>
 								</Item>
-								<Item class="UIAspectRatioConstraint" referent="RBXF0A2588899DC40418FD1A50DC0CFB3F1">
+								<Item class="UIAspectRatioConstraint" referent="RBXF5DD5521F358450B98B458F4A9131270">
 									<Properties>
 										<float name="AspectRatio">1</float>
 										<token name="AspectType">1</token>
@@ -2219,7 +2272,7 @@ return MWindow]]></ProtectedString>
 										<UniqueId name="UniqueId">1fb9260fbeb8d7670258d171000278e4</UniqueId>
 									</Properties>
 								</Item>
-								<Item class="UISizeConstraint" referent="RBXCF9A145D2CDB4584916EB00C9598B8EE">
+								<Item class="UISizeConstraint" referent="RBX44A30F22C32F441AA1D91D00CD6E41E8">
 									<Properties>
 										<BinaryString name="AttributesSerialize"></BinaryString>
 										<Vector2 name="MaxSize">
@@ -2237,7 +2290,7 @@ return MWindow]]></ProtectedString>
 									</Properties>
 								</Item>
 							</Item>
-							<Item class="ImageButton" referent="RBX33DC09BEB34243BC97A3B19AB17A4621">
+							<Item class="ImageButton" referent="RBXB876AE29221B445F8F3131656017693E">
 								<Properties>
 									<bool name="Active">true</bool>
 									<Vector2 name="AnchorPoint">
@@ -2337,7 +2390,7 @@ return MWindow]]></ProtectedString>
 									<bool name="Visible">true</bool>
 									<int name="ZIndex">1</int>
 								</Properties>
-								<Item class="UICorner" referent="RBXB11B80DC94C8457DBFE221E3F0838342">
+								<Item class="UICorner" referent="RBX1512529EEBEB43E2ABD560B88CD4F1C2">
 									<Properties>
 										<BinaryString name="AttributesSerialize"></BinaryString>
 										<UDim name="CornerRadius">
@@ -2350,7 +2403,7 @@ return MWindow]]></ProtectedString>
 										<UniqueId name="UniqueId">1fb9260fbeb8d7670258d171000278e8</UniqueId>
 									</Properties>
 								</Item>
-								<Item class="UIAspectRatioConstraint" referent="RBX8E82776A6A6343759EE1F5919D028B4A">
+								<Item class="UIAspectRatioConstraint" referent="RBXD4DAB4E9B4F5473783AD69E410D61606">
 									<Properties>
 										<float name="AspectRatio">1</float>
 										<token name="AspectType">1</token>
@@ -2362,7 +2415,7 @@ return MWindow]]></ProtectedString>
 										<UniqueId name="UniqueId">1fb9260fbeb8d7670258d171000278e5</UniqueId>
 									</Properties>
 								</Item>
-								<Item class="UISizeConstraint" referent="RBXF5624B6134F441EBBA4767233AEF70CA">
+								<Item class="UISizeConstraint" referent="RBX67A15F1551EB45CCA953D7BE39098DEF">
 									<Properties>
 										<BinaryString name="AttributesSerialize"></BinaryString>
 										<Vector2 name="MaxSize">
@@ -2380,7 +2433,7 @@ return MWindow]]></ProtectedString>
 									</Properties>
 								</Item>
 							</Item>
-							<Item class="UIListLayout" referent="RBX4F3F3077F7C94B97BC78843C24C7FF20">
+							<Item class="UIListLayout" referent="RBX16361B6805DE45668F293868EECBE7D8">
 								<Properties>
 									<BinaryString name="AttributesSerialize"></BinaryString>
 									<token name="FillDirection">0</token>
@@ -2399,7 +2452,7 @@ return MWindow]]></ProtectedString>
 							</Item>
 						</Item>
 					</Item>
-					<Item class="Frame" referent="RBX56A9563FD6CC4604B5A53E9BB8D68DC7">
+					<Item class="Frame" referent="RBXF0B19743B5E54D909E6E3813D02F8ACD">
 						<Properties>
 							<bool name="Active">false</bool>
 							<Vector2 name="AnchorPoint">
@@ -2462,7 +2515,7 @@ return MWindow]]></ProtectedString>
 						</Properties>
 					</Item>
 				</Item>
-				<Item class="ModuleScript" referent="RBX6423C59EFA1742ABADA05F2134F0982E">
+				<Item class="ModuleScript" referent="RBX079A791C0C704349A763124E6375F5FF">
 					<Properties>
 						<BinaryString name="AttributesSerialize"></BinaryString>
 						<Content name="LinkedSource"><null></null></Content>
@@ -2506,22 +2559,24 @@ local MWindowResizeRegion = {
 	ClassName = "MWindowResizeRegion",
 }
 
-MWindowResizeRegion.Init = function(self,x,y,side,sx,sy,osx,osy,parent,_obj)
-	if parent.ClassName ~= "MWindow" then
+MWindowResizeRegion.Init = function(self,x,y,side,sx,sy,osx,osy,window,_obj)
+	if window.ClassName ~= "MWindow" then
 		error("Mt error: MWindowResizeRegions must be parented to an MWindow.")
 	end
 	
-	local _obj = MObject.Init(self,parent,_obj)
+	local _obj = MObject.Init(self,window,_obj)
 	_obj.Resizing    = Instance.new("BindableEvent")
 	_obj.ResizeEnded = Instance.new("BindableEvent")
 	_obj.ResizeBegan = Instance.new("BindableEvent")
+	
+	_obj.Window = window
 
-	if not _obj.Parent.Frame:FindFirstChild("resizeRegions") then
+	if not _obj.Window.Frame:FindFirstChild("resizeRegions") then
 		_obj.ResizeRegionsFolder = Instance.new("Folder")
-		_obj.ResizeRegionsFolder.Parent = _obj.Parent.Frame
+		_obj.ResizeRegionsFolder.Parent = _obj.Window.Frame
 		_obj.ResizeRegionsFolder.Name = "resizeRegions"
 	else
-		_obj.ResizeRegionsFolder = _obj.Parent.Frame.resizeRegions
+		_obj.ResizeRegionsFolder = _obj.Window.Frame.resizeRegions
 	end
 
 	if not _obj.ResizeRegionsFolder:FindFirstChild("Dragging") then
@@ -2567,10 +2622,10 @@ MWindowResizeRegion.Init = function(self,x,y,side,sx,sy,osx,osy,parent,_obj)
 	_obj.Region.InputBegan:Connect(function(input)
 		if input.UserInputType == Enum.UserInputType.MouseButton1 then
 			local clickLocation = uis:GetMouseLocation()
-			local wx=_obj.Parent.Frame.Position.X.Offset
-			local wy=_obj.Parent.Frame.Position.Y.Offset
-			local wsx=_obj.Parent.Frame.Size.X.Offset
-			local wsy=_obj.Parent.Frame.Size.Y.Offset
+			local wx=_obj.Window.Frame.Position.X.Offset
+			local wy=_obj.Window.Frame.Position.Y.Offset
+			local wsx=_obj.Window.Frame.Size.X.Offset
+			local wsy=_obj.Window.Frame.Size.Y.Offset
 			local imx=clickLocation.X
 			local imy=clickLocation.Y
 
@@ -2578,7 +2633,7 @@ MWindowResizeRegion.Init = function(self,x,y,side,sx,sy,osx,osy,parent,_obj)
 			local sidex=MtEnum.ResizeSide.None
 			local sidey=MtEnum.ResizeSide.None
 
-			if _getMouseButton1Pressed(nil,uis:GetMouseButtonsPressed()) then
+			if _getMouseButton1Pressed(uis:GetMouseButtonsPressed()) then
 				if math.abs(imx-wx)<5 then sidex=MtEnum.ResizeSide.Left end
 				if math.abs(imx-(wx+wsx))<5 then sidex=MtEnum.ResizeSide.Right end
 				if math.abs(imy-wy)<5 then sidey=MtEnum.ResizeSide.Top end
@@ -2587,7 +2642,7 @@ MWindowResizeRegion.Init = function(self,x,y,side,sx,sy,osx,osy,parent,_obj)
 			
 			_obj.ResizeBegan:Fire()
 			
-			while _getMouseButton1Pressed(nil,uis:GetMouseButtonsPressed()) and _obj.Parent.Screen.WindowBeingInteracted do
+			while _getMouseButton1Pressed(uis:GetMouseButtonsPressed()) and _obj.Window.Screen.WindowBeingInteracted do
 				local location = uis:GetMouseLocation()
 				local mx=location.X
 				local my=location.Y
@@ -2618,11 +2673,15 @@ MWindowResizeRegion.Init = function(self,x,y,side,sx,sy,osx,osy,parent,_obj)
 					ny=wy
 					nsy=wsy+(incy)
 				end
+				----- Check if the x < min x
+				----- Check if the y < min y 
+				------ if yes then do nothing
 				
-				_obj.Parent.Frame.Position = UDim2.fromOffset(nx,ny)
-				_obj.Parent.Frame.Size = UDim2.fromOffset(nsx,nsy)
+				
+				_obj.Window:SetPosition(Vector2.new(nx,ny))
+				_obj.Window:SetSize(Vector2.new(nsx,nsy))
 
-				_obj.Resizing:Fire(_obj.Parent.Frame.Size,_obj.Parent.Frame.Position,location)
+				_obj.Resizing:Fire(_obj.Window.Frame.Size,_obj.Window.Frame.Position,location)
 				MtMouseController:ChangeCursor(MWindowResizeRegion.GetCursorFromResizeSide(sidex,sidey))
 
 				task.wait(.025)
@@ -2669,7 +2728,7 @@ return MWindowResizeRegion]]></ProtectedString>
 						<BinaryString name="Tags"></BinaryString>
 						<UniqueId name="UniqueId">1fb9260fbeb8d7670258d17100027951</UniqueId>
 					</Properties>
-					<Item class="UIStroke" referent="RBXDC4B1054F8024B42B6726E8FAB4DCFC5">
+					<Item class="UIStroke" referent="RBX5B93DD8C56FD4782956374EEAC3AC7A9">
 						<Properties>
 							<token name="ApplyStrokeMode">0</token>
 							<BinaryString name="AttributesSerialize"></BinaryString>
@@ -2690,7 +2749,7 @@ return MWindowResizeRegion]]></ProtectedString>
 					</Item>
 				</Item>
 			</Item>
-			<Item class="ModuleScript" referent="RBX256542981CD84EE481720D6005B67EB3">
+			<Item class="ModuleScript" referent="RBXF2A4ECEF2BD7426C8EB12741360379F8">
 				<Properties>
 					<BinaryString name="AttributesSerialize"></BinaryString>
 					<Content name="LinkedSource"><null></null></Content>
@@ -2741,27 +2800,13 @@ return mtcore]]></ProtectedString>
 					<BinaryString name="Tags"></BinaryString>
 					<UniqueId name="UniqueId">0b401e85ede42a620247f9fa00027361</UniqueId>
 				</Properties>
-				<Item class="ModuleScript" referent="RBXFC6D0E5FE2974B7E9112CB3EEE1EE8E5">
+				<Item class="ModuleScript" referent="RBX56DB66356FA6499A84F029BDCF7CDA69">
 					<Properties>
 						<BinaryString name="AttributesSerialize"></BinaryString>
 						<Content name="LinkedSource"><null></null></Content>
 						<string name="Name">MObject</string>
 						<string name="ScriptGuid">{821AE6BB-57C6-4C9A-8CA7-AB5C209BBF19}</string>
-						<ProtectedString name="Source"><![CDATA[function _dictKeys(t)
-	local keyset={}
-	local n=0
-
-	for k,v in pairs(t) do
-		n=n+1
-		keyset[n]=k
-	end
-
-	return keyset
-end
-function _keyInTableExists(t,k)
-	return table.find(_dictKeys(t),k) ~= nil
-end
-
+						<ProtectedString name="Source"><![CDATA[local _keyInTableExists = require(script.Parent.MtCoreFunctions)._keyInTableExists
 local _storeObj = require(script.Parent.MtCoreFunctions)._storeObj
 
 local OBJIDS = 0
@@ -2805,7 +2850,7 @@ MObject.Init = function(self,parent,_obj,_id)
 	parent = parent or {}
 	MObject.SetParent(_obj,parent)
 	
-	_storeObj(nil,_obj)
+	_storeObj(_obj)
 
 	return _obj
 end
@@ -2875,7 +2920,7 @@ MObject.PrintMembers = function(self)
 
 	print(self.Name.."'s members:")
 	for k,v in pairs(self) do
-		print(k..": "..typeof(v).." = "..v)
+		print(k..": "..typeof(v).." = "..tostring(v))
 	end
 end
 
@@ -2885,7 +2930,7 @@ return MObject]]></ProtectedString>
 						<UniqueId name="UniqueId">0b401e85ede42a620247f9fa00027459</UniqueId>
 					</Properties>
 				</Item>
-				<Item class="ModuleScript" referent="RBXA75FA41BBCA24720942B47F5D1F53425">
+				<Item class="ModuleScript" referent="RBXEA0D3B2B6BB546CFA8D712A2E091E544">
 					<Properties>
 						<BinaryString name="AttributesSerialize"></BinaryString>
 						<Content name="LinkedSource"><null></null></Content>
@@ -2937,7 +2982,7 @@ MScreen.GetWidgets = function(self)
 	local widgets = {}
 
 	for i,v in ipairs(self.Widgets) do
-		table.insert(widgets,_getObjFromId(nil,v))
+		table.insert(widgets,_getObjFromId(v))
 	end
 
 	return widgets
@@ -2967,7 +3012,7 @@ return MScreen]]></ProtectedString>
 						<UniqueId name="UniqueId">07b446ace3d04e1c024bb3e4000e2bc4</UniqueId>
 					</Properties>
 				</Item>
-				<Item class="ModuleScript" referent="RBX312C04652CCD42FFB5271BBAF2A64121">
+				<Item class="ModuleScript" referent="RBX7DDCEA0D05D147A9B81443E5634648F9">
 					<Properties>
 						<BinaryString name="AttributesSerialize"></BinaryString>
 						<Content name="LinkedSource"><null></null></Content>
@@ -3031,7 +3076,7 @@ return MtEnum]]></ProtectedString>
 						<UniqueId name="UniqueId">1fb9260fbeb8d7670258d1710006e58c</UniqueId>
 					</Properties>
 				</Item>
-				<Item class="ModuleScript" referent="RBXEDB673423DE44198B644D63DAB98232E">
+				<Item class="ModuleScript" referent="RBX74A9D3926FA648F0A195E64CFF8598A4">
 					<Properties>
 						<BinaryString name="AttributesSerialize"></BinaryString>
 						<Content name="LinkedSource"><null></null></Content>
@@ -3045,21 +3090,6 @@ local _getMouseButton1Pressed = require(script.Parent.MtCoreFunctions)._getMouse
 local _getObjFromId = require(script.Parent.MtCoreFunctions)._getObjFromId
 local uis = game:GetService("UserInputService")
 local rs = game:GetService("RunService")
-
-function _dictKeys(t)
-	local keyset={}
-	local n=0
-
-	for k,v in pairs(t) do
-		n=n+1
-		keyset[n]=k
-	end
-
-	return keyset
-end
-function _keyInTableExists(t,k)
-	return table.find(_dictKeys(t),k) ~= nil
-end
 
 local MWindowManager = {
 	Name = "windowmanager",
@@ -3086,7 +3116,6 @@ MWindowManager.InitResize = function(self,window)
 
 	for i,v in pairs(window.ResizeRegions) do
 		v.Resizing.Event:Connect(function(size)
-			window.NormalSize = size
 			window.Resizing:Fire(size)
 			window.Interacted:Fire()
 			self.WindowResized:Fire(window.OBJID)
@@ -3113,31 +3142,14 @@ MWindowManager.InitWindowFunctionality = function(self,window)
 	self:InitResize(window)
 	
 	window.Frame.InputBegan:Connect(function(input)
-		if
-			self.WindowBeingInteracted or
-			window.WindowInteractionState ~= MtEnum.WindowInteractionState.None
-		then
-			return
-		end
-		if input.UserInputType == Enum.UserInputType.MouseButton1 then
-			self:ToggleWindowBeingInteractedState()
-			while _getMouseButton1Pressed(nil,uis:GetMouseButtonsPressed()) and self.WindowBeingInteracted do
-				-- (why do i have to do this)
-				task.wait()
-			end
-			window.Interacted:Fire()
-			self:ToggleWindowBeingInteractedState()
+		if self:RunInteractionChecks(window,input) then
+			self:TriggerInteraction(window)
 		end
 	end)
 	
 	window.Handle.Frame.InputBegan:Connect(function(input)
-		if
-			self.WindowBeingInteracted or
-			window.WindowInteractionState ~= MtEnum.WindowInteractionState.None
-		then
-			return
-		end
-		if input.UserInputType == Enum.UserInputType.MouseButton1 then
+		if self:RunInteractionChecks(window,input) then
+			--[[
 			local clickLocation = uis:GetMouseLocation()
 			local windowPosX = window.Frame.Position.X.Offset
 			local windowPosY = window.Frame.Position.Y.Offset
@@ -3147,7 +3159,7 @@ MWindowManager.InitWindowFunctionality = function(self,window)
 			self:ToggleWindowBeingInteractedState()
 			
 			window.WindowInteractionState = MtEnum.WindowInteractionState.Moving
-			while _getMouseButton1Pressed(nil,uis:GetMouseButtonsPressed()) and self.WindowBeingInteracted do
+			while _getMouseButton1Pressed(uis:GetMouseButtonsPressed()) and self.WindowBeingInteracted do
 				local location = uis:GetMouseLocation()
 
 				window.Frame.Position = UDim2.fromOffset(
@@ -3164,59 +3176,23 @@ MWindowManager.InitWindowFunctionality = function(self,window)
 
 			window.WindowInteractionState = MtEnum.WindowInteractionState.None
 			self:ToggleWindowBeingInteractedState()
+			]]
+			self:StartMovingWindow(window)
 		end
-	end)
-
-	window.Moving.Event:Connect(function(pos)
-		window.NormalPosition = pos
 	end)
 
 	window.CloseButton.MouseButton1Click:Connect(function()
 		window.Interacted:Fire()
-		window.Frame:TweenSize(
-			UDim2.fromOffset(0,0),
-			Enum.EasingDirection.In,
-			Enum.EasingStyle.Back,
-			0.2,
-			true,
-			function()
-				window:SetHidden(true)
-			end
-		)
+		self:CloseWindow(window)
 	end)
 
-	window.MaxButton:SetAttribute("MaximizeState",true)
 	window.MaxButton.MouseButton1Click:Connect(function()
 		window.Interacted:Fire()
-		if window.MaxButton:GetAttribute("MaximizeState") then
-			window.Frame.Position = UDim2.fromOffset(0,0)
-			window.Frame:TweenSize(
-				UDim2.fromOffset(
-					window.Screen:GetScreenWidth(),
-					window.Screen:GetScreenHeight()
-				),
-				Enum.EasingDirection.Out,
-				Enum.EasingStyle.Back,
-				0.2,
-				true
-			)
-			window.MaxButton.Image = "rbxassetid://9194909505"
+		if window.Maximized then
+			self:RestoreWindow(window)
 		else
-			window.Frame:TweenSizeAndPosition(
-				window.NormalSize,
-				window.NormalPosition,
-				Enum.EasingDirection.Out,
-				Enum.EasingStyle.Back,
-				0.2,
-				true
-			)
-			window.MaxButton.Image = "rbxassetid://9194908204"
+			self:MaximizeWindow(window)
 		end
-
-		window.MaxButton:SetAttribute(
-			"MaximizeState",
-			not window.MaxButton:GetAttribute("MaximizeState")
-		)
 	end)
 
 	window.NormalSize = window.Frame.Size
@@ -3224,11 +3200,107 @@ MWindowManager.InitWindowFunctionality = function(self,window)
 	
 	window.Interacted.Event:Connect(function()
 		self.WindowInteracted:Fire(window.OBJID)
-		local i = table.find(self.Widgets,window.OBJID)
-		table.remove(self.Widgets,i)
-		table.insert(self.Widgets,window.OBJID)
-		self:RefreshFocus()
+		self:BringWindowToTop(window)
 	end)
+end
+
+function MWindowManager.BringWindowToTop(self,window)
+	local i = table.find(self.Widgets,window.OBJID)
+	table.remove(self.Widgets,i)
+	table.insert(self.Widgets,window.OBJID)
+	self:RefreshFocus()
+end
+
+function MWindowManager.CloseWindow(self,window)
+	window.Frame:TweenSize(
+		UDim2.fromOffset(0,0),
+		Enum.EasingDirection.In,
+		Enum.EasingStyle.Back,
+		0.2,
+		true,
+		function()
+			window:SetHidden(true)
+		end
+	)
+end
+
+function MWindowManager.MaximizeWindow(self,window)
+	window.NormalSize = window.Frame.Size
+	window.NormalPosition = window.Frame.Position
+	
+	window.Frame.Position = UDim2.fromOffset(0,0)
+	window.Frame:TweenSize(
+		UDim2.fromOffset(
+			window.Screen:GetScreenWidth(),
+			window.Screen:GetScreenHeight()
+		),
+		Enum.EasingDirection.Out,
+		Enum.EasingStyle.Back,
+		0.2,
+		true
+	)
+	window.MaxButton.Image = "rbxassetid://9194909505"
+	
+	window.Maximized = true
+end
+
+function MWindowManager.RestoreWindow(self,window)
+	window.Frame:TweenSizeAndPosition(
+		window.NormalSize,
+		window.NormalPosition,
+		Enum.EasingDirection.Out,
+		Enum.EasingStyle.Back,
+		0.2,
+		true
+	)
+	window.MaxButton.Image = "rbxassetid://9194908204"
+	
+	window.Maximized = false
+end
+
+function MWindowManager.StartMovingWindow(self,window)
+	local clickLocation = uis:GetMouseLocation()
+	local windowPosX = window.Frame.Position.X.Offset
+	local windowPosY = window.Frame.Position.Y.Offset
+	local xoff = clickLocation.X - windowPosX
+	local yoff = clickLocation.Y - windowPosY
+
+	self:ToggleWindowBeingInteractedState()
+
+	window.WindowInteractionState = MtEnum.WindowInteractionState.Moving
+	while _getMouseButton1Pressed(uis:GetMouseButtonsPressed()) and self.WindowBeingInteracted do
+		local location = uis:GetMouseLocation()
+
+		window.Frame.Position = UDim2.fromOffset(
+			location.X-xoff,
+			location.Y-yoff
+		)
+
+		window.Moving:Fire(window.Frame.Position,location)
+		self.WindowMoved:Fire(window.OBJID)
+		window.Interacted:Fire()
+
+		task.wait(0.025)
+	end
+
+	window.WindowInteractionState = MtEnum.WindowInteractionState.None
+	self:ToggleWindowBeingInteractedState()
+end
+
+function MWindowManager.TriggerInteraction(self,window)
+	self:ToggleWindowBeingInteractedState()
+	while _getMouseButton1Pressed(uis:GetMouseButtonsPressed()) and self.WindowBeingInteracted do
+		task.wait()
+	end
+	window.Interacted:Fire()
+	self:ToggleWindowBeingInteractedState()
+end
+
+function MWindowManager.RunInteractionChecks(self,window,inputObj: InputObject): boolean
+	return inputObj.UserInputType == Enum.UserInputType.MouseButton1 and (
+		not self.WindowBeingInteracted or
+		not window.WindowInteractionState ~= MtEnum.WindowInteractionState.None
+	)
 end
 
 MWindowManager.RefreshFocus = function(self)
@@ -3249,7 +3321,7 @@ MWindowManager.RefreshFocus = function(self)
 	end
 end
 
-MWindowManager.ZIndex2Color = function(self,zi): Color3
+MWindowManager.ZIndex2Color = function(self,zi): (Color3, Color3)
 	if zi == #self.Widgets then
 		return Color3.fromRGB(0, 90, 235), Color3.fromRGB(95, 140, 240) -- active window handle and button colours
 	else
@@ -3275,13 +3347,27 @@ return MWindowManager]]></ProtectedString>
 						<UniqueId name="UniqueId">66fbffa5fa0aab38027702e200044834</UniqueId>
 					</Properties>
 				</Item>
-				<Item class="ModuleScript" referent="RBXF949D3AB8ED642E0A899CCB2A47FADB1">
+				<Item class="ModuleScript" referent="RBXF0D8D3ABC201486E901C640A5924E650">
 					<Properties>
 						<BinaryString name="AttributesSerialize"></BinaryString>
 						<Content name="LinkedSource"><null></null></Content>
 						<string name="Name">MtCoreFunctions</string>
 						<string name="ScriptGuid">{F70202B2-6C88-4E15-8BB2-A0D5EE289272}</string>
 						<ProtectedString name="Source"><![CDATA[local funcs = {}
+function funcs._dictKeys(t)
+	local keyset={}
+	local n=0
+
+	for k,v in pairs(t) do
+		n=n+1
+		table.insert(keyset,n,k)
+	end
+
+	return keyset
+end
+function funcs._keyInTableExists(t,k)
+	return table.find(funcs._dictKeys(t),k) ~= nil
+end
 function funcs:_inherit(a,b)
 	-- Includes properties and functions from object b to object a, used for inheritance, except it's not used at all
 
@@ -3292,7 +3378,7 @@ function funcs:_inherit(a,b)
 	return a
 end
 
-function funcs:_getMouseButton1Pressed(pressedButtons)
+function funcs._getMouseButton1Pressed(pressedButtons)
 	-- get left button pressed, used in many scripts, thats why it's here
 	
 	
@@ -3307,13 +3393,13 @@ function funcs:_getMouseButton1Pressed(pressedButtons)
 end
 
 local OBJS = {}
-function funcs:_storeObj(obj)
+function funcs._storeObj(obj)
 	local id = obj.OBJID
 	if id ~= -1 then
 		OBJS[id] = obj
 	end
 end
-function funcs:_getObjFromId(id)
+function funcs._getObjFromId(id)
 	return OBJS[id]
 end
 return funcs]]></ProtectedString>
@@ -3322,7 +3408,7 @@ return funcs]]></ProtectedString>
 						<UniqueId name="UniqueId">66fbffa5fa0aab38027702e20006304d</UniqueId>
 					</Properties>
 				</Item>
-				<Item class="ModuleScript" referent="RBX600C483F9B7847A2A75FBB11B3D5C755">
+				<Item class="ModuleScript" referent="RBX2A437FA800DB47D5B81931359490E34D">
 					<Properties>
 						<BinaryString name="AttributesSerialize"></BinaryString>
 						<Content name="LinkedSource"><null></null></Content>
@@ -3362,7 +3448,7 @@ return MtMouseController]]></ProtectedString>
 					</Properties>
 				</Item>
 			</Item>
-			<Item class="Script" referent="RBX55617929413B45018863721CDEF83D1C">
+			<Item class="Script" referent="RBX3A622C3670CE433D99D09C13804D72DE">
 				<Properties>
 					<BinaryString name="AttributesSerialize"></BinaryString>
 					<bool name="Disabled">true</bool>
@@ -3386,7 +3472,7 @@ MObject
 					<UniqueId name="UniqueId">07b446ace3d04e1c024bb3e400121224</UniqueId>
 				</Properties>
 			</Item>
-			<Item class="Folder" referent="RBXA599D9BA1A694E23A6D99B57946CFDEA">
+			<Item class="Folder" referent="RBX6353D0AC3F8B42D481E6E0FE57DC480B">
 				<Properties>
 					<BinaryString name="AttributesSerialize"></BinaryString>
 					<string name="Name">Tests</string>
@@ -3394,7 +3480,7 @@ MObject
 					<BinaryString name="Tags"></BinaryString>
 					<UniqueId name="UniqueId">29dccafe008ad55d024f65f0004d4b41</UniqueId>
 				</Properties>
-				<Item class="LocalScript" referent="RBXDFC5C4B8BB9F433CB1A32C7F1AA06488">
+				<Item class="LocalScript" referent="RBXE7252F10F8564D658091418D2335F575">
 					<Properties>
 						<BinaryString name="AttributesSerialize"></BinaryString>
 						<bool name="Disabled">false</bool>
@@ -3420,7 +3506,7 @@ window:SetTitle("window")]]></ProtectedString>
 						<UniqueId name="UniqueId">29dccafe008ad55d024f65f0004d4b78</UniqueId>
 					</Properties>
 				</Item>
-				<Item class="Script" referent="RBXB6AF49486D63489A8FD779072BFB83E3">
+				<Item class="Script" referent="RBXE8E97DDC698F4A57A388C2D0C58CE005">
 					<Properties>
 						<BinaryString name="AttributesSerialize"></BinaryString>
 						<bool name="Disabled">false</bool>
@@ -3456,7 +3542,7 @@ end]]></ProtectedString>
 					</Properties>
 				</Item>
 			</Item>
-			<Item class="Folder" referent="RBX27B99A62F61E41B69DE9846E60ECCD9A">
+			<Item class="Folder" referent="RBX0E2B4F7237BE43029DC560A5C08FBB10">
 				<Properties>
 					<BinaryString name="AttributesSerialize"></BinaryString>
 					<string name="Name">OtherModules</string>
@@ -3465,7 +3551,7 @@ end]]></ProtectedString>
 					<UniqueId name="UniqueId">683ee95d122d1fcb0287f927002ad7b7</UniqueId>
 				</Properties>
 			</Item>
-			<Item class="Folder" referent="RBX73B9B613A6A34AA282F0BD109E356980">
+			<Item class="Folder" referent="RBX9A89F1A64DA24595943DAC6A7BE01E4D">
 				<Properties>
 					<BinaryString name="AttributesSerialize"></BinaryString>
 					<string name="Name">Remotes</string>
@@ -3473,7 +3559,7 @@ end]]></ProtectedString>
 					<BinaryString name="Tags"></BinaryString>
 					<UniqueId name="UniqueId">683ee95d122d1fcb0287f927003ae213</UniqueId>
 				</Properties>
-				<Item class="BindableEvent" referent="RBX09189C062AE4499DA8C66C5DC3BED000">
+				<Item class="BindableEvent" referent="RBX05D8D651EAB64F17BB153B8C3DC027DE">
 					<Properties>
 						<BinaryString name="AttributesSerialize"></BinaryString>
 						<string name="Name">ChangeCursor</string>
@@ -3485,7 +3571,7 @@ end]]></ProtectedString>
 			</Item>
 		</Item>
 	</Item>
-	<Item class="LuaWebService" referent="RBX719416C2ED8A459691E2A9A5DAFF7BBE">
+	<Item class="LuaWebService" referent="RBXFEB928F605C54DFF8E1AC4586128BA81">
 		<Properties>
 			<BinaryString name="AttributesSerialize"></BinaryString>
 			<string name="Name">Instance</string>
@@ -3494,7 +3580,7 @@ end]]></ProtectedString>
 			<UniqueId name="UniqueId">0b401e85ede42a620247f9fa0001b281</UniqueId>
 		</Properties>
 	</Item>
-	<Item class="ProcessInstancePhysicsService" referent="RBX6345AB4C77E249E5A682689B5FC5607C">
+	<Item class="ProcessInstancePhysicsService" referent="RBX94385C48A17F450B94D544D4D979B446">
 		<Properties>
 			<BinaryString name="AttributesSerialize"></BinaryString>
 			<string name="Name">ProcessInstancePhysicsService</string>
@@ -3503,7 +3589,7 @@ end]]></ProtectedString>
 			<UniqueId name="UniqueId">0b401e85ede42a620247f9fa0001b284</UniqueId>
 		</Properties>
 	</Item>
-	<Item class="Lighting" referent="RBXBFB81FF0EAA943DFA77CFEC919F7696A">
+	<Item class="Lighting" referent="RBXAD293B6AE97745B6B35E15B944EDF561">
 		<Properties>
 			<Color3 name="Ambient">
 				<R>0.274509817</R>
@@ -3548,7 +3634,7 @@ end]]></ProtectedString>
 			<string name="TimeOfDay">14:30:00</string>
 			<UniqueId name="UniqueId">0b401e85ede42a620247f9fa0001b2a9</UniqueId>
 		</Properties>
-		<Item class="Sky" referent="RBX3F20645625D14F07974D63F230AD4749">
+		<Item class="Sky" referent="RBX098CE97DBCD14C04ABC3302AE550AFEF">
 			<Properties>
 				<BinaryString name="AttributesSerialize"></BinaryString>
 				<bool name="CelestialBodiesShown">true</bool>
@@ -3569,7 +3655,7 @@ end]]></ProtectedString>
 				<UniqueId name="UniqueId">0b401e85ede42a620247f9fa0001b442</UniqueId>
 			</Properties>
 		</Item>
-		<Item class="SunRaysEffect" referent="RBXC8B240241DAB4A3F8BFE11F896CA49D2">
+		<Item class="SunRaysEffect" referent="RBX7C17C032A22D40EB9F7755A0B1A38B63">
 			<Properties>
 				<BinaryString name="AttributesSerialize"></BinaryString>
 				<bool name="Enabled">true</bool>
@@ -3581,7 +3667,7 @@ end]]></ProtectedString>
 				<UniqueId name="UniqueId">0b401e85ede42a620247f9fa0001b447</UniqueId>
 			</Properties>
 		</Item>
-		<Item class="Atmosphere" referent="RBX0851B70A5AC14DF0A4F5CCE9BF092C6C">
+		<Item class="Atmosphere" referent="RBX00D7C0F34BA94DB7A5356271153616B0">
 			<Properties>
 				<BinaryString name="AttributesSerialize"></BinaryString>
 				<Color3 name="Color">
@@ -3604,7 +3690,7 @@ end]]></ProtectedString>
 				<UniqueId name="UniqueId">0b401e85ede42a620247f9fa0001b43a</UniqueId>
 			</Properties>
 		</Item>
-		<Item class="BloomEffect" referent="RBX612069EAB54A43E390C6B9EF0F732E33">
+		<Item class="BloomEffect" referent="RBX2AEAE9FF620740ABBE0D606419B9A741">
 			<Properties>
 				<BinaryString name="AttributesSerialize"></BinaryString>
 				<bool name="Enabled">true</bool>
@@ -3617,7 +3703,7 @@ end]]></ProtectedString>
 				<UniqueId name="UniqueId">0b401e85ede42a620247f9fa0001b43b</UniqueId>
 			</Properties>
 		</Item>
-		<Item class="DepthOfFieldEffect" referent="RBXC8EACFA783C74D09B6E3CF61BA8B1F40">
+		<Item class="DepthOfFieldEffect" referent="RBX34EE176814B94716BF6DDC537459AFD0">
 			<Properties>
 				<BinaryString name="AttributesSerialize"></BinaryString>
 				<bool name="Enabled">false</bool>
@@ -3632,7 +3718,7 @@ end]]></ProtectedString>
 			</Properties>
 		</Item>
 	</Item>
-	<Item class="LodDataService" referent="RBX9245EE4743D741F1A2910377DB344E61">
+	<Item class="LodDataService" referent="RBX6826D289AC2B41A1BC95F528B084F5A7">
 		<Properties>
 			<BinaryString name="AttributesSerialize"></BinaryString>
 			<string name="Name">Instance</string>
@@ -3641,16 +3727,7 @@ end]]></ProtectedString>
 			<UniqueId name="UniqueId">0b401e85ede42a620247f9fa0001b2ac</UniqueId>
 		</Properties>
 	</Item>
-	<Item class="LanguageService" referent="RBXEAF2E8FEE454425293CA4FC0F3D0D16F">
-		<Properties>
-			<BinaryString name="AttributesSerialize"></BinaryString>
-			<string name="Name">LanguageService</string>
-			<int64 name="SourceAssetId">-1</int64>
-			<BinaryString name="Tags"></BinaryString>
-			<UniqueId name="UniqueId">0b401e85ede42a620247f9fa0001b288</UniqueId>
-		</Properties>
-	</Item>
-	<Item class="DataStoreService" referent="RBX1F1AFDDF41FB4EF3B7D6D7D61022086C">
+	<Item class="DataStoreService" referent="RBXC166BB65173042808EA42D55F3CB7BF7">
 		<Properties>
 			<BinaryString name="AttributesSerialize"></BinaryString>
 			<bool name="AutomaticRetry">true</bool>
@@ -3661,7 +3738,7 @@ end]]></ProtectedString>
 			<UniqueId name="UniqueId">0b401e85ede42a620247f9fa0001b43d</UniqueId>
 		</Properties>
 	</Item>
-	<Item class="HttpService" referent="RBX24C23A672819473B8271472D6A9058DA">
+	<Item class="HttpService" referent="RBX2341204B80234538B963547AC0DB894A">
 		<Properties>
 			<BinaryString name="AttributesSerialize"></BinaryString>
 			<bool name="HttpEnabled">false</bool>
@@ -3671,7 +3748,27 @@ end]]></ProtectedString>
 			<UniqueId name="UniqueId">0b401e85ede42a620247f9fa0001b440</UniqueId>
 		</Properties>
 	</Item>
-	<Item class="Teams" referent="RBXE8ED1A248CB84726A8429A6470AD2CDD">
+	<Item class="LanguageService" referent="RBXED43314FB8BE418EBDC99EC315A3D1BF">
+		<Properties>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<string name="Name">LanguageService</string>
+			<int64 name="SourceAssetId">-1</int64>
+			<BinaryString name="Tags"></BinaryString>
+			<UniqueId name="UniqueId">0b401e85ede42a620247f9fa0001b288</UniqueId>
+		</Properties>
+	</Item>
+	<Item class="ProximityPromptService" referent="RBX9F8E791ABC944AEFBA1C7B248067C797">
+		<Properties>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<bool name="Enabled">true</bool>
+			<int name="MaxPromptsVisible">16</int>
+			<string name="Name">ProximityPromptService</string>
+			<int64 name="SourceAssetId">-1</int64>
+			<BinaryString name="Tags"></BinaryString>
+			<UniqueId name="UniqueId">0b401e85ede42a620247f9fa00024f66</UniqueId>
+		</Properties>
+	</Item>
+	<Item class="Teams" referent="RBXEE4DFE4229384A07B93C46794E092274">
 		<Properties>
 			<BinaryString name="AttributesSerialize"></BinaryString>
 			<string name="Name">Teams</string>
@@ -3680,7 +3777,7 @@ end]]></ProtectedString>
 			<UniqueId name="UniqueId">0b401e85ede42a620247f9fa0001b448</UniqueId>
 		</Properties>
 	</Item>
-	<Item class="TestService" referent="RBX0FFF87EF581F4C7D8F1B68A53202C6C9">
+	<Item class="TestService" referent="RBX836162715F904688A0F4809079F94401">
 		<Properties>
 			<BinaryString name="AttributesSerialize"></BinaryString>
 			<bool name="AutoRuns">true</bool>
@@ -3698,24 +3795,13 @@ end]]></ProtectedString>
 			<UniqueId name="UniqueId">0b401e85ede42a620247f9fa0001b44a</UniqueId>
 		</Properties>
 	</Item>
-	<Item class="VirtualInputManager" referent="RBX13E21D6AD518422EA18BA2AFA00325CB">
+	<Item class="VirtualInputManager" referent="RBX1A260C5B2C9C475FA24630811142DB00">
 		<Properties>
 			<BinaryString name="AttributesSerialize"></BinaryString>
 			<string name="Name">VirtualInputManager</string>
 			<int64 name="SourceAssetId">-1</int64>
 			<BinaryString name="Tags"></BinaryString>
 			<UniqueId name="UniqueId">0b401e85ede42a620247f9fa0001b44c</UniqueId>
-		</Properties>
-	</Item>
-	<Item class="ProximityPromptService" referent="RBX691331A823AA4D96A685E8F732EB7D0F">
-		<Properties>
-			<BinaryString name="AttributesSerialize"></BinaryString>
-			<bool name="Enabled">true</bool>
-			<int name="MaxPromptsVisible">16</int>
-			<string name="Name">ProximityPromptService</string>
-			<int64 name="SourceAssetId">-1</int64>
-			<BinaryString name="Tags"></BinaryString>
-			<UniqueId name="UniqueId">0b401e85ede42a620247f9fa00024f66</UniqueId>
 		</Properties>
 	</Item>
 	<SharedStrings>
