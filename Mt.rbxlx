@@ -1486,13 +1486,13 @@ MWidget.LimitCoordinate = function(self,coor:Vector2,min:Vector2,max:Vector2): V
 end
 
 MWidget.SetSize = function(self,newsize:Vector2)
-	newsize = self:LimitCoordinate(newsize)
+	local limitedsize = self:LimitCoordinate(newsize)
 	local currentScale: Vector2 = self:GetSizeScale()
 	self.Frame.Size = UDim2.new(
 		currentScale.X,
-		newsize.X,
+		limitedsize.X,
 		currentScale.Y,
-		newsize.Y
+		limitedsize.Y
 	)
 end
 
@@ -1705,6 +1705,10 @@ function MWindow.InitGui(self)
 	end)
 
 	self:SetMinimumSize(Vector2.new(150,handle.Size.Y.Offset))
+end
+
+function MWindow.ResizeBySide(self,side:string): boolean
+	
 end
 
 MWindow.GetZIndex = function(self): number
@@ -3017,8 +3021,7 @@ MWindowManager.InitWindowFunctionality = function(self,window)
 end
 
 function MWindowManager.BringWindowToTop(self,window)
-	local i = table.find(self.Widgets,window.OBJID)
-	table.remove(self.Widgets,i)
+	table.remove(self.Widgets,window:GetZIndex())
 	table.insert(self.Widgets,window.OBJID)
 	self:RefreshFocus()
 end
