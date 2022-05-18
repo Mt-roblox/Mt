@@ -80,18 +80,18 @@
 			<Properties>
 				<BinaryString name="AttributesSerialize"></BinaryString>
 				<CoordinateFrame name="CFrame">
-					<X>-176.217087</X>
-					<Y>52.8616142</Y>
-					<Z>80.1858749</Z>
-					<R00>0.132157311</R00>
-					<R01>-0.979023159</R01>
-					<R02>0.15507482</R02>
-					<R10>-0</R10>
-					<R11>0.156447068</R11>
-					<R12>0.987686396</R12>
-					<R20>-0.991228759</R20>
-					<R21>-0.130529985</R21>
-					<R22>0.0206756238</R22>
+					<X>-175.490524</X>
+					<Y>51.1783447</Y>
+					<Z>78.4593201</Z>
+					<R00>-0.851734102</R00>
+					<R01>-0.0765281171</R01>
+					<R02>0.518355668</R02>
+					<R10>-7.45058149e-09</R10>
+					<R11>0.989276826</R11>
+					<R12>0.14605312</R12>
+					<R20>-0.523974478</R20>
+					<R21>0.124398418</R21>
+					<R22>-0.842600644</R22>
 				</CoordinateFrame>
 				<Ref name="CameraSubject">null</Ref>
 				<token name="CameraType">0</token>
@@ -550,7 +550,6 @@ window:SetName("MainWindow")
 window:SetTitle("window")
 window.Frame.Position = UDim2.fromOffset(0,0)
 putStuffOnWindow(window,script.window:GetChildren())
-window:PrintMembers()
 
 local dialog = MWindow:Init(screen)
 dialog:SetName("Dialog")
@@ -1477,11 +1476,13 @@ MWidget.LimitCoordinate = function(self,coor:Vector2,min:Vector2,max:Vector2): V
 	min=min or self:GetMinimumSize()
 	max=max or self:GetMaximumSize()
 	
-	if coor.X > max then coor = Vector2.new(max,coor.Y) end
-	if coor.Y > max then coor = Vector2.new(coor.X,max) end
+	if coor.X > max.X then coor = Vector2.new(max.X,coor.Y) end
+	if coor.Y > max.Y then coor = Vector2.new(coor.X,max.Y) end
 	
-	if coor.X < min then coor = Vector2.new(min,coor.Y) end
-	if coor.Y < min then coor = Vector2.new(coor.X,min) end
+	if coor.X < min.X then coor = Vector2.new(min.X,coor.Y) end
+	if coor.Y < min.Y then coor = Vector2.new(coor.X,min.Y) end
+	
+	return coor
 end
 
 MWidget.SetSize = function(self,newsize:Vector2)
@@ -3135,7 +3136,7 @@ end
 
 MWindowManager.ToggleWindowBeingInteractedState = function(self)
 	self.WindowBeingInteracted = not self.WindowBeingInteracted
-	--print(self.WindowBeingInteracted)
+	print(self.WindowBeingInteracted)
 end
 
 MWindowManager.InitWindowFunctionality = function(self,window)
@@ -3200,6 +3201,7 @@ MWindowManager.InitWindowFunctionality = function(self,window)
 	
 	window.Interacted.Event:Connect(function()
 		self.WindowInteracted:Fire(window.OBJID)
+		print("bring "..window.Name.." to top")
 		self:BringWindowToTop(window)
 	end)
 end
@@ -3271,14 +3273,11 @@ function MWindowManager.StartMovingWindow(self,window)
 	while _getMouseButton1Pressed(uis:GetMouseButtonsPressed()) and self.WindowBeingInteracted do
 		local location = uis:GetMouseLocation()
 
-		window.Frame.Position = UDim2.fromOffset(
-			location.X-xoff,
-			location.Y-yoff
-		)
-
+		window:SetPosition(Vector2.new(location.X-xoff,location.Y-yoff))
+		
+		window.Interacted:Fire()
 		window.Moving:Fire(window.Frame.Position,location)
 		self.WindowMoved:Fire(window.OBJID)
-		window.Interacted:Fire()
 
 		task.wait(0.025)
 	end
@@ -3289,16 +3288,16 @@ end
 
 function MWindowManager.TriggerInteraction(self,window)
 	self:ToggleWindowBeingInteractedState()
+	window.Interacted:Fire()
 	while _getMouseButton1Pressed(uis:GetMouseButtonsPressed()) and self.WindowBeingInteracted do
 		task.wait()
 	end
-	window.Interacted:Fire()
 	self:ToggleWindowBeingInteractedState()
 end
 
 function MWindowManager.RunInteractionChecks(self,window,inputObj: InputObject): boolean
 	return inputObj.UserInputType == Enum.UserInputType.MouseButton1 and (
-		not self.WindowBeingInteracted or
+		not self.WindowBeingInteracted and
 		not window.WindowInteractionState ~= MtEnum.WindowInteractionState.None
 	)
 end
