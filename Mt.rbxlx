@@ -520,6 +520,26 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 				<BinaryString name="Tags"></BinaryString>
 				<UniqueId name="UniqueId">0b401e85ede42a620247f9fa0001b445</UniqueId>
 			</Properties>
+			<Item class="LocalScript" referent="RBXD5D811BB03F84A618A7E076CB0CDFBD0">
+				<Properties>
+					<BinaryString name="AttributesSerialize"></BinaryString>
+					<bool name="Disabled">false</bool>
+					<Content name="LinkedSource"><null></null></Content>
+					<string name="Name">MtRemotes</string>
+					<string name="ScriptGuid">{A7C6D0D5-14AA-4B8C-AFE7-FFB33C4115B6}</string>
+					<ProtectedString name="Source"><![CDATA[local remotes = game:GetService("ReplicatedStorage").Mt.Remotes
+local plr = game:GetService("Players").LocalPlayer
+
+remotes.ChangeCursor.Event:Connect(function(cursor: string)
+	local mouse = plr:GetMouse()
+	--print(mouse.Icon)
+	mouse.Icon = cursor
+end)]]></ProtectedString>
+					<int64 name="SourceAssetId">-1</int64>
+					<BinaryString name="Tags"></BinaryString>
+					<UniqueId name="UniqueId">683ee95d122d1fcb0287f927003ae265</UniqueId>
+				</Properties>
+			</Item>
 			<Item class="LocalScript" referent="RBX75556E998ADF425FBD476EA155A6CB37">
 				<Properties>
 					<BinaryString name="AttributesSerialize"></BinaryString>
@@ -945,26 +965,6 @@ putStuffOnWindow(page,script.page:GetChildren())]]></ProtectedString>
 						</Properties>
 					</Item>
 				</Item>
-			</Item>
-			<Item class="LocalScript" referent="RBXD5D811BB03F84A618A7E076CB0CDFBD0">
-				<Properties>
-					<BinaryString name="AttributesSerialize"></BinaryString>
-					<bool name="Disabled">false</bool>
-					<Content name="LinkedSource"><null></null></Content>
-					<string name="Name">MtRemotes</string>
-					<string name="ScriptGuid">{A7C6D0D5-14AA-4B8C-AFE7-FFB33C4115B6}</string>
-					<ProtectedString name="Source"><![CDATA[local remotes = game:GetService("ReplicatedStorage").Mt.Remotes
-local plr = game:GetService("Players").LocalPlayer
-
-remotes.ChangeCursor.Event:Connect(function(cursor: string)
-	local mouse = plr:GetMouse()
-	--print(mouse.Icon)
-	mouse.Icon = cursor
-end)]]></ProtectedString>
-					<int64 name="SourceAssetId">-1</int64>
-					<BinaryString name="Tags"></BinaryString>
-					<UniqueId name="UniqueId">683ee95d122d1fcb0287f927003ae265</UniqueId>
-				</Properties>
 			</Item>
 		</Item>
 		<Item class="StarterCharacterScripts" referent="RBX3A07D90B2FAD4148B7E14B1228EF9AB4">
@@ -1462,12 +1462,12 @@ MWidget.Init = function(self,parent,_obj)
 	_obj.Frame.Name = _obj.Name
 	_obj.Frame.BorderSizePixel = 0
 	_obj.Frame.BackgroundColor3 = Color3.new(1,1,1)
-	_obj.Frame.Size = UDim2.fromScale(0.25,0.25)
 
 	MWidget.SetSizeLimit(_obj,
 		Vector2.new(10,10),
 		Vector2.new(3000,3000)
 	)
+	MWidget.SetSize(_obj,Vector2.new(325,325))
 
 	return _obj
 end
@@ -2678,9 +2678,11 @@ MWindowResizeRegion.Init = function(self,x,y,side,sx,sy,osx,osy,window,_obj)
 				----- Check if the y < min y 
 				------ if yes then do nothing
 				
-				
-				_obj.Window:SetPosition(Vector2.new(nx,ny))
-				_obj.Window:SetSize(Vector2.new(nsx,nsy))
+				local newsize = _obj.Window:LimitCoordinate(Vector2.new(nsx,nsy),Vector2.new(0,0))
+				if newsize == _obj.Window:LimitCoordinate(newsize) then
+					_obj.Window:SetPosition(Vector2.new(nx,ny))
+				end
+				_obj.Window:SetSize(newsize)
 
 				_obj.Resizing:Fire(_obj.Window.Frame.Size,_obj.Window.Frame.Position,location)
 				MtMouseController:ChangeCursor(MWindowResizeRegion.GetCursorFromResizeSide(sidex,sidey))
@@ -2937,7 +2939,7 @@ return MObject]]></ProtectedString>
 						<Content name="LinkedSource"><null></null></Content>
 						<string name="Name">MScreen</string>
 						<string name="ScriptGuid">{E113FF64-7C1B-432B-A92B-99BB89843598}</string>
-						<ProtectedString name="Source"><![CDATA[local MObject = require(script.Parent.MObject)
+						<ProtectedString name="Source"><![CDATA[ local MObject = require(script.Parent.MObject)
 local MWidget = require(script.Parent.Parent.MtWidgets.MWidget)
 local _getObjFromId = require(script.Parent.MtCoreFunctions)._getObjFromId
 
