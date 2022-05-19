@@ -44,6 +44,7 @@
 			</Vector3>
 			<string name="Name">Workspace</string>
 			<bool name="NeedsPivotMigration">false</bool>
+			<token name="PhysicsInertiaAndVolumeFix">0</token>
 			<token name="PhysicsSteppingMethod">0</token>
 			<Ref name="PrimaryPart">null</Ref>
 			<token name="ReplicateInstanceDestroySetting">0</token>
@@ -1707,7 +1708,7 @@ function MWindow.InitGui(self)
 	self:SetMinimumSize(Vector2.new(150,handle.Size.Y.Offset))
 end
 
-function MWindow.ResizeBySide(self,side:string): boolean
+function MWindow.ResizeBySide(self, side: string, inc: number): boolean
 	
 end
 
