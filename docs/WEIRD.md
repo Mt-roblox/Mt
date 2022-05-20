@@ -12,3 +12,7 @@ absolutely random things also called mt
 - make money using mt (monopoly tycoon)
   
   ![image](https://user-images.githubusercontent.com/85036874/168494520-771fe871-3e29-46b5-8f83-f0154036c08d.png)
+
+- uhh i can explain!
+
+  https://user-images.githubusercontent.com/85036874/169556560-31b57dc9-583f-48e4-842a-3ad0263f578d.mp4
