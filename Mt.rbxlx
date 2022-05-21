@@ -3162,11 +3162,11 @@ function MWindowManager.StartResizingWindow(self,window,region)
 		---print (sidex)
 		--print (sidey)
 
-		local newsize = window:LimitCoordinate(Vector2.new(nsx,nsy))
+		local newsize = window:LimitCoordinate(Vector2.new(nsx,nsy), Vector2.new(0,0))
 		if window:IsCoordinateAboveMin(newsize) then
 			window:SetPosition(Vector2.new(nx,ny))
+			window:SetSize(newsize)
 		end
-		window:SetSize(newsize)
 
 		region.Resizing:Fire(window.Frame.Size,window.Frame.Position,ml)
 		MtMouseController:ChangeCursor(self.GetCursorFromResizeSide(sidex,sidey))
