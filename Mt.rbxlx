@@ -559,6 +559,7 @@ local MWindowManager = require(repstrg.Mt.MtCore.MWindowManager)
 game:GetService("StarterGui"):SetCoreGuiEnabled(Enum.CoreGuiType.PlayerList,false)
 
 local screen = MWindowManager()
+print(screen)
 
 function putStuffOnWindow(window,stuff:{GuiObject})
 	for i,v in ipairs(stuff) do
@@ -2659,6 +2660,7 @@ local OBJIDS = 0
 local MObject = {
 	-- Properties (Read-only (use their functions))
 	Name = "object", -- Object name (string)
+	__name = "object",
 	ClassName = "MObject", -- Object class name (string)
 	OBJID = 0,
 	Parent = {}, -- Object parent (MObject)
@@ -2732,6 +2734,7 @@ end
 
 MObject.SetName = function(self,name)
 	self.Name = name
+	self.__name = name
 end
 
 MObject.SetParent = function(self,parent)
