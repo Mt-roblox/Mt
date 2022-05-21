@@ -558,7 +558,7 @@ local MWindowManager = require(repstrg.Mt.MtCore.MWindowManager)
 
 game:GetService("StarterGui"):SetCoreGuiEnabled(Enum.CoreGuiType.PlayerList,false)
 
-local screen = MWindowManager:Init()
+local screen = MWindowManager()
 
 function putStuffOnWindow(window,stuff:{GuiObject})
 	for i,v in ipairs(stuff) do
@@ -2698,6 +2698,10 @@ MObject.Init = function(self,parent,_obj,_id)
 	_storeObj(_obj)
 
 	return _obj
+end
+
+function MObject.__call(self,...)
+	return self:Init(...)
 end
 
 MObject.FireEvent = function(self,event,...)
