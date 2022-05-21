@@ -81,27 +81,27 @@
 			<Properties>
 				<BinaryString name="AttributesSerialize"></BinaryString>
 				<CoordinateFrame name="CFrame">
-					<X>-221.269547</X>
-					<Y>49.4355316</Y>
-					<Z>39.4235115</Z>
-					<R00>-0.817225337</R00>
-					<R01>-0.2426406</R01>
-					<R02>0.522750676</R02>
+					<X>-217.754074</X>
+					<Y>55.0020561</Y>
+					<Z>49.8049469</Z>
+					<R00>0.438246489</R00>
+					<R01>-0.56198597</R01>
+					<R02>0.701506793</R02>
 					<R10>-0</R10>
-					<R11>0.9070521</R11>
-					<R12>0.421018451</R12>
-					<R20>-0.576318204</R20>
-					<R21>0.344066948</R21>
-					<R22>-0.741266012</R22>
+					<R11>0.780445039</R11>
+					<R12>0.625224411</R12>
+					<R20>-0.898854852</R20>
+					<R21>-0.274002403</R21>
+					<R22>0.342027307</R22>
 				</CoordinateFrame>
 				<Ref name="CameraSubject">null</Ref>
 				<token name="CameraType">0</token>
 				<float name="FieldOfView">70</float>
 				<token name="FieldOfViewMode">0</token>
 				<CoordinateFrame name="Focus">
-					<X>-222.315048</X>
-					<Y>48.5934944</Y>
-					<Z>40.906044</Z>
+					<X>-219.157089</X>
+					<Y>53.751606</Y>
+					<Z>49.1208916</Z>
 					<R00>1</R00>
 					<R01>0</R01>
 					<R02>0</R02>
@@ -1455,6 +1455,8 @@ local uis = game:GetService("UserInputService")
 local MWidget = {
 	ClassName = "MWidget", -- See Mt.MtCore.MObject
 	Name = "widget",       -- ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^
+	
+	Size = {X=0,Y=0}
 }
 
 MWidget.Init = function(self,parent,_obj)
@@ -1484,31 +1486,49 @@ function MWidget.IsCoordinateAboveMin(self,coor:Vector2,min:Vector2): boolean
 	return coor.X > min.X and coor.Y > min.Y
 end
 
-MWidget.LimitCoordinate = function(self,coor:Vector2,min:Vector2,max:Vector2): Vector2
+MWidget.LimitCoordinate = function(self,coor:Vector2,min:Vector2,max:Vector2): (Vector2, boolean)
 	min=min or self:GetMinimumSize()
 	max=max or self:GetMaximumSize()
 	
-	if coor.X > max.X then coor = Vector2.new(max.X,coor.Y) end
-	if coor.Y > max.Y then coor = Vector2.new(coor.X,max.Y) end
+	local newX=coor.X
+	local newY=coor.Y
 	
-	if coor.X < min.X then coor = Vector2.new(min.X,coor.Y) end
-	if coor.Y < min.Y then coor = Vector2.new(coor.X,min.Y) end
+	if coor.X > max.X then newX=max.X end
+	if coor.Y > max.Y then newY=max.Y end
 	
-	return coor
+	if coor.X < min.X then newX=min.X end
+	if coor.Y < min.Y then newY=min.Y end
+	
+	if coor.X==newX and coor.Y==newY then
+		return coor, false
+	else
+		return Vector2.new(newX,newY), true
+	end
+	
 end
 
-MWidget.SetSize = function(self,newsize:Vector2)
-	local limitedsize = self:LimitCoordinate(newsize)
+MWidget.SetSize = function(self,newsize:Vector2): boolean
+	local oldSize = self:GetSize()
+	local limitedsize, onlimit = self:LimitCoordinate(newsize)
 	local currentScale: Vector2 = self:GetSizeScale()
+	
+	self.Size.X, self.Size.Y = limitedsize.X, limitedsize.Y
 	self.Frame.Size = UDim2.new(
 		currentScale.X,
 		limitedsize.X,
 		currentScale.Y,
 		limitedsize.Y
 	)
+	
+	print (onlimit ,newsize.X,oldSize.X )
+	return not(onlimit and newsize==oldSize)
 end
 
 MWidget.Resize = MWidget.SetSize
+
+function MWidget.GetSize(self): Vector2
+	return self.Frame.AbsoluteSize
+end
 
 MWidget.SetSizeFromScale = function(self,newscale:Vector2)
 	local screenSize = self.Screen:GetScreenSize()
@@ -3163,10 +3183,13 @@ function MWindowManager.StartResizingWindow(self,window,region)
 		--print (sidey)
 
 		local newsize = window:LimitCoordinate(Vector2.new(nsx,nsy), Vector2.new(0,0))
-		if window:IsCoordinateAboveMin(newsize) then
-			window:SetPosition(Vector2.new(nx,ny))
-			window:SetSize(newsize)
-		end
+		--if window:IsCoordinateAboveMin(newsize) then
+		if window:SetSize(newsize) then 
+			window:SetPosition(Vector2.new(nx,ny)) 
+		end  
+		--	window:SetPosition(Vector2.new(nx,ny))
+		--	window:SetSize(newsize)
+		--end
 
 		region.Resizing:Fire(window.Frame.Size,window.Frame.Position,ml)
 		MtMouseController:ChangeCursor(self.GetCursorFromResizeSide(sidex,sidey))
