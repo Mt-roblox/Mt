@@ -81,27 +81,27 @@
 			<Properties>
 				<BinaryString name="AttributesSerialize"></BinaryString>
 				<CoordinateFrame name="CFrame">
-					<X>-185.252747</X>
-					<Y>70.1458206</Y>
-					<Z>-8.0369606</Z>
-					<R00>-0.851734102</R00>
-					<R01>-0.0765281171</R01>
-					<R02>0.518355668</R02>
-					<R10>-7.45058149e-09</R10>
-					<R11>0.989276826</R11>
-					<R12>0.14605312</R12>
-					<R20>-0.523974478</R20>
-					<R21>0.124398418</R21>
-					<R22>-0.842600644</R22>
+					<X>-180.896698</X>
+					<Y>65.0919647</Y>
+					<Z>5.39744949</Z>
+					<R00>-0.851734042</R00>
+					<R01>-0.0765261278</R01>
+					<R02>0.518355966</R02>
+					<R10>7.4505806e-09</R10>
+					<R11>0.989277363</R11>
+					<R12>0.146049395</R12>
+					<R20>-0.523974359</R20>
+					<R21>0.124395251</R21>
+					<R22>-0.84260118</R22>
 				</CoordinateFrame>
 				<Ref name="CameraSubject">null</Ref>
 				<token name="CameraType">0</token>
 				<float name="FieldOfView">70</float>
 				<token name="FieldOfViewMode">0</token>
 				<CoordinateFrame name="Focus">
-					<X>-186.289459</X>
-					<Y>69.853714</Y>
-					<Z>-6.35175705</Z>
+					<X>-181.933411</X>
+					<Y>64.7998657</Y>
+					<Z>7.08265305</Z>
 					<R00>1</R00>
 					<R01>0</R01>
 					<R02>0</R02>
@@ -605,7 +605,7 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 					<Ref name="NextSelectionRight">null</Ref>
 					<Ref name="NextSelectionUp">null</Ref>
 					<UDim2 name="Position">
-						<XS>0.777970791</XS>
+						<XS>0.0500000007</XS>
 						<XO>0</XO>
 						<YS>0.0573394895</YS>
 						<YO>0</YO>
@@ -624,7 +624,7 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 						<XS>0</XS>
 						<XO>276</XO>
 						<YS>0</YS>
-						<YO>81</YO>
+						<YO>40</YO>
 					</UDim2>
 					<token name="SizeConstraint">0</token>
 					<int64 name="SourceAssetId">-1</int64>
@@ -658,7 +658,7 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 						<BinaryString name="AttributesSerialize"></BinaryString>
 						<UDim name="CornerRadius">
 							<S>0</S>
-							<O>8</O>
+							<O>2</O>
 						</UDim>
 						<string name="Name">UICorner</string>
 						<int64 name="SourceAssetId">-1</int64>
@@ -732,7 +732,7 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 							<BinaryString name="AttributesSerialize"></BinaryString>
 							<UDim name="CornerRadius">
 								<S>0</S>
-								<O>8</O>
+								<O>2</O>
 							</UDim>
 							<string name="Name">UICorner</string>
 							<int64 name="SourceAssetId">-1</int64>
@@ -808,8 +808,8 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 							<Ref name="NextSelectionRight">null</Ref>
 							<Ref name="NextSelectionUp">null</Ref>
 							<UDim2 name="Position">
-								<XS>0.875</XS>
-								<XO>0</XO>
+								<XS>0</XS>
+								<XO>60</XO>
 								<YS>0</YS>
 								<YO>0</YO>
 							</UDim2>
@@ -984,7 +984,7 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 					</Color3>
 					<token name="BorderMode">0</token>
 					<int name="BorderSizePixel">1</int>
-					<bool name="ClipsDescendants">false</bool>
+					<bool name="ClipsDescendants">true</bool>
 					<bool name="Draggable">false</bool>
 					<int name="LayoutOrder">0</int>
 					<string name="Name">undefinedprogressbar</string>
@@ -993,9 +993,9 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 					<Ref name="NextSelectionRight">null</Ref>
 					<Ref name="NextSelectionUp">null</Ref>
 					<UDim2 name="Position">
-						<XS>0.777970791</XS>
+						<XS>0.0500000007</XS>
 						<XO>0</XO>
-						<YS>0.196725681</YS>
+						<YS>0.150000006</YS>
 						<YO>0</YO>
 					</UDim2>
 					<Ref name="RootLocalizationTable">null</Ref>
@@ -1012,7 +1012,7 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 						<XS>0</XS>
 						<XO>276</XO>
 						<YS>0</YS>
-						<YO>81</YO>
+						<YO>40</YO>
 					</UDim2>
 					<token name="SizeConstraint">0</token>
 					<int64 name="SourceAssetId">-1</int64>
@@ -1046,7 +1046,7 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 						<BinaryString name="AttributesSerialize"></BinaryString>
 						<UDim name="CornerRadius">
 							<S>0</S>
-							<O>8</O>
+							<O>2</O>
 						</UDim>
 						<string name="Name">UICorner</string>
 						<int64 name="SourceAssetId">-1</int64>
@@ -1086,7 +1086,7 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 						<Ref name="NextSelectionRight">null</Ref>
 						<Ref name="NextSelectionUp">null</Ref>
 						<UDim2 name="Position">
-							<XS>0.125</XS>
+							<XS>-0.5</XS>
 							<XO>0</XO>
 							<YS>0</YS>
 							<YO>0</YO>
@@ -1102,8 +1102,8 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 						<Ref name="SelectionImageObject">null</Ref>
 						<int name="SelectionOrder">0</int>
 						<UDim2 name="Size">
-							<XS>0.75</XS>
-							<XO>0</XO>
+							<XS>0</XS>
+							<XO>225</XO>
 							<YS>1</YS>
 							<YO>0</YO>
 						</UDim2>
@@ -1120,7 +1120,7 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 							<BinaryString name="AttributesSerialize"></BinaryString>
 							<UDim name="CornerRadius">
 								<S>0</S>
-								<O>8</O>
+								<O>2</O>
 							</UDim>
 							<string name="Name">UICorner</string>
 							<int64 name="SourceAssetId">-1</int64>
