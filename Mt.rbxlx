@@ -81,27 +81,27 @@
 			<Properties>
 				<BinaryString name="AttributesSerialize"></BinaryString>
 				<CoordinateFrame name="CFrame">
-					<X>-175.490524</X>
-					<Y>51.1783447</Y>
-					<Z>78.4593201</Z>
-					<R00>-0.851734102</R00>
-					<R01>-0.0765281171</R01>
-					<R02>0.518355668</R02>
-					<R10>-7.45058149e-09</R10>
-					<R11>0.989276826</R11>
-					<R12>0.14605312</R12>
-					<R20>-0.523974478</R20>
-					<R21>0.124398418</R21>
-					<R22>-0.842600644</R22>
+					<X>-221.269547</X>
+					<Y>49.4355316</Y>
+					<Z>39.4235115</Z>
+					<R00>-0.817225337</R00>
+					<R01>-0.2426406</R01>
+					<R02>0.522750676</R02>
+					<R10>-0</R10>
+					<R11>0.9070521</R11>
+					<R12>0.421018451</R12>
+					<R20>-0.576318204</R20>
+					<R21>0.344066948</R21>
+					<R22>-0.741266012</R22>
 				</CoordinateFrame>
 				<Ref name="CameraSubject">null</Ref>
 				<token name="CameraType">0</token>
 				<float name="FieldOfView">70</float>
 				<token name="FieldOfViewMode">0</token>
 				<CoordinateFrame name="Focus">
-					<X>-176.527237</X>
-					<Y>50.8862381</Y>
-					<Z>80.1445236</Z>
+					<X>-222.315048</X>
+					<Y>48.5934944</Y>
+					<Z>40.906044</Z>
 					<R00>1</R00>
 					<R01>0</R01>
 					<R02>0</R02>
@@ -559,6 +559,7 @@ local MWindowManager = require(repstrg.Mt.MtCore.MWindowManager)
 game:GetService("StarterGui"):SetCoreGuiEnabled(Enum.CoreGuiType.PlayerList,false)
 
 local screen = MWindowManager:Init()
+--screen:SetOverrideTopbar(false)
 
 function putStuffOnWindow(window,stuff:{GuiObject})
 	for i,v in ipairs(stuff) do
@@ -1473,6 +1474,16 @@ MWidget.Init = function(self,parent,_obj)
 	return _obj
 end
 
+function MWidget.IsCoordinateBelowMax(self,coor:Vector2,max:Vector2): boolean
+	max=max or self:GetMaximumSize()
+	return coor.X < max.X and coor.Y < max.Y
+end
+
+function MWidget.IsCoordinateAboveMin(self,coor:Vector2,min:Vector2): boolean
+	min=min or self:GetMinimumSize()
+	return coor.X > min.X and coor.Y > min.Y
+end
+
 MWidget.LimitCoordinate = function(self,coor:Vector2,min:Vector2,max:Vector2): Vector2
 	min=min or self:GetMinimumSize()
 	max=max or self:GetMaximumSize()
@@ -1706,10 +1717,6 @@ function MWindow.InitGui(self)
 	end)
 
 	self:SetMinimumSize(Vector2.new(150,handle.Size.Y.Offset))
-end
-
-function MWindow.ResizeBySide(self, side: string, inc: number): boolean
-	
 end
 
 MWindow.GetZIndex = function(self): number
@@ -2464,6 +2471,8 @@ MWindowResizeRegion.Init = function(self,x,y,side,sx,sy,osx,osy,window,_obj)
 
 	_obj.Region.InputBegan:Connect(function(input)
 		if input.UserInputType == Enum.UserInputType.MouseButton1 then
+			_obj.ResizeBegan:Fire()
+			--[[
 			local clickLocation = uis:GetMouseLocation()
 			local wx=_obj.Window.Frame.Position.X.Offset
 			local wy=_obj.Window.Frame.Position.Y.Offset
@@ -2537,11 +2546,10 @@ MWindowResizeRegion.Init = function(self,x,y,side,sx,sy,osx,osy,window,_obj)
 			_obj.DraggingValue.Value = nil
 			
 			_obj.ResizeEnded:Fire()
+			]]
 		end
 	end)
-	
 	--MWindowResizeRegion.SetXRayEnabled(_obj,true)
-
 	return _obj
 end
 
@@ -2781,7 +2789,7 @@ return MObject]]></ProtectedString>
 						<Content name="LinkedSource"><null></null></Content>
 						<string name="Name">MScreen</string>
 						<string name="ScriptGuid">{E113FF64-7C1B-432B-A92B-99BB89843598}</string>
-						<ProtectedString name="Source"><![CDATA[ local MObject = require(script.Parent.MObject)
+						<ProtectedString name="Source"><![CDATA[local MObject = require(script.Parent.MObject)
 local MWidget = require(script.Parent.Parent.MtWidgets.MWidget)
 local _getObjFromId = require(script.Parent.MtCoreFunctions)._getObjFromId
 
@@ -2935,6 +2943,7 @@ local _getMouseButton1Pressed = require(script.Parent.MtCoreFunctions)._getMouse
 local _getObjFromId = require(script.Parent.MtCoreFunctions)._getObjFromId
 local uis = game:GetService("UserInputService")
 local rs = game:GetService("RunService")
+local MtMouseController = require(script.Parent.MtMouseController)
 
 local MWindowManager = {
 	Name = "windowmanager",
@@ -2969,6 +2978,7 @@ MWindowManager.InitResize = function(self,window)
 		v.ResizeBegan.Event:Connect(function()
 			self:ToggleWindowBeingInteractedState()
 			window.WindowInteractionState = MtEnum.WindowInteractionState.Resizing
+			self:StartResizingWindow(window,v)
 		end)
 
 		v.ResizeEnded.Event:Connect(function()
@@ -2980,7 +2990,7 @@ end
 
 MWindowManager.ToggleWindowBeingInteractedState = function(self)
 	self.WindowBeingInteracted = not self.WindowBeingInteracted
-	print(self.WindowBeingInteracted)
+	--print(self.WindowBeingInteracted)
 end
 
 MWindowManager.InitWindowFunctionality = function(self,window)
@@ -3098,6 +3108,106 @@ function MWindowManager.StartMovingWindow(self,window)
 
 	window.WindowInteractionState = MtEnum.WindowInteractionState.None
 	self:ToggleWindowBeingInteractedState()
+end
+
+function MWindowManager.GetVector2FromUDim2Offset(udim2:UDim2): Vector2
+	-- static function
+	return Vector2.new(udim2.X.Offset,udim2.Y.Offset)
+end
+
+function MWindowManager.StartResizingWindow(self,window,region)
+	local cl=uis:GetMouseLocation()
+	local wp=self.GetVector2FromUDim2Offset(window.Frame.Position)
+	local ws=self.GetVector2FromUDim2Offset(window.Frame.Size)
+	
+	--local sidex,sidey = MtEnum.ResizeSide.None,MtEnum.ResizeSide.None
+	--if _getMouseButton1Pressed(uis:GetMouseButtonsPressed()) then
+	local sidex,sidey = self.GetResizeSidesFromLocation(cl,wp,ws)
+	--end
+
+	region.DraggingValue.Value = region.Region
+
+	while _getMouseButton1Pressed(uis:GetMouseButtonsPressed()) and self.WindowBeingInteracted do
+		local ml = uis:GetMouseLocation()
+		local inc = Vector2.new(ml.X-cl.X,ml.Y-cl.Y)
+		local nx,ny,nsx,nsy
+		if sidex==MtEnum.ResizeSide.None then
+			nx=wp.X
+			nsx=ws.X
+		end
+		if sidex==MtEnum.ResizeSide.Left then
+			nx=wp.X+(inc.X)
+			nsx=ws.X-(inc.X)
+		end
+		if sidex==MtEnum.ResizeSide.Right then
+			nx=wp.X
+			nsx=ws.X+(inc.X)
+		end
+		if sidey==MtEnum.ResizeSide.None then
+			ny=wp.Y
+			nsy=ws.Y
+		end
+		if sidey==MtEnum.ResizeSide.Top then 
+			ny=wp.Y+(inc.Y)
+			nsy=ws.Y-(inc.Y)
+		end
+		if sidey==MtEnum.ResizeSide.Bottom then
+			ny=wp.Y
+			nsy=ws.Y+(inc.Y)
+		end
+		----- Check if the x < min x
+		----- Check if the y < min y 
+		------ if yes then do nothing
+		
+		---print (sidex)
+		--print (sidey)
+
+		local newsize = window:LimitCoordinate(Vector2.new(nsx,nsy))
+		if window:IsCoordinateAboveMin(newsize) then
+			window:SetPosition(Vector2.new(nx,ny))
+		end
+		window:SetSize(newsize)
+
+		region.Resizing:Fire(window.Frame.Size,window.Frame.Position,ml)
+		MtMouseController:ChangeCursor(self.GetCursorFromResizeSide(sidex,sidey))
+
+		task.wait(.025)
+		--print(table.unpack(uis:GetMouseButtonsPressed()))
+	end
+
+	MtMouseController:ResetCursor()
+	region.DraggingValue.Value = nil
+
+	region.ResizeEnded:Fire()
+end
+
+function MWindowManager.GetResizeSidesFromLocation(click:Vector2, winPos:Vector2, winSize:Vector2, regThickness:number): (string, string)
+	-- static function
+	
+	regThickness = regThickness or 5 -- resize region thickness
+	
+	local sidex=MtEnum.ResizeSide.None
+	local sidey=MtEnum.ResizeSide.None
+	
+	if math.abs(click.X-winPos.X)<regThickness then sidex=MtEnum.ResizeSide.Left end
+	if math.abs(click.X-(winPos.X+winSize.X))<regThickness then sidex=MtEnum.ResizeSide.Right end
+	if math.abs(click.Y-winPos.Y)<regThickness then sidey=MtEnum.ResizeSide.Top end
+	if math.abs(click.Y-(winPos.Y+winSize.Y))<regThickness then sidey=MtEnum.ResizeSide.Bottom end
+	
+	return sidex,sidey
+end
+
+function MWindowManager.GetCursorFromResizeSide(x:number,y:number):string
+	-- static function
+	-- haha no x and y aren't coordinates they're MtEnum.ResizeSide enums.
+
+	if x==0 and y==0 then return "" end -- none
+
+	if x~=0 and y==0 then return "rbxasset://textures/StudioUIEditor/icon_resize2.png" end -- horizontal
+	if y~=0 and x==0 then return "rbxasset://textures/StudioUIEditor/icon_resize4.png" end -- vertical
+
+	if x==y then return "rbxasset://textures/StudioUIEditor/icon_resize3.png" end -- diagonal north-east
+	if x~=y then return "rbxasset://textures/StudioUIEditor/icon_resize1.png" end -- diagonal north-west
 end
 
 function MWindowManager.TriggerInteraction(self,window)
@@ -3227,27 +3337,30 @@ return funcs]]></ProtectedString>
 						<Content name="LinkedSource"><null></null></Content>
 						<string name="Name">MtMouseController</string>
 						<string name="ScriptGuid">{3C027CF8-11D2-42A6-BA8E-E523E83EC614}</string>
-						<ProtectedString name="Source"><![CDATA[repeat task.wait() until game:IsLoaded()
+						<ProtectedString name="Source"><![CDATA[repeat task.wait() until game:IsLoaded() -- can't use game.Loaded because after the game is loaded, it won't fire the event again
 local plr = game:GetService("Players").LocalPlayer
-if not plr then error("Mt error: MtMouseController must be required by the client!") end
+if not plr then error("Mt error: MtMouseController must be required by the client! (couldn't get player)") end
 local mouse = plr:GetMouse()
 
 local MtMouseController = {}
 
+--[[
 local cursor = ""
 
 
 game:GetService("RunService").RenderStepped:Connect(function()
 	mouse.Icon=cursor
 end)
+]]
 
 function MtMouseController:GetCursor(): string
-	return cursor
+	return mouse.Icon
 end
 
 function MtMouseController:ChangeCursor(icon: string)
 	icon=icon or ""
-	cursor=icon
+	--cursor=icon
+	mouse.Icon = icon
 end
 
 function MtMouseController:ResetCursor()
