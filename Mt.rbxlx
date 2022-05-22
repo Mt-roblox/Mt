@@ -537,7 +537,8 @@ local bar = MProgressBar:Init(screen)
 screen:AddWidget(bar)
 bar:SetPosition(Vector2.new(100,100))
 bar:SetProgress(0)
-bar:SetFormat("progress: {p}")
+bar:SetLabelAlignment(Enum.TextXAlignment.Center)
+--bar:SetLabelVisibility(false)
 
 if not game:IsLoaded() then game.Loaded:Wait() end
 local input = game.Players.LocalPlayer.PlayerGui:WaitForChild("extra").input
@@ -1010,6 +1011,22 @@ function MProgressBar.GetFormat(self): string
 	return self.Format
 end
 
+function MProgressBar.SetLabelVisibility(self,visible:boolean)
+	self.Label.Visible = visible
+end
+
+function MProgressBar.GetLabelVisibility(self): boolean
+	return self.Label.Visible
+end
+
+function MProgressBar.SetLabelAlignment(self,alignment:Enum.TextXAlignment)
+	self.Label.TextXAlignment = alignment
+end
+
+function MProgressBar.GetLabelAlignment(self): Enum.TextXAlignment
+	return self.Label.TextXAlignment
+end
+
 MProgressBar = MWidget:Init({},MProgressBar,-1)
 
 return MProgressBar]]></ProtectedString>
@@ -1171,19 +1188,6 @@ return MProgressBar]]></ProtectedString>
 								<bool name="Visible">true</bool>
 								<int name="ZIndex">1</int>
 							</Properties>
-							<Item class="UICorner" referent="RBX3418558337014D058F51984D48654A8D">
-								<Properties>
-									<BinaryString name="AttributesSerialize"></BinaryString>
-									<UDim name="CornerRadius">
-										<S>0</S>
-										<O>2</O>
-									</UDim>
-									<string name="Name">UICorner</string>
-									<int64 name="SourceAssetId">-1</int64>
-									<BinaryString name="Tags"></BinaryString>
-									<UniqueId name="UniqueId">72e3064f72345eb8029aa0820002b027</UniqueId>
-								</Properties>
-							</Item>
 							<Item class="UIStroke" referent="RBX751E8B3DF4FB438293C9091A8135EC87">
 								<Properties>
 									<token name="ApplyStrokeMode">0</token>
@@ -1246,7 +1250,7 @@ return MProgressBar]]></ProtectedString>
 								<int name="BorderSizePixel">1</int>
 								<bool name="ClipsDescendants">false</bool>
 								<bool name="Draggable">false</bool>
-								<token name="Font">3</token>
+								<token name="Font">4</token>
 								<Font name="FontFace"></Font>
 								<int name="LayoutOrder">0</int>
 								<float name="LineHeight">1</float>
