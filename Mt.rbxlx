@@ -537,7 +537,7 @@ local screen = MScreen:Init()
 local bar = MProgressBar:Init(screen)
 screen:AddWidget(bar)
 bar:SetPosition(Vector2.new(100,100))
-bar:SetProgress(0)
+--bar:SetProgress(0)
 bar:SetLabelAlignment(Enum.TextXAlignment.Center)
 bar:SetLabelVisibility(true)
 bar:SetFillingOrientation(MtEnum.Orientation.Vertical)
@@ -997,22 +997,26 @@ function MProgressBar.GetLimitedProgress(self,progress:number,min:number,max:num
 	end
 end
 
-function MProgressBar.GetFillingSize(self,orientation:string,progress:number,max:number): UDim2
+function MProgressBar.GetFillingSize(self,orientation:string,inverted:boolean,progress:number,max:number): UDim2
 	orientation = orientation or self:GetFillingOrientation()
-	progress = progress or self:GetLimitedProgress()
+	inverted = inverted or self:GetFillingInverted()
+	progress = progress or self:GetProgress()
 	max = max or self.Max
 	
+	local newsize = progress/max
+	if inverted then newsize = -newsize end
+	
 	if orientation == MtEnum.Orientation.Vertical then
-		return UDim2.fromScale(1,progress/max)
+		return UDim2.fromScale(1,newsize)
 	else
-		return UDim2.fromScale(progress/max,1)
+		return UDim2.fromScale(newsize,1)
 	end
 end
 
 function MProgressBar.SetProgress(self,progress:number)
 	local limitedProgress = self:GetLimitedProgress(progress)
 	
-	self.Filling.Size = self:GetFillingSize(self.FillingOrientation,limitedProgress)
+	self.Filling.Size = self:GetFillingSize()
 	self.Label.Text = self:GetFormattedText(limitedProgress)
 	self.Progress = limitedProgress
 end
@@ -1053,6 +1057,23 @@ end
 
 function MProgressBar.GetFillingOrientation(self): string
 	return self.FillingOrientation
+end
+
+local bool2fillingPos = {
+	[false] = 0,
+	[true] = 1
+}
+
+function MProgressBar.SetFillingInverted(self,inverted:boolean)
+	local newpos = bool2fillingPos[inverted]
+	self.Filling.Position = UDim2.fromScale(newpos,newpos)
+	
+	self.Filling.Size = self:GetFillingSize(self.FillingOrientation, inverted)
+	self.FillingInverted = inverted
+end
+
+function MProgressBar.GetFillingInverted(self): boolean
+	return self.FillingInverted
 end
 
 MProgressBar = MWidget:Init({},MProgressBar,-1)
