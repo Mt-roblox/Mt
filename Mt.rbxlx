@@ -1487,7 +1487,7 @@ function MWidget.IsCoordinateAboveMin(self,coor:Vector2,min:Vector2): boolean
 	return coor.X > min.X and coor.Y > min.Y
 end
 
-MWidget.LimitCoordinate = function(self,coor:Vector2,min:Vector2,max:Vector2): (Vector2, boolean)
+MWidget.CalcLimitedSize = function(self,coor:Vector2,min:Vector2,max:Vector2): (Vector2, boolean)
 	min=min or self:GetMinimumSize()
 	max=max or self:GetMaximumSize()
 	
@@ -1513,11 +1513,18 @@ function MWidget.GetVector2FromUDim2Offset(udim2:UDim2): Vector2
 	return Vector2.new(udim2.X.Offset,udim2.Y.Offset)
 end
 
-MWidget.SetSizeEx = function(self,newsize:Vector2,anchor: boolean): boolean
-	local oldSize = table.clone(self.Size)
-	local limitedsize, onlimit = self:LimitCoordinate(newsize)
-	local currentScale: Vector2 = self:GetSizeScale()
+MWidget.ChangeSize = function(self, deltaX, deltaY ,anchor: boolean): boolean
+	local nsx=self.Size.X+deltaX
+	local nsy=self.Size.Y+deltaY
+	self:SetSize(Vector2.new(nsx,nsy),anchor)
+end
 
+MWidget.SetSize= function(self,newsize:Vector2,anchor: boolean): boolean
+	anchor=anchor or false
+	local oldSize = table.clone(self.Size)
+	local limitedsize, onlimit = self:CalcLimitedSize(newsize)
+	local currentScale: Vector2 = self:GetSizeScale()
+	
 	self.Size.X, self.Size.Y = limitedsize.X, limitedsize.Y
 	self.Frame.Size = UDim2.new(
 		currentScale.X,
@@ -1535,23 +1542,7 @@ MWidget.SetSizeEx = function(self,newsize:Vector2,anchor: boolean): boolean
 end
 
 
-MWidget.SetSize = function(self,newsize:Vector2): boolean
-	local oldSize = table.clone(self.Size)
-	local limitedsize, onlimit = self:LimitCoordinate(newsize)
-	local currentScale: Vector2 = self:GetSizeScale()
-	
-	self.Size.X, self.Size.Y = limitedsize.X, limitedsize.Y
-	self.Frame.Size = UDim2.new(
-		currentScale.X,
-		limitedsize.X,
-		currentScale.Y,
-		limitedsize.Y
-	)
-	
-	print (onlimit ,self.Size.X,oldSize.X)
-	--return not(onlimit and self.Size.X==oldSize.X )
-	return not(onlimit)
-end
+
 
 MWidget.Resize = MWidget.SetSize
 
@@ -3168,7 +3159,7 @@ end
 
 function MWindowManager.StartResizingWindow(self,window,region)
 	local cl=uis:GetMouseLocation()
-
+	local wp=window.GetVector2FromUDim2Offset(window.Frame.Position)
 	local ws=window.GetVector2FromUDim2Offset(window.Frame.Size)
 	
 	local sidex,sidey = self.GetResizeSidesFromLocation(cl,wp,ws)
@@ -3176,8 +3167,10 @@ function MWindowManager.StartResizingWindow(self,window,region)
 	region.DraggingValue.Value = region.Region
 
 	while _getMouseButton1Pressed(uis:GetMouseButtonsPressed()) and self.WindowBeingInteracted do
+		
 		local ml = uis:GetMouseLocation()
 		local inc = Vector2.new(ml.X-cl.X,ml.Y-cl.Y)
+		
 		local nsx,nsy
 		if sidex==MtEnum.ResizeSide.None then
 			nsx=ws.X
@@ -3198,13 +3191,14 @@ function MWindowManager.StartResizingWindow(self,window,region)
 			nsy=ws.Y+(inc.Y)
 		end
 
-		window:SetSizeEx(Vector2.new(nsx,nsy),sidex==MtEnum.ResizeSide.Left or sidey==MtEnum.ResizeSide.Top)
-	
+		window:SetSize(Vector2.new(nsx,nsy),sidex==MtEnum.ResizeSide.Left or sidey==MtEnum.ResizeSide.Top)
+				
 		region.Resizing:Fire(window.Frame.Size,window.Frame.Position,ml)
 		MtMouseController:ChangeCursor(self.GetCursorFromResizeSide(sidex,sidey))
 
 		task.wait(.025)
-		--print(table.unpack(uis:GetMouseButtonsPressed()))
+
+		
 	end
 
 	MtMouseController:ResetCursor()
