@@ -943,6 +943,7 @@ return mtwidgets]]></ProtectedString>
 						<string name="ScriptGuid">{6C7FCB0E-3E63-4CEB-A66E-534210256E09}</string>
 						<ProtectedString name="Source"><![CDATA[local repstrg = game:GetService("ReplicatedStorage")
 local MWidget = require(repstrg.Mt.MtWidgets.MWidget)
+local MtEnum = require(repstrg.Mt.MtCore.MtEnum)
 local uis = game:GetService("UserInputService")
 
 local MProgressBar = {
@@ -954,6 +955,8 @@ local MProgressBar = {
 	
 	Min = 0,
 	Max = 100,
+	
+	FillingDirection = MtEnum.Direction.Right
 }
 
 MProgressBar.Init = function(self,parent,_obj)
@@ -993,6 +996,7 @@ end
 
 function MProgressBar.SetProgress(self,progress:number)
 	local limitedProgress = self:GetLimitedProgress(progress)
+	
 	self.Filling.Size = UDim2.fromScale(limitedProgress/self.Max,1)
 	self.Label.Text = self:GetFormattedText(limitedProgress)
 	self.Progress = limitedProgress
@@ -1025,6 +1029,12 @@ end
 
 function MProgressBar.GetLabelAlignment(self): Enum.TextXAlignment
 	return self.Label.TextXAlignment
+end
+
+function MProgressBar.SetFillingDirection(self,direction:string)
+	if direction == MtEnum.Direction.Right then
+		
+	end
 end
 
 MProgressBar = MWidget:Init({},MProgressBar,-1)
