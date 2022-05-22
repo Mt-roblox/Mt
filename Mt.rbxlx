@@ -537,6 +537,7 @@ local bar = MProgressBar:Init(screen)
 screen:AddWidget(bar)
 bar:SetPosition(Vector2.new(100,100))
 bar:SetProgress(0)
+bar:SetFormat("progress: {p}")
 
 if not game:IsLoaded() then game.Loaded:Wait() end
 local input = game.Players.LocalPlayer.PlayerGui:WaitForChild("extra").input
@@ -948,6 +949,10 @@ local MProgressBar = {
 	Name = "progressbar",       -- ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^
 	
 	Progress = 0,
+	Format = "{p}%",
+	
+	Min = 0,
+	Max = 100,
 }
 
 MProgressBar.Init = function(self,parent,_obj)
@@ -957,7 +962,6 @@ MProgressBar.Init = function(self,parent,_obj)
 	local clone = script.progressbar:Clone()
 	_obj.Filling = clone.filling
 	_obj.Label = clone.label
-	_obj.Sharpener = clone.filling.sharpener
 	_obj.Frame = clone
 	
 	MProgressBar.SetProgress(_obj,24)
@@ -965,10 +969,45 @@ MProgressBar.Init = function(self,parent,_obj)
 	return _obj
 end
 
+function MProgressBar.GetFormattedText(self,progress:number,format:string): string
+	progress = progress or self:GetProgress()
+	format = format or self:GetFormat()
+	
+	return string.gsub(format,"{p}",tostring(progress))
+end
+
+function MProgressBar.GetLimitedProgress(self,progress:number,min:number,max:number): number
+	progress = progress or self:GetProgress()
+	min = min or self.Min
+	max = max or self.Max
+	
+	if progress < min then
+		return min
+	elseif progress > max then
+		return max
+	else
+		return progress
+	end
+end
+
 function MProgressBar.SetProgress(self,progress:number)
-	self.Filling.Size = UDim2.fromScale(progress/100,1)
-	self.Label.Text = tostring(progress).."%"
-	self.Sharpener.Position = UDim2.fromOffset(self.Filling.Size.X.Offset-self.Filling.UICorner.CornerRadius.Offset,0)
+	local limitedProgress = self:GetLimitedProgress(progress)
+	self.Filling.Size = UDim2.fromScale(limitedProgress/self.Max,1)
+	self.Label.Text = self:GetFormattedText(limitedProgress)
+	self.Progress = limitedProgress
+end
+
+function MProgressBar.GetProgress(self): number
+	return self.Progress
+end
+
+function MProgressBar.SetFormat(self,format:string)
+	self.Label.Text = self:GetFormattedText(self:GetProgress(),format)
+	self.Format = format
+end
+
+function MProgressBar.GetFormat(self): string
+	return self.Format
 end
 
 MProgressBar = MWidget:Init({},MProgressBar,-1)
@@ -1180,85 +1219,6 @@ return MProgressBar]]></ProtectedString>
 									<NumberSequence name="Transparency">0 0 0 1 0 0 </NumberSequence>
 									<UniqueId name="UniqueId">72e3064f72345eb8029aa0820002b4e6</UniqueId>
 								</Properties>
-							</Item>
-							<Item class="Frame" referent="RBXAEEDC0E267164439ADDB0EADD593E80A">
-								<Properties>
-									<bool name="Active">false</bool>
-									<Vector2 name="AnchorPoint">
-										<X>0</X>
-										<Y>0</Y>
-									</Vector2>
-									<BinaryString name="AttributesSerialize"></BinaryString>
-									<bool name="AutoLocalize">true</bool>
-									<token name="AutomaticSize">0</token>
-									<Color3 name="BackgroundColor3">
-										<R>1</R>
-										<G>1</G>
-										<B>1</B>
-									</Color3>
-									<float name="BackgroundTransparency">0</float>
-									<Color3 name="BorderColor3">
-										<R>0.105882362</R>
-										<G>0.164705887</G>
-										<B>0.207843155</B>
-									</Color3>
-									<token name="BorderMode">0</token>
-									<int name="BorderSizePixel">0</int>
-									<bool name="ClipsDescendants">false</bool>
-									<bool name="Draggable">false</bool>
-									<int name="LayoutOrder">0</int>
-									<string name="Name">sharpener</string>
-									<Ref name="NextSelectionDown">null</Ref>
-									<Ref name="NextSelectionLeft">null</Ref>
-									<Ref name="NextSelectionRight">null</Ref>
-									<Ref name="NextSelectionUp">null</Ref>
-									<UDim2 name="Position">
-										<XS>0</XS>
-										<XO>60</XO>
-										<YS>0</YS>
-										<YO>0</YO>
-									</UDim2>
-									<Ref name="RootLocalizationTable">null</Ref>
-									<float name="Rotation">0</float>
-									<bool name="Selectable">false</bool>
-									<token name="SelectionBehaviorDown">0</token>
-									<token name="SelectionBehaviorLeft">0</token>
-									<token name="SelectionBehaviorRight">0</token>
-									<token name="SelectionBehaviorUp">0</token>
-									<bool name="SelectionGroup">false</bool>
-									<Ref name="SelectionImageObject">null</Ref>
-									<int name="SelectionOrder">0</int>
-									<UDim2 name="Size">
-										<XS>0</XS>
-										<XO>8</XO>
-										<YS>1</YS>
-										<YO>0</YO>
-									</UDim2>
-									<token name="SizeConstraint">0</token>
-									<int64 name="SourceAssetId">-1</int64>
-									<token name="Style">0</token>
-									<BinaryString name="Tags"></BinaryString>
-									<UniqueId name="UniqueId">72e3064f72345eb8029aa0820002d0c6</UniqueId>
-									<bool name="Visible">true</bool>
-									<int name="ZIndex">1</int>
-								</Properties>
-								<Item class="UIGradient" referent="RBX038BD45A77A24E9FBFA44D2D66BA2D19">
-									<Properties>
-										<BinaryString name="AttributesSerialize"></BinaryString>
-										<ColorSequence name="Color">0 0.333333 1 0 0 1 0.607843 1 0.411765 0 </ColorSequence>
-										<bool name="Enabled">true</bool>
-										<string name="Name">UIGradient</string>
-										<Vector2 name="Offset">
-											<X>0</X>
-											<Y>0</Y>
-										</Vector2>
-										<float name="Rotation">-90</float>
-										<int64 name="SourceAssetId">-1</int64>
-										<BinaryString name="Tags"></BinaryString>
-										<NumberSequence name="Transparency">0 0 0 1 0 0 </NumberSequence>
-										<UniqueId name="UniqueId">72e3064f72345eb8029aa0820002d820</UniqueId>
-									</Properties>
-								</Item>
 							</Item>
 						</Item>
 						<Item class="TextLabel" referent="RBXB3BB16BEBDD540B082794DEE6F36E7EA">
