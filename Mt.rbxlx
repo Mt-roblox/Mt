@@ -530,6 +530,7 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 					<string name="ScriptGuid">{5F3728E5-2388-4161-9565-DB53D4DDC893}</string>
 					<ProtectedString name="Source"><![CDATA[local MScreen = require(game.ReplicatedStorage.Mt.MtCore.MScreen)
 local MProgressBar = require(game.ReplicatedStorage.Mt.MtWidgets.MProgressBar)
+local MtEnum = require(game.ReplicatedStorage.Mt.MtCore.MtEnum)
 
 local screen = MScreen:Init()
 
@@ -538,7 +539,8 @@ screen:AddWidget(bar)
 bar:SetPosition(Vector2.new(100,100))
 bar:SetProgress(0)
 bar:SetLabelAlignment(Enum.TextXAlignment.Center)
---bar:SetLabelVisibility(false)
+bar:SetLabelVisibility(true)
+bar:SetFillingOrientation(MtEnum.Orientation.Vertical)
 
 if not game:IsLoaded() then game.Loaded:Wait() end
 local input = game.Players.LocalPlayer.PlayerGui:WaitForChild("extra").input
@@ -956,7 +958,8 @@ local MProgressBar = {
 	Min = 0,
 	Max = 100,
 	
-	FillingDirection = MtEnum.Direction.Right
+	FillingOrientation = MtEnum.Orientation.Horizontal,
+	FillingInverted = false
 }
 
 MProgressBar.Init = function(self,parent,_obj)
@@ -994,10 +997,22 @@ function MProgressBar.GetLimitedProgress(self,progress:number,min:number,max:num
 	end
 end
 
+function MProgressBar.GetFillingSize(self,orientation:string,progress:number,max:number): UDim2
+	orientation = orientation or self:GetFillingOrientation()
+	progress = progress or self:GetLimitedProgress()
+	max = max or self.Max
+	
+	if orientation == MtEnum.Orientation.Vertical then
+		return UDim2.fromScale(1,progress/max)
+	else
+		return UDim2.fromScale(progress/max,1)
+	end
+end
+
 function MProgressBar.SetProgress(self,progress:number)
 	local limitedProgress = self:GetLimitedProgress(progress)
 	
-	self.Filling.Size = UDim2.fromScale(limitedProgress/self.Max,1)
+	self.Filling.Size = self:GetFillingSize(self.FillingOrientation,limitedProgress)
 	self.Label.Text = self:GetFormattedText(limitedProgress)
 	self.Progress = limitedProgress
 end
@@ -1031,10 +1046,13 @@ function MProgressBar.GetLabelAlignment(self): Enum.TextXAlignment
 	return self.Label.TextXAlignment
 end
 
-function MProgressBar.SetFillingDirection(self,direction:string)
-	if direction == MtEnum.Direction.Right then
-		
-	end
+function MProgressBar.SetFillingOrientation(self,orientation:string)
+	self.Filling.Size = self:GetFillingSize(orientation)
+	self.FillingOrientation = orientation
+end
+
+function MProgressBar.GetFillingOrientation(self): string
+	return self.FillingOrientation
 end
 
 MProgressBar = MWidget:Init({},MProgressBar,-1)
