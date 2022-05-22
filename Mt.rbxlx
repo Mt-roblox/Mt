@@ -1456,7 +1456,8 @@ local MWidget = {
 	ClassName = "MWidget", -- See Mt.MtCore.MObject
 	Name = "widget",       -- ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^
 	
-	Size = {X=0,Y=0}
+	Size = {X=0,Y=0},
+	Position = {X=0,Y=0}
 }
 
 MWidget.Init = function(self,parent,_obj)
@@ -1507,8 +1508,35 @@ MWidget.LimitCoordinate = function(self,coor:Vector2,min:Vector2,max:Vector2): (
 	
 end
 
+function MWidget.GetVector2FromUDim2Offset(udim2:UDim2): Vector2
+	-- static function
+	return Vector2.new(udim2.X.Offset,udim2.Y.Offset)
+end
+
+MWidget.SetSizeEx = function(self,newsize:Vector2,anchor: boolean): boolean
+	local oldSize = table.clone(self.Size)
+	local limitedsize, onlimit = self:LimitCoordinate(newsize)
+	local currentScale: Vector2 = self:GetSizeScale()
+
+	self.Size.X, self.Size.Y = limitedsize.X, limitedsize.Y
+	self.Frame.Size = UDim2.new(
+		currentScale.X,
+		limitedsize.X,
+		currentScale.Y,
+		limitedsize.Y
+	)
+	if anchor then
+		self:SetPosition(Vector2.new(self.Position.X+(oldSize.X-self.Size.X),self.Position.Y+(oldSize.Y-self.Size.Y)))	
+	end
+	 
+	--print (onlimit ,self.Size.X,oldSize.X)
+	--return not(onlimit and self.Size.X==oldSize.X )
+	return not(onlimit)
+end
+
+
 MWidget.SetSize = function(self,newsize:Vector2): boolean
-	local oldSize = self:GetSize()
+	local oldSize = table.clone(self.Size)
 	local limitedsize, onlimit = self:LimitCoordinate(newsize)
 	local currentScale: Vector2 = self:GetSizeScale()
 	
@@ -1520,14 +1548,16 @@ MWidget.SetSize = function(self,newsize:Vector2): boolean
 		limitedsize.Y
 	)
 	
-	print (onlimit ,newsize.X,oldSize.X )
-	return not(onlimit and newsize==oldSize)
+	print (onlimit ,self.Size.X,oldSize.X)
+	--return not(onlimit and self.Size.X==oldSize.X )
+	return not(onlimit)
 end
 
 MWidget.Resize = MWidget.SetSize
 
-function MWidget.GetSize(self): Vector2
-	return self.Frame.AbsoluteSize
+function MWidget.GetSize(self): {}
+	--return self.Frame.AbsoluteSize
+	return self.Size
 end
 
 MWidget.SetSizeFromScale = function(self,newscale:Vector2)
@@ -1539,6 +1569,7 @@ MWidget.Rescale = MWidget.SetSizeFromScale
 
 MWidget.SetPosition = function(self,newpos:Vector2)
 	self.Frame.Position = UDim2.fromOffset(newpos.X,newpos.Y)
+	self.Position.X, self.Position.Y = newpos.X, newpos.Y
 end
 
 MWidget.GoTo = MWidget.SetPosition
@@ -3137,60 +3168,38 @@ end
 
 function MWindowManager.StartResizingWindow(self,window,region)
 	local cl=uis:GetMouseLocation()
-	local wp=self.GetVector2FromUDim2Offset(window.Frame.Position)
-	local ws=self.GetVector2FromUDim2Offset(window.Frame.Size)
+
+	local ws=window.GetVector2FromUDim2Offset(window.Frame.Size)
 	
-	--local sidex,sidey = MtEnum.ResizeSide.None,MtEnum.ResizeSide.None
-	--if _getMouseButton1Pressed(uis:GetMouseButtonsPressed()) then
 	local sidex,sidey = self.GetResizeSidesFromLocation(cl,wp,ws)
-	--end
 
 	region.DraggingValue.Value = region.Region
 
 	while _getMouseButton1Pressed(uis:GetMouseButtonsPressed()) and self.WindowBeingInteracted do
 		local ml = uis:GetMouseLocation()
 		local inc = Vector2.new(ml.X-cl.X,ml.Y-cl.Y)
-		local nx,ny,nsx,nsy
+		local nsx,nsy
 		if sidex==MtEnum.ResizeSide.None then
-			nx=wp.X
 			nsx=ws.X
 		end
 		if sidex==MtEnum.ResizeSide.Left then
-			nx=wp.X+(inc.X)
 			nsx=ws.X-(inc.X)
 		end
 		if sidex==MtEnum.ResizeSide.Right then
-			nx=wp.X
 			nsx=ws.X+(inc.X)
 		end
 		if sidey==MtEnum.ResizeSide.None then
-			ny=wp.Y
 			nsy=ws.Y
 		end
 		if sidey==MtEnum.ResizeSide.Top then 
-			ny=wp.Y+(inc.Y)
 			nsy=ws.Y-(inc.Y)
 		end
 		if sidey==MtEnum.ResizeSide.Bottom then
-			ny=wp.Y
 			nsy=ws.Y+(inc.Y)
 		end
-		----- Check if the x < min x
-		----- Check if the y < min y 
-		------ if yes then do nothing
-		
-		---print (sidex)
-		--print (sidey)
 
-		local newsize = window:LimitCoordinate(Vector2.new(nsx,nsy), Vector2.new(0,0))
-		--if window:IsCoordinateAboveMin(newsize) then
-		if window:SetSize(newsize) then 
-			window:SetPosition(Vector2.new(nx,ny)) 
-		end  
-		--	window:SetPosition(Vector2.new(nx,ny))
-		--	window:SetSize(newsize)
-		--end
-
+		window:SetSizeEx(Vector2.new(nsx,nsy),sidex==MtEnum.ResizeSide.Left or sidey==MtEnum.ResizeSide.Top)
+	
 		region.Resizing:Fire(window.Frame.Size,window.Frame.Position,ml)
 		MtMouseController:ChangeCursor(self.GetCursorFromResizeSide(sidex,sidey))
 
