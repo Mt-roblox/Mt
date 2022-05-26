@@ -541,6 +541,7 @@ bar:SetPosition(Vector2.new(100,100))
 bar:SetLabelAlignment(Enum.TextXAlignment.Center)
 bar:SetLabelVisibility(true)
 bar:SetFillingOrientation(MtEnum.Orientation.Vertical)
+bar:SetFillingInverted(true)
 
 if not game:IsLoaded() then game.Loaded:Wait() end
 local input = game.Players.LocalPlayer.PlayerGui:WaitForChild("extra").input
@@ -998,19 +999,24 @@ function MProgressBar.GetLimitedProgress(self,progress:number,min:number,max:num
 	end
 end
 
+local function _returnNeg(n:number,yes:boolean): number
+	if yes then return -n end
+	return n
+end
+
 function MProgressBar.GetFillingSize(self,orientation:string,inverted:boolean,progress:number,max:number): UDim2
 	orientation = orientation or self:GetFillingOrientation()
 	inverted = inverted or self:GetFillingInverted()
 	progress = progress or self:GetProgress()
 	max = max or self.Max
 	
-	local newsize = progress/max
-	if inverted then newsize = -newsize end
+	local ns1 = _returnNeg(progress/max,inverted)
+	local ns2 = _returnNeg(1,inverted)
 	
 	if orientation == MtEnum.Orientation.Vertical then
-		return UDim2.fromScale(1,newsize)
+		return UDim2.fromScale(ns2,ns1)
 	else
-		return UDim2.fromScale(newsize,1)
+		return UDim2.fromScale(ns1,ns2)
 	end
 end
 
@@ -1072,11 +1078,10 @@ local bool2fillingPos = {
 }
 
 function MProgressBar.SetFillingInverted(self,inverted:boolean)
+	self.FillingInverted = inverted
 	local newpos = bool2fillingPos[inverted]
 	self.Filling.Position = UDim2.fromScale(newpos,newpos)
-	
-	self.Filling.Size = self:GetFillingSize(self.FillingOrientation, inverted)
-	self.FillingInverted = inverted
+	self.Filling.Size = self:GetFillingSize()
 end
 
 function MProgressBar.GetFillingInverted(self): boolean
