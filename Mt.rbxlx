@@ -1016,9 +1016,9 @@ end
 function MProgressBar.SetProgress(self,progress:number)
 	local limitedProgress = self:GetLimitedProgress(progress)
 	
+	self.Progress = limitedProgress
 	self.Filling.Size = self:GetFillingSize()
 	self.Label.Text = self:GetFormattedText(limitedProgress)
-	self.Progress = limitedProgress
 end
 
 function MProgressBar.GetProgress(self): number
@@ -1062,6 +1062,11 @@ end
 local bool2fillingPos = {
 	[false] = 0,
 	[true] = 1
+}
+
+local bool2fillingGradRotation = {
+	[false] = -90, -- horizontal
+	[true] = 0, -- vertical
 }
 
 function MProgressBar.SetFillingInverted(self,inverted:boolean)
