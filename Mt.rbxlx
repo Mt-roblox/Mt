@@ -540,14 +540,15 @@ bar:SetPosition(Vector2.new(100,100))
 --bar:SetProgress(0)
 bar:SetLabelAlignment(Enum.TextXAlignment.Center)
 bar:SetLabelVisibility(true)
-bar:SetFillingOrientation(MtEnum.Orientation.Vertical)
-bar:SetFillingInverted(true)
+bar:SetFormat("Progress: {p}%")
+--bar:SetFillingOrientation(MtEnum.Orientation.Vertical)
+--bar:SetFillingInverted(true)
 
 if not game:IsLoaded() then game.Loaded:Wait() end
-local input = game.Players.LocalPlayer.PlayerGui:WaitForChild("extra").input
-input.FocusLost:Connect(function(enter)
+local value = game.Players.LocalPlayer.PlayerGui:WaitForChild("extra").value
+value.FocusLost:Connect(function(enter)
 	if enter then
-		bar:SetProgress(tonumber(input.Text) or 0)
+		bar:SetProgress(tonumber(value.Text) or 0)
 	end
 end)]]></ProtectedString>
 					<int64 name="SourceAssetId">-1</int64>
@@ -639,7 +640,7 @@ end)]]></ProtectedString>
 					<float name="LineHeight">1</float>
 					<int name="MaxVisibleGraphemes">-1</int>
 					<bool name="MultiLine">false</bool>
-					<string name="Name">input</string>
+					<string name="Name">value</string>
 					<Ref name="NextSelectionDown">null</Ref>
 					<Ref name="NextSelectionLeft">null</Ref>
 					<Ref name="NextSelectionRight">null</Ref>
@@ -698,6 +699,101 @@ end)]]></ProtectedString>
 					<token name="TextXAlignment">2</token>
 					<token name="TextYAlignment">1</token>
 					<UniqueId name="UniqueId">76f3dc643540221e029af31b0008bf9e</UniqueId>
+					<bool name="Visible">true</bool>
+					<int name="ZIndex">1</int>
+				</Properties>
+			</Item>
+			<Item class="TextBox" referent="RBX8A47FB84AFBC4CA4B269505FA3CB3B81">
+				<Properties>
+					<bool name="Active">true</bool>
+					<Vector2 name="AnchorPoint">
+						<X>0</X>
+						<Y>0</Y>
+					</Vector2>
+					<BinaryString name="AttributesSerialize"></BinaryString>
+					<bool name="AutoLocalize">true</bool>
+					<token name="AutomaticSize">0</token>
+					<Color3 name="BackgroundColor3">
+						<R>1</R>
+						<G>1</G>
+						<B>1</B>
+					</Color3>
+					<float name="BackgroundTransparency">0</float>
+					<Color3 name="BorderColor3">
+						<R>0.105882362</R>
+						<G>0.164705887</G>
+						<B>0.207843155</B>
+					</Color3>
+					<token name="BorderMode">0</token>
+					<int name="BorderSizePixel">1</int>
+					<bool name="ClearTextOnFocus">true</bool>
+					<bool name="ClipsDescendants">false</bool>
+					<bool name="Draggable">false</bool>
+					<token name="Font">3</token>
+					<Font name="FontFace"></Font>
+					<int name="LayoutOrder">0</int>
+					<float name="LineHeight">1</float>
+					<int name="MaxVisibleGraphemes">-1</int>
+					<bool name="MultiLine">false</bool>
+					<string name="Name">format</string>
+					<Ref name="NextSelectionDown">null</Ref>
+					<Ref name="NextSelectionLeft">null</Ref>
+					<Ref name="NextSelectionRight">null</Ref>
+					<Ref name="NextSelectionUp">null</Ref>
+					<Color3 name="PlaceholderColor3">
+						<R>0.699999988</R>
+						<G>0.699999988</G>
+						<B>0.699999988</B>
+					</Color3>
+					<string name="PlaceholderText"></string>
+					<UDim2 name="Position">
+						<XS>0.220435202</XS>
+						<XO>0</XO>
+						<YS>0.629297435</YS>
+						<YO>0</YO>
+					</UDim2>
+					<bool name="RichText">false</bool>
+					<Ref name="RootLocalizationTable">null</Ref>
+					<float name="Rotation">0</float>
+					<bool name="Selectable">true</bool>
+					<token name="SelectionBehaviorDown">0</token>
+					<token name="SelectionBehaviorLeft">0</token>
+					<token name="SelectionBehaviorRight">0</token>
+					<token name="SelectionBehaviorUp">0</token>
+					<bool name="SelectionGroup">false</bool>
+					<Ref name="SelectionImageObject">null</Ref>
+					<int name="SelectionOrder">0</int>
+					<bool name="ShowNativeInput">true</bool>
+					<UDim2 name="Size">
+						<XS>0</XS>
+						<XO>200</XO>
+						<YS>0</YS>
+						<YO>50</YO>
+					</UDim2>
+					<token name="SizeConstraint">0</token>
+					<int64 name="SourceAssetId">-1</int64>
+					<BinaryString name="Tags"></BinaryString>
+					<string name="Text"></string>
+					<Color3 name="TextColor3">
+						<R>0</R>
+						<G>0</G>
+						<B>0</B>
+					</Color3>
+					<bool name="TextEditable">true</bool>
+					<bool name="TextScaled">false</bool>
+					<float name="TextSize">14</float>
+					<Color3 name="TextStrokeColor3">
+						<R>0</R>
+						<G>0</G>
+						<B>0</B>
+					</Color3>
+					<float name="TextStrokeTransparency">1</float>
+					<float name="TextTransparency">0</float>
+					<token name="TextTruncate">0</token>
+					<bool name="TextWrapped">false</bool>
+					<token name="TextXAlignment">2</token>
+					<token name="TextYAlignment">1</token>
+					<UniqueId name="UniqueId">6cc5de791d219f0102a16d970026927a</UniqueId>
 					<bool name="Visible">true</bool>
 					<int name="ZIndex">1</int>
 				</Properties>
@@ -960,10 +1056,13 @@ local MProgressBar = {
 	Max = 100,
 	
 	FillingOrientation = MtEnum.Orientation.Horizontal,
-	FillingInverted = false
+	FillingInverted = false,
+	
+	Bool2Bin={[false]=0, [true]=1}
+	
 }
 
-MProgressBar.Init = function(self,parent,_obj)
+function MProgressBar.Init(self,parent,_obj)
 	local _obj = MWidget.Init(self,parent,_obj)
 	_obj.Frame:Destroy()
 	
