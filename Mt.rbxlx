@@ -1267,8 +1267,11 @@ local MProgressBar = {
 	FillingOrientation = MtEnum.Orientation.Horizontal,
 	FillingInverted = false,
 	
-	Bool2Bin={[false]=0, [true]=1}
-	
+	Bool2Bin={[false]=0, [true]=1},
+	Enum2FillingGradRotation = {
+		[MtEnum.Orientation.Horizontal] = -90,
+		[MtEnum.Orientation.Vertical]   =  0 ,
+	},
 }
 
 function MProgressBar.Init(self,parent,_obj)
@@ -1365,14 +1368,9 @@ function MProgressBar.GetLabelAlignment(self): Enum.TextXAlignment
 	return self.Label.TextXAlignment
 end
 
-local enum2fillingGradRotation = {
-	[MtEnum.Orientation.Horizontal] = -90,
-	[MtEnum.Orientation.Vertical]   =  0 ,
-}
-
 function MProgressBar.SetFillingOrientation(self,orientation:string)
 	self.Filling.Size = self:GetFillingSize(orientation)
-	self.Gradient.Rotation = enum2fillingGradRotation[orientation]
+	self.Gradient.Rotation = self.Enum2FillingGradRotation[orientation]
 	self.FillingOrientation = orientation
 end
 
@@ -1380,14 +1378,9 @@ function MProgressBar.GetFillingOrientation(self): string
 	return self.FillingOrientation
 end
 
-local bool2fillingPos = {
-	[false] = 0,
-	[true] = 1
-}
-
 function MProgressBar.SetFillingInverted(self,inverted:boolean)
 	self.FillingInverted = inverted
-	local newpos = bool2fillingPos[inverted]
+	local newpos = self.Bool2Bin[inverted]
 	self.Filling.Position = UDim2.fromScale(newpos,newpos)
 	self.Filling.Size = self:GetFillingSize()
 end
