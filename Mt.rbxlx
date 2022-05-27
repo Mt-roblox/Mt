@@ -81,27 +81,27 @@
 			<Properties>
 				<BinaryString name="AttributesSerialize"></BinaryString>
 				<CoordinateFrame name="CFrame">
-					<X>-180.896698</X>
-					<Y>65.0919647</Y>
-					<Z>5.39744949</Z>
-					<R00>-0.851734042</R00>
-					<R01>-0.0765261278</R01>
-					<R02>0.518355966</R02>
-					<R10>7.4505806e-09</R10>
-					<R11>0.989277363</R11>
-					<R12>0.146049395</R12>
-					<R20>-0.523974359</R20>
-					<R21>0.124395251</R21>
-					<R22>-0.84260118</R22>
+					<X>-207.420135</X>
+					<Y>87.218544</Y>
+					<Z>8.26459503</Z>
+					<R00>-0.309024334</R00>
+					<R01>0.651031017</R01>
+					<R02>-0.693298519</R02>
+					<R10>-0</R10>
+					<R11>0.728979051</R11>
+					<R12>0.684536159</R12>
+					<R20>0.951054215</R20>
+					<R21>0.21153833</R21>
+					<R22>-0.225272238</R22>
 				</CoordinateFrame>
 				<Ref name="CameraSubject">null</Ref>
 				<token name="CameraType">0</token>
 				<float name="FieldOfView">70</float>
 				<token name="FieldOfViewMode">0</token>
 				<CoordinateFrame name="Focus">
-					<X>-181.933411</X>
-					<Y>64.7998657</Y>
-					<Z>7.08265305</Z>
+					<X>-206.033539</X>
+					<Y>85.849472</Y>
+					<Z>8.71513939</Z>
 					<R00>1</R00>
 					<R01>0</R01>
 					<R02>0</R02>
@@ -1332,11 +1332,12 @@ function MProgressBar.GetFillingSize(self,orientation:string,inverted:boolean,pr
 end
 
 function MProgressBar.SetProgress(self,progress:number)
-	local limitedProgress = self:GetLimitedProgress(progress)
-	
-	self.Progress = limitedProgress
-	self.Filling.Size = self:GetFillingSize()
-	self.Label.Text = self:GetFormattedText(limitedProgress)
+	if self.Progress ~= false then
+		local limitedProgress = self:GetLimitedProgress(progress)
+		self.Progress = limitedProgress
+		self.Filling.Size = self:GetFillingSize()
+		self.Label.Text = self:GetFormattedText(limitedProgress)
+	end
 end
 
 function MProgressBar.GetProgress(self): number
