@@ -1281,7 +1281,8 @@ function MProgressBar.Init(self,parent,_obj)
 	local clone = script.progressbar:Clone()
 	_obj.Filling = clone.filling
 	_obj.Label = clone.label
-	_obj.Gradient = clone.filling.UIGradient
+	_obj.Gradient = clone.filling.Gradient
+	_obj.UndefGradient = clone.filling.UndefinedGradient
 	_obj.Frame = clone
 	
 	MProgressBar.SetProgress(_obj,24)
@@ -1342,6 +1343,18 @@ end
 
 function MProgressBar.GetProgress(self): number
 	return self.Progress
+end
+
+function MProgressBar.SetUndefinedProgress(self,undefined:boolean)
+	self.UndefGradient.Enabled = undefined
+	self.Gradient.Enabled = not undefined
+	
+	if undefined then
+		self:SetProgress(0)
+	else
+		self.Progress = false
+		
+	end
 end
 
 function MProgressBar.SetFormat(self,format:string)
@@ -1575,7 +1588,7 @@ return MProgressBar]]></ProtectedString>
 									<BinaryString name="AttributesSerialize"></BinaryString>
 									<ColorSequence name="Color">0 0.333333 1 0 0 1 0.607843 1 0.411765 0 </ColorSequence>
 									<bool name="Enabled">true</bool>
-									<string name="Name">UIGradient</string>
+									<string name="Name">Gradient</string>
 									<Vector2 name="Offset">
 										<X>0</X>
 										<Y>0</Y>
@@ -1585,6 +1598,23 @@ return MProgressBar]]></ProtectedString>
 									<BinaryString name="Tags"></BinaryString>
 									<NumberSequence name="Transparency">0 0 0 1 0 0 </NumberSequence>
 									<UniqueId name="UniqueId">72e3064f72345eb8029aa0820002b4e6</UniqueId>
+								</Properties>
+							</Item>
+							<Item class="UIGradient" referent="RBX4C66B2B9A8AB4676A18C39C07EDD5B13">
+								<Properties>
+									<BinaryString name="AttributesSerialize"></BinaryString>
+									<ColorSequence name="Color">0 0.313726 0.313726 0.313726 0 0.499168 0.333333 1 0 0 1 0.313726 0.313726 0.313726 0 </ColorSequence>
+									<bool name="Enabled">true</bool>
+									<string name="Name">UndefinedGradient</string>
+									<Vector2 name="Offset">
+										<X>0</X>
+										<Y>0</Y>
+									</Vector2>
+									<float name="Rotation">0</float>
+									<int64 name="SourceAssetId">-1</int64>
+									<BinaryString name="Tags"></BinaryString>
+									<NumberSequence name="Transparency">0 0 0 1 0 0 </NumberSequence>
+									<UniqueId name="UniqueId">16861249f3c0b07402aaa8880004cf60</UniqueId>
 								</Properties>
 							</Item>
 						</Item>
