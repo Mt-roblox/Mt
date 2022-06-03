@@ -1362,7 +1362,7 @@ function MProgressBar.SetProgress(self,progress:number)
 end
 
 function MProgressBar.GetProgress(self): number
-	return self.Progress
+	return self.Progress~=false and self.Progress or 0 -- progress if progress~=false else 0
 end
 
 function MProgressBar.SetUndefGradOffset(self,offset:number)
@@ -1402,6 +1402,11 @@ function MProgressBar.SetUndefinedProgress(self,undefined:boolean)
 	end
 end
 
+function MProgressBar.GetUndefinedProgress(self): boolean
+	-- returns if progress is undefined
+	return self.Progress == false
+end
+
 function MProgressBar.SetFormat(self,format:string)
 	self.Label.Text = self:GetFormattedText(self:GetProgress(),format)
 	self.Format = format
@@ -1428,7 +1433,10 @@ function MProgressBar.GetLabelAlignment(self): Enum.TextXAlignment
 end
 
 function MProgressBar.SetFillingOrientation(self,orientation:string)
-	self.Filling.Size = self:GetFillingSize(orientation)
+	if not self:GetUndefinedProgress() then
+		self.Filling.Size = self:GetFillingSize(orientation)
+	end
+	
 	local newrot = self.Enum2FillingGradRotation[orientation]
 	self.Gradient.Rotation = newrot
 	self.UndefGradient.Rotation = newrot
@@ -1441,9 +1449,11 @@ end
 
 function MProgressBar.SetFillingInverted(self,inverted:boolean)
 	self.FillingInverted = inverted
-	local newpos = self.Bool2Bin[inverted]
-	self.Filling.Position = UDim2.fromScale(newpos,newpos)
-	self.Filling.Size = self:GetFillingSize()
+	if not self:GetUndefinedProgress() then
+		local newpos = self.Bool2Bin[inverted]
+		self.Filling.Position = UDim2.fromScale(newpos,newpos)
+		self.Filling.Size = self:GetFillingSize()
+	end
 end
 
 function MProgressBar.GetFillingInverted(self): boolean
