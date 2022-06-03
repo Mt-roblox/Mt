@@ -1275,6 +1275,10 @@ local MProgressBar = {
 		[MtEnum.Orientation.Horizontal] = -90,
 		[MtEnum.Orientation.Vertical]   =  0 ,
 	},
+	Enum2FillingUndefGradRotation = {
+		[MtEnum.Orientation.Horizontal] = 0  ,
+		[MtEnum.Orientation.Vertical]   = -90,
+	},
 }
 
 function MProgressBar.Init(self,parent,_obj)
@@ -1437,9 +1441,8 @@ function MProgressBar.SetFillingOrientation(self,orientation:string)
 		self.Filling.Size = self:GetFillingSize(orientation)
 	end
 	
-	local newrot = self.Enum2FillingGradRotation[orientation]
-	self.Gradient.Rotation = newrot
-	self.UndefGradient.Rotation = newrot
+	self.Gradient.Rotation = self.Enum2FillingGradRotation[orientation]
+	self.UndefGradient.Rotation = self.Enum2FillingUndefGradRotation[orientation]
 	self.FillingOrientation = orientation
 end
 
