@@ -543,6 +543,8 @@ bar:SetLabelAlignment(Enum.TextXAlignment.Center)
 bar:SetLabelVisibility(true)
 bar:SetFormat("Progress: {p}%")
 bar:SetUndefinedProgress(true)
+bar:SetUndefinedProgress(false)
+bar:SetUndefinedProgress(true)
 --bar:SetFillingOrientation(MtEnum.Orientation.Vertical)
 --bar:SetFillingInverted(true)
 
@@ -1391,6 +1393,7 @@ function MProgressBar.SetUndefinedProgress(self,undefined:boolean)
 	self.Gradient.Enabled = not undefined
 	
 	if not undefined then
+		self.Progress = 0 -- this will stop the drag undef grad coroutine
 		self:SetProgress(0)
 	else
 		self.Progress = false
