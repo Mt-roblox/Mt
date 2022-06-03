@@ -542,6 +542,7 @@ bar:SetProgress(0)
 bar:SetLabelAlignment(Enum.TextXAlignment.Center)
 bar:SetLabelVisibility(true)
 bar:SetFormat("Progress: {p}%")
+bar:SetUndefinedProgress(true)
 --bar:SetFillingOrientation(MtEnum.Orientation.Vertical)
 --bar:SetFillingInverted(true)
 
@@ -1252,7 +1253,7 @@ return mtwidgets]]></ProtectedString>
 						<ProtectedString name="Source"><![CDATA[local repstrg = game:GetService("ReplicatedStorage")
 local MWidget = require(repstrg.Mt.MtWidgets.MWidget)
 local MtEnum = require(repstrg.Mt.MtCore.MtEnum)
-local uis = game:GetService("UserInputService")
+local ts = game:GetService("TweenService")
 
 local MProgressBar = {
 	ClassName = "MProgressBar", -- See Mt.MtCore.MObject
@@ -1281,9 +1282,26 @@ function MProgressBar.Init(self,parent,_obj)
 	local clone = script.progressbar:Clone()
 	_obj.Filling = clone.filling
 	_obj.Label = clone.label
-	_obj.Gradient = clone.filling.Gradient
+	_obj.Gradient = _obj.Filling.Gradient
 	_obj.UndefGradient = clone.filling.UndefinedGradient
 	_obj.Frame = clone
+	
+	_obj.UndefTweenGoal = {Offset = Vector2.new(1,0)}
+	_obj.UndefTween = ts:Create(
+		_obj.UndefGradient,
+		TweenInfo.new(
+			3,
+			Enum.EasingStyle.Quad,
+			Enum.EasingDirection.InOut,
+			0,
+			true
+		),
+		_obj.UndefTweenGoal
+	)
+	
+	_obj.DragUndefGradCoro = coroutine.create(function()
+		MProgressBar.DragUndefGradient(_obj)
+	end)
 	
 	MProgressBar.SetProgress(_obj,24)
 
@@ -1345,15 +1363,39 @@ function MProgressBar.GetProgress(self): number
 	return self.Progress
 end
 
+function MProgressBar.SetUndefGradOffset(self,offset:number)
+	if self:GetFillingOrientation() == MtEnum.Orientation.Vertical then
+		self.UndefGradient.Offset = Vector2.new(0,offset)
+	else
+		self.UndefGradient.Offset = Vector2.new(offset,0)
+	end
+end
+
+function MProgressBar.DragUndefGradient(self)
+	while self.Progress == false do
+		for i = -1,1,0.05 do
+			self:SetUndefGradOffset(i)
+			task.wait(0.025)
+		end
+		--[[
+		for i = 1,-1,0.05 do
+			self:SetUndefGradOffset(i)
+			task.wait(0.1)
+		end
+		]]
+	end
+end
+
 function MProgressBar.SetUndefinedProgress(self,undefined:boolean)
 	self.UndefGradient.Enabled = undefined
 	self.Gradient.Enabled = not undefined
 	
-	if undefined then
+	if not undefined then
 		self:SetProgress(0)
 	else
 		self.Progress = false
-		
+		self.Filling.Size = UDim2.fromScale(1,1)
+		coroutine.resume(self.DragUndefGradCoro)
 	end
 end
 
@@ -1384,7 +1426,9 @@ end
 
 function MProgressBar.SetFillingOrientation(self,orientation:string)
 	self.Filling.Size = self:GetFillingSize(orientation)
-	self.Gradient.Rotation = self.Enum2FillingGradRotation[orientation]
+	local newrot = self.Enum2FillingGradRotation[orientation]
+	self.Gradient.Rotation = newrot
+	self.UndefGradient.Rotation = newrot
 	self.FillingOrientation = orientation
 end
 
