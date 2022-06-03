@@ -543,10 +543,6 @@ bar:SetLabelAlignment(Enum.TextXAlignment.Center)
 bar:SetLabelVisibility(true)
 bar:SetFormat("Progress: {p}%")
 bar:SetUndefinedProgress(true)
-bar:SetUndefinedProgress(false)
-bar:SetUndefinedProgress(true)
---bar:SetFillingOrientation(MtEnum.Orientation.Vertical)
---bar:SetFillingInverted(true)
 
 if not game:IsLoaded() then game.Loaded:Wait() end
 
