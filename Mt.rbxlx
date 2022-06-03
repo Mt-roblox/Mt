@@ -968,6 +968,72 @@ putStuffOnWindow(page,script.page:GetChildren())]]></ProtectedString>
 					</Item>
 				</Item>
 			</Item>
+			<Item class="LocalScript" referent="RBX60DE950157D14F548149937393E75E70">
+				<Properties>
+					<BinaryString name="AttributesSerialize"></BinaryString>
+					<bool name="Disabled">false</bool>
+					<Content name="LinkedSource"><null></null></Content>
+					<string name="Name">MtProgressBarTest</string>
+					<string name="ScriptGuid">{5F3728E5-2388-4161-9565-DB53D4DDC893}</string>
+					<ProtectedString name="Source"><![CDATA[local MScreen = require(game.ReplicatedStorage.Mt.MtCore.MScreen)
+local MProgressBar = require(game.ReplicatedStorage.Mt.MtWidgets.MProgressBar)
+local MtEnum = require(game.ReplicatedStorage.Mt.MtCore.MtEnum)
+
+local screen = MScreen:Init()
+
+local bar = MProgressBar:Init(screen)
+screen:AddWidget(bar)
+bar:SetPosition(Vector2.new(100,100))
+bar:Resize(Vector2.new(200,200))
+bar:SetProgress(0)
+bar:SetLabelAlignment(Enum.TextXAlignment.Center)
+bar:SetLabelVisibility(true)
+bar:SetFormat("{p}%")
+bar:SetUndefinedProgress(true)
+
+--[[
+if not game:IsLoaded() then game.Loaded:Wait() end
+local gui = game.Players.LocalPlayer.PlayerGui:WaitForChild("extra")
+
+local vi = gui.value
+vi.FocusLost:Connect(function(enter)
+	if enter then
+		bar:SetProgress(tonumber(vi.Text) or 0)
+	end
+end)
+
+local fi = gui.format
+fi.FocusLost:Connect(function(enter)
+	if enter then
+		bar:SetFormat(fi.Text)
+	end
+end)
+
+local i = false
+local ii = gui.inverted
+
+ii.MouseButton1Down:Connect(function(enter)
+	bar:SetFillingInverted(not i)
+	i = bar:GetFillingInverted()
+end)
+
+local o = MtEnum.Orientation.Horizontal
+local oi = gui.orientation
+
+oi.MouseButton1Down:Connect(function(enter)
+	if o == MtEnum.Orientation.Vertical then
+		o = MtEnum.Orientation.Horizontal
+	else
+		o = MtEnum.Orientation.Vertical
+	end
+	bar:SetFillingOrientation(o)
+end)
+]]]]></ProtectedString>
+					<int64 name="SourceAssetId">-1</int64>
+					<BinaryString name="Tags"></BinaryString>
+					<UniqueId name="UniqueId">2c4fe3e3f18b662702abd6620002b592</UniqueId>
+				</Properties>
+			</Item>
 		</Item>
 		<Item class="StarterCharacterScripts" referent="RBX3A07D90B2FAD4148B7E14B1228EF9AB4">
 			<Properties>
@@ -2643,6 +2709,889 @@ return MWindowResizeRegion]]></ProtectedString>
 						</Properties>
 					</Item>
 				</Item>
+				<Item class="ModuleScript" referent="RBX391F9E164AE64F81A9A7A1FE6E2FDE05">
+					<Properties>
+						<BinaryString name="AttributesSerialize"></BinaryString>
+						<Content name="LinkedSource"><null></null></Content>
+						<string name="Name">MProgressBar</string>
+						<string name="ScriptGuid">{84533514-0FD2-4718-8D24-7F8B6CAB21E0}</string>
+						<ProtectedString name="Source"><![CDATA[local repstrg = game:GetService("ReplicatedStorage")
+local MWidget = require(repstrg.Mt.MtWidgets.MWidget)
+local MtEnum = require(repstrg.Mt.MtCore.MtEnum)
+local ts = game:GetService("TweenService")
+
+local MProgressBar = {
+	ClassName = "MProgressBar", -- See Mt.MtCore.MObject
+	Name = "progressbar",       -- ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^
+	
+	Progress = 0,
+	Format = "{p}%",
+	
+	Min = 0,
+	Max = 100,
+	
+	FillingOrientation = MtEnum.Orientation.Horizontal,
+	FillingInverted = false,
+	
+	Bool2Bin={[false]=0, [true]=1},
+	Enum2FillingGradRotation = {
+		[MtEnum.Orientation.Horizontal] = -90,
+		[MtEnum.Orientation.Vertical]   =  0 ,
+	},
+	Enum2FillingUndefGradRotation = {
+		[MtEnum.Orientation.Horizontal] = 0  ,
+		[MtEnum.Orientation.Vertical]   = -90,
+	},
+}
+
+function MProgressBar.Init(self,parent,_obj)
+	local _obj = MWidget.Init(self,parent,_obj)
+	_obj.Frame:Destroy()
+	
+	local clone = script.progressbar:Clone()
+	_obj.Filling = clone.filling
+	_obj.Label = clone.label
+	_obj.Gradient = _obj.Filling.Gradient
+	_obj.UndefGradient = clone.filling.UndefinedGradient
+	_obj.Frame = clone
+	
+	_obj.UndefTweenGoal = {Offset = Vector2.new(1,0)}
+	_obj.UndefTween = ts:Create(
+		_obj.UndefGradient,
+		TweenInfo.new(
+			3,
+			Enum.EasingStyle.Quad,
+			Enum.EasingDirection.InOut,
+			0,
+			true
+		),
+		_obj.UndefTweenGoal
+	)
+	
+	_obj.DragUndefGradCoro = coroutine.create(function()
+		MProgressBar.DragUndefGradient(_obj)
+	end)
+	
+	MProgressBar.SetProgress(_obj,24)
+
+	return _obj
+end
+
+function MProgressBar.GetFormattedText(self,progress:number,format:string): string
+	if self:GetUndefinedProgress() then
+		progress = "?"
+	else
+		progress = tostring(progress) or tostring(self:GetProgress())
+	end
+	
+	format = format or self:GetFormat()
+	
+	return string.gsub(format,"{p}",progress)
+end
+
+function MProgressBar.GetLimitedProgress(self,progress:number,min:number,max:number): number
+	progress = progress or self:GetProgress()
+	min = min or self.Min
+	max = max or self.Max
+	
+	if progress < min then
+		return min
+	elseif progress > max then
+		return max
+	else
+		return progress
+	end
+end
+
+local function _returnNeg(n:number,yes:boolean): number
+	if yes then return -n end
+	return n
+end
+
+function MProgressBar.GetFillingSize(self,orientation:string,inverted:boolean,progress:number,max:number): UDim2
+	orientation = orientation or self:GetFillingOrientation()
+	inverted = inverted or self:GetFillingInverted()
+	progress = progress or self:GetProgress()
+	max = max or self.Max
+	
+	local ns1 = _returnNeg(progress/max,inverted)
+	local ns2 = _returnNeg(1,inverted)
+	
+	if orientation == MtEnum.Orientation.Vertical then
+		return UDim2.fromScale(ns2,ns1)
+	else
+		return UDim2.fromScale(ns1,ns2)
+	end
+end
+
+function MProgressBar.SetProgress(self,progress:number)
+	progress = progress or self:GetProgress()
+	
+	if self.Progress ~= false then
+		local limitedProgress = self:GetLimitedProgress(progress)
+		self.Progress = limitedProgress
+		self.Filling.Size = self:GetFillingSize()
+		self.Label.Text = self:GetFormattedText(limitedProgress)
+	end
+end
+
+function MProgressBar.GetProgress(self): number
+	return self.Progress~=false and self.Progress or 0 -- progress if progress~=false else 0
+end
+
+function MProgressBar.SetUndefGradOffset(self,offset:number)
+	offset = _returnNeg(offset,self:GetFillingInverted())
+	if self:GetFillingOrientation() == MtEnum.Orientation.Vertical then
+		self.UndefGradient.Offset = Vector2.new(0,offset)
+	else
+		self.UndefGradient.Offset = Vector2.new(offset,0)
+	end
+end
+
+function MProgressBar.DragUndefGradient(self)
+	while self.Progress == false do
+		for i = -1,1,0.05 do
+			self:SetUndefGradOffset(i)
+			task.wait(0.025)
+		end
+		--[[
+		for i = 1,-1,0.05 do
+			self:SetUndefGradOffset(i)
+			task.wait(0.1)
+		end
+		]]
+	end
+end
+
+function MProgressBar.SetUndefinedProgress(self,undefined:boolean)
+	self.UndefGradient.Enabled = undefined
+	self.Gradient.Enabled = not undefined
+	
+	if not undefined then
+		self.Progress = 0 -- this will stop the drag undef grad coroutine
+		self:SetProgress(0)
+	else
+		self.Progress = false
+		self.Filling.Size = UDim2.fromScale(1,1)
+		self.Label.Text = self:GetFormattedText()
+		coroutine.resume(self.DragUndefGradCoro)
+	end
+end
+
+function MProgressBar.GetUndefinedProgress(self): boolean
+	-- returns if progress is undefined
+	return self.Progress == false
+end
+
+function MProgressBar.SetFormat(self,format:string)
+	self.Label.Text = self:GetFormattedText(self:GetProgress(),format)
+	self.Format = format
+end
+
+function MProgressBar.GetFormat(self): string
+	return self.Format
+end
+
+function MProgressBar.SetLabelVisibility(self,visible:boolean)
+	self.Label.Visible = visible
+end
+
+function MProgressBar.GetLabelVisibility(self): boolean
+	return self.Label.Visible
+end
+
+function MProgressBar.SetLabelAlignment(self,alignment:Enum.TextXAlignment)
+	self.Label.TextXAlignment = alignment
+end
+
+function MProgressBar.GetLabelAlignment(self): Enum.TextXAlignment
+	return self.Label.TextXAlignment
+end
+
+function MProgressBar.SetFillingOrientation(self,orientation:string)
+	if not self:GetUndefinedProgress() then
+		self.Filling.Size = self:GetFillingSize(orientation)
+	end
+	
+	self.Gradient.Rotation = self.Enum2FillingGradRotation[orientation]
+	self.UndefGradient.Rotation = self.Enum2FillingUndefGradRotation[orientation]
+	self.FillingOrientation = orientation
+end
+
+function MProgressBar.GetFillingOrientation(self): string
+	return self.FillingOrientation
+end
+
+function MProgressBar.SetFillingInverted(self,inverted:boolean)
+	self.FillingInverted = inverted
+	if not self:GetUndefinedProgress() then
+		local newpos = self.Bool2Bin[inverted]
+		self.Filling.Position = UDim2.fromScale(newpos,newpos)
+		self.Filling.Size = self:GetFillingSize()
+	end
+end
+
+function MProgressBar.GetFillingInverted(self): boolean
+	return self.FillingInverted
+end
+
+function MProgressBar.SetMaximum(self,max:number)
+	self.Max = max
+	self:SetProgress()
+end
+
+function MProgressBar.SetMinimum(self,min:number)
+	self.Min = min
+	self:SetProgress()
+end
+
+function MProgressBar.GetMaximum(self): number
+	return self.Max
+end
+
+function MProgressBar.GetMinimum(self): number
+	return self.Min
+end
+
+function MProgressBar.SetProgressLimit(self,min:number,max:number)
+	self:SetMinimum(min)
+	self:SetMaximum(max)
+end
+
+function MProgressBar.GetProgressLimit(self): (number,number)
+	return self:GetMinimum(), self:GetMaximum()
+end
+
+MProgressBar = MWidget:Init({},MProgressBar,-1)
+
+return MProgressBar]]></ProtectedString>
+						<int64 name="SourceAssetId">-1</int64>
+						<BinaryString name="Tags"></BinaryString>
+						<UniqueId name="UniqueId">2c4fe3e3f18b662702abd6620004cffe</UniqueId>
+					</Properties>
+					<Item class="Frame" referent="RBXD30B343D8D954B4BB853DD65533E6F84">
+						<Properties>
+							<bool name="Active">false</bool>
+							<Vector2 name="AnchorPoint">
+								<X>0</X>
+								<Y>0</Y>
+							</Vector2>
+							<BinaryString name="AttributesSerialize"></BinaryString>
+							<bool name="AutoLocalize">true</bool>
+							<token name="AutomaticSize">0</token>
+							<Color3 name="BackgroundColor3">
+								<R>0.313725501</R>
+								<G>0.313725501</G>
+								<B>0.313725501</B>
+							</Color3>
+							<float name="BackgroundTransparency">0</float>
+							<Color3 name="BorderColor3">
+								<R>0.105882362</R>
+								<G>0.164705887</G>
+								<B>0.207843155</B>
+							</Color3>
+							<token name="BorderMode">0</token>
+							<int name="BorderSizePixel">1</int>
+							<bool name="ClipsDescendants">true</bool>
+							<bool name="Draggable">false</bool>
+							<int name="LayoutOrder">0</int>
+							<string name="Name">progressbar</string>
+							<Ref name="NextSelectionDown">null</Ref>
+							<Ref name="NextSelectionLeft">null</Ref>
+							<Ref name="NextSelectionRight">null</Ref>
+							<Ref name="NextSelectionUp">null</Ref>
+							<UDim2 name="Position">
+								<XS>0</XS>
+								<XO>0</XO>
+								<YS>0</YS>
+								<YO>0</YO>
+							</UDim2>
+							<Ref name="RootLocalizationTable">null</Ref>
+							<float name="Rotation">0</float>
+							<bool name="Selectable">false</bool>
+							<token name="SelectionBehaviorDown">0</token>
+							<token name="SelectionBehaviorLeft">0</token>
+							<token name="SelectionBehaviorRight">0</token>
+							<token name="SelectionBehaviorUp">0</token>
+							<bool name="SelectionGroup">false</bool>
+							<Ref name="SelectionImageObject">null</Ref>
+							<int name="SelectionOrder">0</int>
+							<UDim2 name="Size">
+								<XS>0</XS>
+								<XO>276</XO>
+								<YS>0</YS>
+								<YO>40</YO>
+							</UDim2>
+							<token name="SizeConstraint">0</token>
+							<int64 name="SourceAssetId">-1</int64>
+							<token name="Style">0</token>
+							<BinaryString name="Tags"></BinaryString>
+							<UniqueId name="UniqueId">2c4fe3e3f18b662702abd6620004cffa</UniqueId>
+							<bool name="Visible">true</bool>
+							<int name="ZIndex">1</int>
+						</Properties>
+						<Item class="UIStroke" referent="RBX1347B7689F0F4FE493BC7013C3A1049D">
+							<Properties>
+								<token name="ApplyStrokeMode">0</token>
+								<BinaryString name="AttributesSerialize"></BinaryString>
+								<Color3 name="Color">
+									<R>0</R>
+									<G>0</G>
+									<B>0</B>
+								</Color3>
+								<bool name="Enabled">true</bool>
+								<token name="LineJoinMode">0</token>
+								<string name="Name">UIStroke</string>
+								<int64 name="SourceAssetId">-1</int64>
+								<BinaryString name="Tags"></BinaryString>
+								<float name="Thickness">5</float>
+								<float name="Transparency">0</float>
+								<UniqueId name="UniqueId">2c4fe3e3f18b662702abd6620004d007</UniqueId>
+							</Properties>
+						</Item>
+						<Item class="UICorner" referent="RBX0D81D89C56F8415A9416548FD2333FBD">
+							<Properties>
+								<BinaryString name="AttributesSerialize"></BinaryString>
+								<UDim name="CornerRadius">
+									<S>0</S>
+									<O>2</O>
+								</UDim>
+								<string name="Name">UICorner</string>
+								<int64 name="SourceAssetId">-1</int64>
+								<BinaryString name="Tags"></BinaryString>
+								<UniqueId name="UniqueId">2c4fe3e3f18b662702abd6620004d001</UniqueId>
+							</Properties>
+						</Item>
+						<Item class="Frame" referent="RBX8C3DDC8A82354A1B9B0E8EE6E194015D">
+							<Properties>
+								<bool name="Active">false</bool>
+								<Vector2 name="AnchorPoint">
+									<X>0</X>
+									<Y>0</Y>
+								</Vector2>
+								<BinaryString name="AttributesSerialize"></BinaryString>
+								<bool name="AutoLocalize">true</bool>
+								<token name="AutomaticSize">0</token>
+								<Color3 name="BackgroundColor3">
+									<R>1</R>
+									<G>1</G>
+									<B>1</B>
+								</Color3>
+								<float name="BackgroundTransparency">0</float>
+								<Color3 name="BorderColor3">
+									<R>0.105882362</R>
+									<G>0.164705887</G>
+									<B>0.207843155</B>
+								</Color3>
+								<token name="BorderMode">0</token>
+								<int name="BorderSizePixel">0</int>
+								<bool name="ClipsDescendants">false</bool>
+								<bool name="Draggable">false</bool>
+								<int name="LayoutOrder">0</int>
+								<string name="Name">filling</string>
+								<Ref name="NextSelectionDown">null</Ref>
+								<Ref name="NextSelectionLeft">null</Ref>
+								<Ref name="NextSelectionRight">null</Ref>
+								<Ref name="NextSelectionUp">null</Ref>
+								<UDim2 name="Position">
+									<XS>0</XS>
+									<XO>0</XO>
+									<YS>0</YS>
+									<YO>0</YO>
+								</UDim2>
+								<Ref name="RootLocalizationTable">null</Ref>
+								<float name="Rotation">0</float>
+								<bool name="Selectable">false</bool>
+								<token name="SelectionBehaviorDown">0</token>
+								<token name="SelectionBehaviorLeft">0</token>
+								<token name="SelectionBehaviorRight">0</token>
+								<token name="SelectionBehaviorUp">0</token>
+								<bool name="SelectionGroup">false</bool>
+								<Ref name="SelectionImageObject">null</Ref>
+								<int name="SelectionOrder">0</int>
+								<UDim2 name="Size">
+									<XS>0</XS>
+									<XO>2</XO>
+									<YS>1</YS>
+									<YO>0</YO>
+								</UDim2>
+								<token name="SizeConstraint">0</token>
+								<int64 name="SourceAssetId">-1</int64>
+								<token name="Style">0</token>
+								<BinaryString name="Tags"></BinaryString>
+								<UniqueId name="UniqueId">2c4fe3e3f18b662702abd6620004cffb</UniqueId>
+								<bool name="Visible">true</bool>
+								<int name="ZIndex">1</int>
+							</Properties>
+							<Item class="UIStroke" referent="RBX3E984C30CFC14972A181722A3B992AE6">
+								<Properties>
+									<token name="ApplyStrokeMode">0</token>
+									<BinaryString name="AttributesSerialize"></BinaryString>
+									<Color3 name="Color">
+										<R>0</R>
+										<G>0.333333343</G>
+										<B>0</B>
+									</Color3>
+									<bool name="Enabled">false</bool>
+									<token name="LineJoinMode">0</token>
+									<string name="Name">UIStroke</string>
+									<int64 name="SourceAssetId">-1</int64>
+									<BinaryString name="Tags"></BinaryString>
+									<float name="Thickness">5</float>
+									<float name="Transparency">0</float>
+									<UniqueId name="UniqueId">2c4fe3e3f18b662702abd6620004d008</UniqueId>
+								</Properties>
+							</Item>
+							<Item class="UIGradient" referent="RBX97FC92BEAB334D419793C2C53DA9AE09">
+								<Properties>
+									<BinaryString name="AttributesSerialize"></BinaryString>
+									<ColorSequence name="Color">0 0.333333 1 0 0 1 0.607843 1 0.411765 0 </ColorSequence>
+									<bool name="Enabled">true</bool>
+									<string name="Name">Gradient</string>
+									<Vector2 name="Offset">
+										<X>0</X>
+										<Y>0</Y>
+									</Vector2>
+									<float name="Rotation">-90</float>
+									<int64 name="SourceAssetId">-1</int64>
+									<BinaryString name="Tags"></BinaryString>
+									<NumberSequence name="Transparency">0 0 0 1 0 0 </NumberSequence>
+									<UniqueId name="UniqueId">2c4fe3e3f18b662702abd6620004d004</UniqueId>
+								</Properties>
+							</Item>
+							<Item class="UIGradient" referent="RBX5FA0E7AE3EAC4CE29CC5BA4C425C8C7B">
+								<Properties>
+									<BinaryString name="AttributesSerialize"></BinaryString>
+									<ColorSequence name="Color">0 0.313726 0.313726 0.313726 0 0.499168 0.333333 1 0 0 1 0.313726 0.313726 0.313726 0 </ColorSequence>
+									<bool name="Enabled">true</bool>
+									<string name="Name">UndefinedGradient</string>
+									<Vector2 name="Offset">
+										<X>0</X>
+										<Y>0</Y>
+									</Vector2>
+									<float name="Rotation">0</float>
+									<int64 name="SourceAssetId">-1</int64>
+									<BinaryString name="Tags"></BinaryString>
+									<NumberSequence name="Transparency">0 0 0 1 0 0 </NumberSequence>
+									<UniqueId name="UniqueId">2c4fe3e3f18b662702abd6620004d005</UniqueId>
+								</Properties>
+							</Item>
+						</Item>
+						<Item class="TextLabel" referent="RBX2A932FBEC4BA4E3E85BD345452EFDEBB">
+							<Properties>
+								<bool name="Active">false</bool>
+								<Vector2 name="AnchorPoint">
+									<X>0</X>
+									<Y>0</Y>
+								</Vector2>
+								<BinaryString name="AttributesSerialize"></BinaryString>
+								<bool name="AutoLocalize">true</bool>
+								<token name="AutomaticSize">0</token>
+								<Color3 name="BackgroundColor3">
+									<R>1</R>
+									<G>1</G>
+									<B>1</B>
+								</Color3>
+								<float name="BackgroundTransparency">1</float>
+								<Color3 name="BorderColor3">
+									<R>0.105882362</R>
+									<G>0.164705887</G>
+									<B>0.207843155</B>
+								</Color3>
+								<token name="BorderMode">0</token>
+								<int name="BorderSizePixel">1</int>
+								<bool name="ClipsDescendants">false</bool>
+								<bool name="Draggable">false</bool>
+								<token name="Font">4</token>
+								<Font name="FontFace"></Font>
+								<int name="LayoutOrder">0</int>
+								<float name="LineHeight">1</float>
+								<int name="MaxVisibleGraphemes">-1</int>
+								<string name="Name">label</string>
+								<Ref name="NextSelectionDown">null</Ref>
+								<Ref name="NextSelectionLeft">null</Ref>
+								<Ref name="NextSelectionRight">null</Ref>
+								<Ref name="NextSelectionUp">null</Ref>
+								<UDim2 name="Position">
+									<XS>0</XS>
+									<XO>0</XO>
+									<YS>0</YS>
+									<YO>0</YO>
+								</UDim2>
+								<bool name="RichText">false</bool>
+								<Ref name="RootLocalizationTable">null</Ref>
+								<float name="Rotation">0</float>
+								<bool name="Selectable">false</bool>
+								<token name="SelectionBehaviorDown">0</token>
+								<token name="SelectionBehaviorLeft">0</token>
+								<token name="SelectionBehaviorRight">0</token>
+								<token name="SelectionBehaviorUp">0</token>
+								<bool name="SelectionGroup">false</bool>
+								<Ref name="SelectionImageObject">null</Ref>
+								<int name="SelectionOrder">0</int>
+								<UDim2 name="Size">
+									<XS>1</XS>
+									<XO>0</XO>
+									<YS>1</YS>
+									<YO>0</YO>
+								</UDim2>
+								<token name="SizeConstraint">0</token>
+								<int64 name="SourceAssetId">-1</int64>
+								<BinaryString name="Tags"></BinaryString>
+								<string name="Text">24%</string>
+								<Color3 name="TextColor3">
+									<R>1</R>
+									<G>1</G>
+									<B>1</B>
+								</Color3>
+								<bool name="TextScaled">true</bool>
+								<float name="TextSize">14</float>
+								<Color3 name="TextStrokeColor3">
+									<R>0</R>
+									<G>0</G>
+									<B>0</B>
+								</Color3>
+								<float name="TextStrokeTransparency">0</float>
+								<float name="TextTransparency">0</float>
+								<token name="TextTruncate">0</token>
+								<bool name="TextWrapped">true</bool>
+								<token name="TextXAlignment">2</token>
+								<token name="TextYAlignment">1</token>
+								<UniqueId name="UniqueId">2c4fe3e3f18b662702abd6620004cfff</UniqueId>
+								<bool name="Visible">true</bool>
+								<int name="ZIndex">1</int>
+							</Properties>
+							<Item class="UIStroke" referent="RBX8CE9E07B5B3944ABBD7BD8A43E496669">
+								<Properties>
+									<token name="ApplyStrokeMode">0</token>
+									<BinaryString name="AttributesSerialize"></BinaryString>
+									<Color3 name="Color">
+										<R>0</R>
+										<G>0</G>
+										<B>0</B>
+									</Color3>
+									<bool name="Enabled">true</bool>
+									<token name="LineJoinMode">0</token>
+									<string name="Name">UIStroke</string>
+									<int64 name="SourceAssetId">-1</int64>
+									<BinaryString name="Tags"></BinaryString>
+									<float name="Thickness">2</float>
+									<float name="Transparency">0</float>
+									<UniqueId name="UniqueId">2c4fe3e3f18b662702abd6620004d009</UniqueId>
+								</Properties>
+							</Item>
+						</Item>
+					</Item>
+					<Item class="Frame" referent="RBX68E26BE5AE3F479188EE6DDA5B037A67">
+						<Properties>
+							<bool name="Active">false</bool>
+							<Vector2 name="AnchorPoint">
+								<X>0</X>
+								<Y>0</Y>
+							</Vector2>
+							<BinaryString name="AttributesSerialize"></BinaryString>
+							<bool name="AutoLocalize">true</bool>
+							<token name="AutomaticSize">0</token>
+							<Color3 name="BackgroundColor3">
+								<R>0.313725501</R>
+								<G>0.313725501</G>
+								<B>0.313725501</B>
+							</Color3>
+							<float name="BackgroundTransparency">0</float>
+							<Color3 name="BorderColor3">
+								<R>0.105882362</R>
+								<G>0.164705887</G>
+								<B>0.207843155</B>
+							</Color3>
+							<token name="BorderMode">0</token>
+							<int name="BorderSizePixel">1</int>
+							<bool name="ClipsDescendants">true</bool>
+							<bool name="Draggable">false</bool>
+							<int name="LayoutOrder">0</int>
+							<string name="Name">undefinedprogressbar</string>
+							<Ref name="NextSelectionDown">null</Ref>
+							<Ref name="NextSelectionLeft">null</Ref>
+							<Ref name="NextSelectionRight">null</Ref>
+							<Ref name="NextSelectionUp">null</Ref>
+							<UDim2 name="Position">
+								<XS>0.0500000007</XS>
+								<XO>0</XO>
+								<YS>0.150000006</YS>
+								<YO>0</YO>
+							</UDim2>
+							<Ref name="RootLocalizationTable">null</Ref>
+							<float name="Rotation">0</float>
+							<bool name="Selectable">false</bool>
+							<token name="SelectionBehaviorDown">0</token>
+							<token name="SelectionBehaviorLeft">0</token>
+							<token name="SelectionBehaviorRight">0</token>
+							<token name="SelectionBehaviorUp">0</token>
+							<bool name="SelectionGroup">false</bool>
+							<Ref name="SelectionImageObject">null</Ref>
+							<int name="SelectionOrder">0</int>
+							<UDim2 name="Size">
+								<XS>0</XS>
+								<XO>276</XO>
+								<YS>0</YS>
+								<YO>40</YO>
+							</UDim2>
+							<token name="SizeConstraint">0</token>
+							<int64 name="SourceAssetId">-1</int64>
+							<token name="Style">0</token>
+							<BinaryString name="Tags"></BinaryString>
+							<UniqueId name="UniqueId">2c4fe3e3f18b662702abd6620004cffc</UniqueId>
+							<bool name="Visible">true</bool>
+							<int name="ZIndex">1</int>
+						</Properties>
+						<Item class="UIStroke" referent="RBX1FCE3C571E0249DCA69A413C8310753B">
+							<Properties>
+								<token name="ApplyStrokeMode">0</token>
+								<BinaryString name="AttributesSerialize"></BinaryString>
+								<Color3 name="Color">
+									<R>0</R>
+									<G>0</G>
+									<B>0</B>
+								</Color3>
+								<bool name="Enabled">true</bool>
+								<token name="LineJoinMode">0</token>
+								<string name="Name">UIStroke</string>
+								<int64 name="SourceAssetId">-1</int64>
+								<BinaryString name="Tags"></BinaryString>
+								<float name="Thickness">5</float>
+								<float name="Transparency">0</float>
+								<UniqueId name="UniqueId">2c4fe3e3f18b662702abd6620004d00a</UniqueId>
+							</Properties>
+						</Item>
+						<Item class="UICorner" referent="RBXC2AEE8AB8551454EAFE8063D36D29347">
+							<Properties>
+								<BinaryString name="AttributesSerialize"></BinaryString>
+								<UDim name="CornerRadius">
+									<S>0</S>
+									<O>2</O>
+								</UDim>
+								<string name="Name">UICorner</string>
+								<int64 name="SourceAssetId">-1</int64>
+								<BinaryString name="Tags"></BinaryString>
+								<UniqueId name="UniqueId">2c4fe3e3f18b662702abd6620004d002</UniqueId>
+							</Properties>
+						</Item>
+						<Item class="Frame" referent="RBX23C8E4357E7A402A9CE63B6ECD552845">
+							<Properties>
+								<bool name="Active">false</bool>
+								<Vector2 name="AnchorPoint">
+									<X>0</X>
+									<Y>0</Y>
+								</Vector2>
+								<BinaryString name="AttributesSerialize"></BinaryString>
+								<bool name="AutoLocalize">true</bool>
+								<token name="AutomaticSize">0</token>
+								<Color3 name="BackgroundColor3">
+									<R>1</R>
+									<G>1</G>
+									<B>1</B>
+								</Color3>
+								<float name="BackgroundTransparency">0</float>
+								<Color3 name="BorderColor3">
+									<R>0.105882354</R>
+									<G>0.164705887</G>
+									<B>0.20784314</B>
+								</Color3>
+								<token name="BorderMode">0</token>
+								<int name="BorderSizePixel">0</int>
+								<bool name="ClipsDescendants">false</bool>
+								<bool name="Draggable">false</bool>
+								<int name="LayoutOrder">0</int>
+								<string name="Name">filling</string>
+								<Ref name="NextSelectionDown">null</Ref>
+								<Ref name="NextSelectionLeft">null</Ref>
+								<Ref name="NextSelectionRight">null</Ref>
+								<Ref name="NextSelectionUp">null</Ref>
+								<UDim2 name="Position">
+									<XS>-0.5</XS>
+									<XO>0</XO>
+									<YS>0</YS>
+									<YO>0</YO>
+								</UDim2>
+								<Ref name="RootLocalizationTable">null</Ref>
+								<float name="Rotation">0</float>
+								<bool name="Selectable">false</bool>
+								<token name="SelectionBehaviorDown">0</token>
+								<token name="SelectionBehaviorLeft">0</token>
+								<token name="SelectionBehaviorRight">0</token>
+								<token name="SelectionBehaviorUp">0</token>
+								<bool name="SelectionGroup">false</bool>
+								<Ref name="SelectionImageObject">null</Ref>
+								<int name="SelectionOrder">0</int>
+								<UDim2 name="Size">
+									<XS>0</XS>
+									<XO>225</XO>
+									<YS>1</YS>
+									<YO>0</YO>
+								</UDim2>
+								<token name="SizeConstraint">0</token>
+								<int64 name="SourceAssetId">-1</int64>
+								<token name="Style">0</token>
+								<BinaryString name="Tags"></BinaryString>
+								<UniqueId name="UniqueId">2c4fe3e3f18b662702abd6620004cffd</UniqueId>
+								<bool name="Visible">true</bool>
+								<int name="ZIndex">1</int>
+							</Properties>
+							<Item class="UICorner" referent="RBXF9201FABE13347328A4C2E111299127B">
+								<Properties>
+									<BinaryString name="AttributesSerialize"></BinaryString>
+									<UDim name="CornerRadius">
+										<S>0</S>
+										<O>2</O>
+									</UDim>
+									<string name="Name">UICorner</string>
+									<int64 name="SourceAssetId">-1</int64>
+									<BinaryString name="Tags"></BinaryString>
+									<UniqueId name="UniqueId">2c4fe3e3f18b662702abd6620004d003</UniqueId>
+								</Properties>
+							</Item>
+							<Item class="UIStroke" referent="RBX315ABD7326AC4999AC4B30001FD0EDAD">
+								<Properties>
+									<token name="ApplyStrokeMode">0</token>
+									<BinaryString name="AttributesSerialize"></BinaryString>
+									<Color3 name="Color">
+										<R>0</R>
+										<G>0.333333343</G>
+										<B>0</B>
+									</Color3>
+									<bool name="Enabled">false</bool>
+									<token name="LineJoinMode">0</token>
+									<string name="Name">UIStroke</string>
+									<int64 name="SourceAssetId">-1</int64>
+									<BinaryString name="Tags"></BinaryString>
+									<float name="Thickness">5</float>
+									<float name="Transparency">0</float>
+									<UniqueId name="UniqueId">2c4fe3e3f18b662702abd6620004d00b</UniqueId>
+								</Properties>
+							</Item>
+							<Item class="UIGradient" referent="RBX1F64933A76CA4D1CB8E2B432C3CF4DA9">
+								<Properties>
+									<BinaryString name="AttributesSerialize"></BinaryString>
+									<ColorSequence name="Color">0 0.313726 0.313726 0.313726 0 0.499168 0.333333 1 0 0 1 0.313726 0.313726 0.313726 0 </ColorSequence>
+									<bool name="Enabled">true</bool>
+									<string name="Name">UIGradient</string>
+									<Vector2 name="Offset">
+										<X>0</X>
+										<Y>0</Y>
+									</Vector2>
+									<float name="Rotation">0</float>
+									<int64 name="SourceAssetId">-1</int64>
+									<BinaryString name="Tags"></BinaryString>
+									<NumberSequence name="Transparency">0 0 0 1 0 0 </NumberSequence>
+									<UniqueId name="UniqueId">2c4fe3e3f18b662702abd6620004d006</UniqueId>
+								</Properties>
+							</Item>
+						</Item>
+						<Item class="TextLabel" referent="RBX7A3F2D608D2A4813A8F14B0BE66B1157">
+							<Properties>
+								<bool name="Active">false</bool>
+								<Vector2 name="AnchorPoint">
+									<X>0</X>
+									<Y>0</Y>
+								</Vector2>
+								<BinaryString name="AttributesSerialize"></BinaryString>
+								<bool name="AutoLocalize">true</bool>
+								<token name="AutomaticSize">0</token>
+								<Color3 name="BackgroundColor3">
+									<R>1</R>
+									<G>1</G>
+									<B>1</B>
+								</Color3>
+								<float name="BackgroundTransparency">1</float>
+								<Color3 name="BorderColor3">
+									<R>0.105882362</R>
+									<G>0.164705887</G>
+									<B>0.207843155</B>
+								</Color3>
+								<token name="BorderMode">0</token>
+								<int name="BorderSizePixel">1</int>
+								<bool name="ClipsDescendants">false</bool>
+								<bool name="Draggable">false</bool>
+								<token name="Font">3</token>
+								<Font name="FontFace"></Font>
+								<int name="LayoutOrder">0</int>
+								<float name="LineHeight">1</float>
+								<int name="MaxVisibleGraphemes">-1</int>
+								<string name="Name">label</string>
+								<Ref name="NextSelectionDown">null</Ref>
+								<Ref name="NextSelectionLeft">null</Ref>
+								<Ref name="NextSelectionRight">null</Ref>
+								<Ref name="NextSelectionUp">null</Ref>
+								<UDim2 name="Position">
+									<XS>0</XS>
+									<XO>0</XO>
+									<YS>0</YS>
+									<YO>0</YO>
+								</UDim2>
+								<bool name="RichText">false</bool>
+								<Ref name="RootLocalizationTable">null</Ref>
+								<float name="Rotation">0</float>
+								<bool name="Selectable">false</bool>
+								<token name="SelectionBehaviorDown">0</token>
+								<token name="SelectionBehaviorLeft">0</token>
+								<token name="SelectionBehaviorRight">0</token>
+								<token name="SelectionBehaviorUp">0</token>
+								<bool name="SelectionGroup">false</bool>
+								<Ref name="SelectionImageObject">null</Ref>
+								<int name="SelectionOrder">0</int>
+								<UDim2 name="Size">
+									<XS>1</XS>
+									<XO>0</XO>
+									<YS>1</YS>
+									<YO>0</YO>
+								</UDim2>
+								<token name="SizeConstraint">0</token>
+								<int64 name="SourceAssetId">-1</int64>
+								<BinaryString name="Tags"></BinaryString>
+								<string name="Text">24%</string>
+								<Color3 name="TextColor3">
+									<R>1</R>
+									<G>1</G>
+									<B>1</B>
+								</Color3>
+								<bool name="TextScaled">true</bool>
+								<float name="TextSize">14</float>
+								<Color3 name="TextStrokeColor3">
+									<R>0</R>
+									<G>0</G>
+									<B>0</B>
+								</Color3>
+								<float name="TextStrokeTransparency">0</float>
+								<float name="TextTransparency">0</float>
+								<token name="TextTruncate">0</token>
+								<bool name="TextWrapped">true</bool>
+								<token name="TextXAlignment">2</token>
+								<token name="TextYAlignment">1</token>
+								<UniqueId name="UniqueId">2c4fe3e3f18b662702abd6620004d000</UniqueId>
+								<bool name="Visible">false</bool>
+								<int name="ZIndex">1</int>
+							</Properties>
+							<Item class="UIStroke" referent="RBX3DD2BF0494B846F79DD44FA10A27DA4A">
+								<Properties>
+									<token name="ApplyStrokeMode">0</token>
+									<BinaryString name="AttributesSerialize"></BinaryString>
+									<Color3 name="Color">
+										<R>0</R>
+										<G>0</G>
+										<B>0</B>
+									</Color3>
+									<bool name="Enabled">true</bool>
+									<token name="LineJoinMode">0</token>
+									<string name="Name">UIStroke</string>
+									<int64 name="SourceAssetId">-1</int64>
+									<BinaryString name="Tags"></BinaryString>
+									<float name="Thickness">2</float>
+									<float name="Transparency">0</float>
+									<UniqueId name="UniqueId">2c4fe3e3f18b662702abd6620004d00c</UniqueId>
+								</Properties>
+							</Item>
+						</Item>
+					</Item>
+				</Item>
 			</Item>
 			<Item class="ModuleScript" referent="RBXF2A4ECEF2BD7426C8EB12741360379F8">
 				<Properties>
@@ -2838,7 +3787,6 @@ local _getObjFromId = require(script.Parent.MtCoreFunctions)._getObjFromId
 local MScreen = {
 	Name = "screen",
 	ClassName = "MScreen",
-	Widgets = {},
 	ScrX=1,
 	ScrY=1,
 }
@@ -2847,6 +3795,8 @@ MScreen.Init = function(self,plr,parent,_obj)
 	local _obj = MObject.Init(self,parent,_obj)
 
 	_obj.Player = plr or game:GetService("Players").LocalPlayer
+	
+	_obj.Widgets = {}
 
 	_obj.ScreenGui = Instance.new("ScreenGui")
 	_obj.ScreenGui.Name = _obj.Name
