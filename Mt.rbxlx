@@ -541,7 +541,7 @@ bar:Resize(Vector2.new(200,200))
 bar:SetProgress(0)
 bar:SetLabelAlignment(Enum.TextXAlignment.Center)
 bar:SetLabelVisibility(true)
-bar:SetFormat("Progress: {p}%")
+bar:SetFormat("{p}%")
 bar:SetUndefinedProgress(true)
 
 if not game:IsLoaded() then game.Loaded:Wait() end
@@ -1358,6 +1358,8 @@ function MProgressBar.GetFillingSize(self,orientation:string,inverted:boolean,pr
 end
 
 function MProgressBar.SetProgress(self,progress:number)
+	progress = progress or self:GetProgress()
+	
 	if self.Progress ~= false then
 		local limitedProgress = self:GetLimitedProgress(progress)
 		self.Progress = limitedProgress
@@ -1464,6 +1466,33 @@ end
 
 function MProgressBar.GetFillingInverted(self): boolean
 	return self.FillingInverted
+end
+
+function MProgressBar.SetMaximum(self,max:number)
+	self.Max = max
+	self:SetProgress()
+end
+
+function MProgressBar.SetMinimum(self,min:number)
+	self.Min = min
+	self:SetProgress()
+end
+
+function MProgressBar.GetMaximum(self): number
+	return self.Max
+end
+
+function MProgressBar.GetMinimum(self): number
+	return self.Min
+end
+
+function MProgressBar.SetProgressLimit(self,min:number,max:number)
+	self:SetMinimum(min)
+	self:SetMaximum(max)
+end
+
+function MProgressBar.GetProgressLimit(self): (number,number)
+	return self:GetMinimum(), self:GetMaximum()
 end
 
 MProgressBar = MWidget:Init({},MProgressBar,-1)
