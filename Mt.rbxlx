@@ -1311,10 +1311,15 @@ function MProgressBar.Init(self,parent,_obj)
 end
 
 function MProgressBar.GetFormattedText(self,progress:number,format:string): string
-	progress = progress or self:GetProgress()
+	if self:GetUndefinedProgress() then
+		progress = "?"
+	else
+		progress = tostring(progress) or tostring(self:GetProgress())
+	end
+	
 	format = format or self:GetFormat()
 	
-	return string.gsub(format,"{p}",tostring(progress))
+	return string.gsub(format,"{p}",progress)
 end
 
 function MProgressBar.GetLimitedProgress(self,progress:number,min:number,max:number): number
@@ -1366,6 +1371,7 @@ function MProgressBar.GetProgress(self): number
 end
 
 function MProgressBar.SetUndefGradOffset(self,offset:number)
+	offset = _returnNeg(offset,self:GetFillingInverted())
 	if self:GetFillingOrientation() == MtEnum.Orientation.Vertical then
 		self.UndefGradient.Offset = Vector2.new(0,offset)
 	else
@@ -1398,6 +1404,7 @@ function MProgressBar.SetUndefinedProgress(self,undefined:boolean)
 	else
 		self.Progress = false
 		self.Filling.Size = UDim2.fromScale(1,1)
+		self.Label.Text = self:GetFormattedText()
 		coroutine.resume(self.DragUndefGradCoro)
 	end
 end
