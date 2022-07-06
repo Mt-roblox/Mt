@@ -429,6 +429,48 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 			<UniqueId name="UniqueId">0b401e85ede42a620247f9fa0001b243</UniqueId>
 		</Properties>
 	</Item>
+	<Item class="MaterialService" referent="RBXD2AE9BA1AFB34BBF99D67A6421B9EEC8">
+		<Properties>
+			<string name="AsphaltName">Asphalt</string>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<string name="BasaltName">Basalt</string>
+			<string name="BrickName">Brick</string>
+			<string name="CobblestoneName">Cobblestone</string>
+			<string name="ConcreteName">Concrete</string>
+			<string name="CorrodedMetalName">CorrodedMetal</string>
+			<string name="CrackedLavaName">CrackedLava</string>
+			<string name="DiamondPlateName">DiamondPlate</string>
+			<string name="FabricName">Fabric</string>
+			<string name="FoilName">Foil</string>
+			<string name="GlacierName">Glacier</string>
+			<string name="GraniteName">Granite</string>
+			<string name="GrassName">Grass</string>
+			<string name="GroundName">Ground</string>
+			<string name="IceName">Ice</string>
+			<string name="LeafyGrassName">LeafyGrass</string>
+			<string name="LimestoneName">Limestone</string>
+			<string name="MarbleName">Marble</string>
+			<string name="MetalName">Metal</string>
+			<string name="MudName">Mud</string>
+			<string name="Name">MaterialService</string>
+			<string name="PavementName">Pavement</string>
+			<string name="PebbleName">Pebble</string>
+			<string name="PlasticName">Plastic</string>
+			<string name="RockName">Rock</string>
+			<string name="SaltName">Salt</string>
+			<string name="SandName">Sand</string>
+			<string name="SandstoneName">Sandstone</string>
+			<string name="SlateName">Slate</string>
+			<string name="SmoothPlasticName">SmoothPlastic</string>
+			<string name="SnowName">Snow</string>
+			<int64 name="SourceAssetId">-1</int64>
+			<BinaryString name="Tags"></BinaryString>
+			<UniqueId name="UniqueId">23fc4fa05a1e0eba02d782820001f347</UniqueId>
+			<bool name="Use2022MaterialsXml">false</bool>
+			<string name="WoodName">Wood</string>
+			<string name="WoodPlanksName">WoodPlanks</string>
+		</Properties>
+	</Item>
 	<Item class="PermissionsService" referent="RBX3BEFFE745269441C8201AEF26856FB32">
 		<Properties>
 			<BinaryString name="AttributesSerialize"></BinaryString>
@@ -524,7 +566,7 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 			<Item class="LocalScript" referent="RBXD5D811BB03F84A618A7E076CB0CDFBD0">
 				<Properties>
 					<BinaryString name="AttributesSerialize"></BinaryString>
-					<bool name="Disabled">false</bool>
+					<bool name="Disabled">true</bool>
 					<Content name="LinkedSource"><null></null></Content>
 					<string name="Name">MtRemotes</string>
 					<string name="ScriptGuid">{A7C6D0D5-14AA-4B8C-AFE7-FFB33C4115B6}</string>
@@ -544,7 +586,7 @@ end)]]></ProtectedString>
 			<Item class="LocalScript" referent="RBX75556E998ADF425FBD476EA155A6CB37">
 				<Properties>
 					<BinaryString name="AttributesSerialize"></BinaryString>
-					<bool name="Disabled">false</bool>
+					<bool name="Disabled">true</bool>
 					<Content name="LinkedSource"><null></null></Content>
 					<string name="Name">MtWindowTest</string>
 					<string name="ScriptGuid">{6458014A-116B-482E-8D8B-AE889E404B10}</string>
@@ -621,7 +663,12 @@ putStuffOnWindow(page,script.page:GetChildren())]]></ProtectedString>
 							<bool name="ClipsDescendants">false</bool>
 							<bool name="Draggable">false</bool>
 							<token name="Font">3</token>
-							<Font name="FontFace"></Font>
+							<Font name="FontFace">
+								<Family><url>rbxasset://fonts/families/SourceSansPro.json</url></Family>
+								<Weight>400</Weight>
+								<Style>Normal</Style>
+								<CachedFaceId><url>rbxasset://fonts/SourceSansPro-Regular.ttf</url></CachedFaceId>
+							</Font>
 							<int name="LayoutOrder">0</int>
 							<float name="LineHeight">1</float>
 							<int name="MaxVisibleGraphemes">-1</int>
@@ -719,7 +766,12 @@ putStuffOnWindow(page,script.page:GetChildren())]]></ProtectedString>
 							<bool name="ClipsDescendants">false</bool>
 							<bool name="Draggable">false</bool>
 							<token name="Font">3</token>
-							<Font name="FontFace"></Font>
+							<Font name="FontFace">
+								<Family><url>rbxasset://fonts/families/SourceSansPro.json</url></Family>
+								<Weight>400</Weight>
+								<Style>Normal</Style>
+								<CachedFaceId><url>rbxasset://fonts/SourceSansPro-Regular.ttf</url></CachedFaceId>
+							</Font>
 							<int name="LayoutOrder">0</int>
 							<float name="LineHeight">1</float>
 							<int name="MaxVisibleGraphemes">-1</int>
@@ -813,7 +865,12 @@ putStuffOnWindow(page,script.page:GetChildren())]]></ProtectedString>
 							<bool name="ClipsDescendants">false</bool>
 							<bool name="Draggable">false</bool>
 							<token name="Font">3</token>
-							<Font name="FontFace"></Font>
+							<Font name="FontFace">
+								<Family><url>rbxasset://fonts/families/SourceSansPro.json</url></Family>
+								<Weight>400</Weight>
+								<Style>Normal</Style>
+								<CachedFaceId><url>rbxasset://fonts/SourceSansPro-Regular.ttf</url></CachedFaceId>
+							</Font>
 							<int name="LayoutOrder">0</int>
 							<float name="LineHeight">1</float>
 							<int name="MaxVisibleGraphemes">-1</int>
@@ -907,7 +964,12 @@ putStuffOnWindow(page,script.page:GetChildren())]]></ProtectedString>
 							<bool name="ClipsDescendants">false</bool>
 							<bool name="Draggable">false</bool>
 							<token name="Font">3</token>
-							<Font name="FontFace"></Font>
+							<Font name="FontFace">
+								<Family><url>rbxasset://fonts/families/SourceSansPro.json</url></Family>
+								<Weight>400</Weight>
+								<Style>Normal</Style>
+								<CachedFaceId><url>rbxasset://fonts/SourceSansPro-Regular.ttf</url></CachedFaceId>
+							</Font>
 							<int name="LayoutOrder">0</int>
 							<float name="LineHeight">1</float>
 							<int name="MaxVisibleGraphemes">-1</int>
@@ -1375,6 +1437,25 @@ putStuffOnWindow(page,script.page:GetChildren())]]></ProtectedString>
 			<BinaryString name="Tags"></BinaryString>
 			<UniqueId name="UniqueId">0b401e85ede42a620247f9fa0001b275</UniqueId>
 		</Properties>
+		<Item class="Script" referent="RBX051175A96F30476CA060C6FB0E0702B2">
+			<Properties>
+				<BinaryString name="AttributesSerialize"></BinaryString>
+				<bool name="Disabled">false</bool>
+				<Content name="LinkedSource"><null></null></Content>
+				<string name="Name">MtObjectTest</string>
+				<string name="ScriptGuid">{31C12EE3-55B0-4EF6-9438-8CFB85B43254}</string>
+				<ProtectedString name="Source"><![CDATA[local repstrg = game:GetService("ReplicatedStorage")
+local MObject = require(repstrg.Mt.MtCore.MObject)
+
+local obj1 = MObject.Init()
+
+obj1:PrintMembers()
+print(tostring(obj1))]]></ProtectedString>
+				<int64 name="SourceAssetId">-1</int64>
+				<BinaryString name="Tags"></BinaryString>
+				<UniqueId name="UniqueId">23fc4fa05a1e0eba02d782820002bbc5</UniqueId>
+			</Properties>
+		</Item>
 	</Item>
 	<Item class="ServerStorage" referent="RBXE7257D1F3B1B43B09B79686BF6001896">
 		<Properties>
@@ -1854,7 +1935,12 @@ return MWindow]]></ProtectedString>
 								<bool name="ClipsDescendants">false</bool>
 								<bool name="Draggable">false</bool>
 								<token name="Font">3</token>
-								<Font name="FontFace"></Font>
+								<Font name="FontFace">
+									<Family><url>rbxasset://fonts/families/SourceSansPro.json</url></Family>
+									<Weight>400</Weight>
+									<Style>Normal</Style>
+									<CachedFaceId><url>rbxasset://fonts/SourceSansPro-Regular.ttf</url></CachedFaceId>
+								</Font>
 								<int name="LayoutOrder">1</int>
 								<float name="LineHeight">1</float>
 								<int name="MaxVisibleGraphemes">-1</int>
@@ -2672,38 +2758,29 @@ local MObject = {
 	-- Events (Read-only)
 	Destroyed = Instance.new("BindableEvent"), -- Fires when the object is destroyed
 }
+MObject.__index = MObject
 
--- Functions
-MObject.Init = function(self,parent,_obj,_id)
+-- Methods
+function MObject.Init(parent,_id)
 	-- Creates object and returns it
-
-	_obj = _obj or {}
-	setmetatable(_obj, self)
-	self.__index = self
-
-	for k,v in pairs(self) do
-		if not _keyInTableExists(_obj,k) then
-			_obj[k] = v
-		end
-	end
+	local self = setmetatable({}, MObject)
 	
 	if _id then
-		_obj.OBJID = _id
+		self.OBJID = _id
 	else
-		_obj.OBJID = OBJIDS
+		self.OBJID = OBJIDS
 		OBJIDS += 1
 	end
 
-	parent = parent or {}
-	MObject.SetParent(_obj,parent)
+	self:SetParent(parent)
 	
-	_storeObj(_obj)
+	_storeObj(self)
 
-	return _obj
+	return self
 end
 
-function MObject.__call(self,...)
-	return self:Init(...)
+function MObject:__call(...)
+	return MObject.Init(...)
 end
 
 MObject.FireEvent = function(self,event,...)
@@ -2732,30 +2809,26 @@ MObject.Clone = function(self)
 	return self
 end
 
-MObject.SetName = function(self,name)
+function MObject:SetName(name)
 	self.Name = name
 	self.__name = name
 end
 
-MObject.SetParent = function(self,parent)
+function MObject:SetParent(parent)
 	-- Sets parent for the object
 
-	parent = parent or {}
-
-	if self.Parent == {} then
+	if self.Parent and self.Parent == {} then
 		table.remove(self.Parent.Children,table.find(self.Parent.Children,self))
 	end
 
 	self.Parent = parent
 
-	if parent == {} then
+	if parent then
 		table.insert(parent.Children,self)
 	end
-
-	return nil
 end
 
-MObject.FindFirstChild = function(self,child)
+function MObject:FindFirstChild(child)
 	-- Finds the inputted child in the object's children list and returns it
 
 	for i,v in ipairs(self.Children) do
@@ -2767,12 +2840,18 @@ MObject.FindFirstChild = function(self,child)
 	return nil
 end
 
-MObject.PrintMembers = function(self)
+function MObject:PrintMembers()
 	-- Prints all members of the metatable and their types
 
 	print(self.Name.."'s members:")
 	for k,v in pairs(self) do
 		print(k..": "..typeof(v).." = "..tostring(v))
+	end
+	
+	for k,v in pairs(MObject) do
+		if not _keyInTableExists(self, k) and not string.match(k,"__") then
+			print(k..": "..typeof(v).." = "..tostring(v))
+		end
 	end
 end
 
