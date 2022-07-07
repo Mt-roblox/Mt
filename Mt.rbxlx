@@ -81,27 +81,27 @@
 			<Properties>
 				<BinaryString name="AttributesSerialize"></BinaryString>
 				<CoordinateFrame name="CFrame">
-					<X>-175.490524</X>
-					<Y>51.1783447</Y>
-					<Z>78.4593201</Z>
-					<R00>-0.851734102</R00>
-					<R01>-0.0765281171</R01>
-					<R02>0.518355668</R02>
-					<R10>-7.45058149e-09</R10>
-					<R11>0.989276826</R11>
-					<R12>0.14605312</R12>
-					<R20>-0.523974478</R20>
-					<R21>0.124398418</R21>
-					<R22>-0.842600644</R22>
+					<X>-74.6528549</X>
+					<Y>20.9915714</Y>
+					<Z>-74.3126297</Z>
+					<R00>-0.559310853</R00>
+					<R01>-0.476656705</R01>
+					<R02>0.678210735</R02>
+					<R10>-0</R10>
+					<R11>0.818148494</R11>
+					<R12>0.575007021</R12>
+					<R20>-0.828958035</R20>
+					<R21>0.321607679</R21>
+					<R22>-0.457599312</R22>
 				</CoordinateFrame>
 				<Ref name="CameraSubject">null</Ref>
 				<token name="CameraType">0</token>
 				<float name="FieldOfView">70</float>
 				<token name="FieldOfViewMode">0</token>
 				<CoordinateFrame name="Focus">
-					<X>-176.527237</X>
-					<Y>50.8862381</Y>
-					<Z>80.1445236</Z>
+					<X>-76.0092773</X>
+					<Y>19.8415565</Y>
+					<Z>-73.3974304</Z>
 					<R00>1</R00>
 					<R01>0</R01>
 					<R02>0</R02>
@@ -1448,9 +1448,17 @@ putStuffOnWindow(page,script.page:GetChildren())]]></ProtectedString>
 local MObject = require(repstrg.Mt.MtCore.MObject)
 
 local obj1 = MObject.Init()
+obj1:SetName("object1")
 
 obj1:PrintMembers()
-print(tostring(obj1))]]></ProtectedString>
+
+local obj2 = MObject.Init()
+obj2:SetName("object2")
+
+obj2:PrintMembers()
+
+print("obj1:"..obj1.Name)
+print("obj2:"..obj2.Name)]]></ProtectedString>
 				<int64 name="SourceAssetId">-1</int64>
 				<BinaryString name="Tags"></BinaryString>
 				<UniqueId name="UniqueId">23fc4fa05a1e0eba02d782820002bbc5</UniqueId>
@@ -2761,7 +2769,7 @@ local MObject = {
 MObject.__index = MObject
 
 -- Methods
-function MObject.Init(parent,_id)
+function MObject.Init(parent,_id) -- new object
 	-- Creates object and returns it
 	local self = setmetatable({}, MObject)
 	
@@ -2781,6 +2789,10 @@ end
 
 function MObject:__call(...)
 	return MObject.Init(...)
+end
+
+function MObject:__tostring()
+	return self.Name
 end
 
 MObject.FireEvent = function(self,event,...)
@@ -2845,7 +2857,9 @@ function MObject:PrintMembers()
 
 	print(self.Name.."'s members:")
 	for k,v in pairs(self) do
-		print(k..": "..typeof(v).." = "..tostring(v))
+		if not string.match(k,"__") then
+			print(k..": "..typeof(v).." = "..tostring(v))
+		end
 	end
 	
 	for k,v in pairs(MObject) do
