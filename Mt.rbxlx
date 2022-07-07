@@ -1446,14 +1446,15 @@ putStuffOnWindow(page,script.page:GetChildren())]]></ProtectedString>
 				<string name="ScriptGuid">{31C12EE3-55B0-4EF6-9438-8CFB85B43254}</string>
 				<ProtectedString name="Source"><![CDATA[local repstrg = game:GetService("ReplicatedStorage")
 local MObject = require(repstrg.Mt.MtCore.MObject)
+local MScreen = require(repstrg.Mt.MtCore.MScreen)
 
 local obj1 = MObject.Init()
 obj1:SetName("object1")
 
 obj1:PrintMembers()
 
-local obj2 = MObject.Init()
-obj2:SetName("object2")
+local obj2 = MScreen.Init(nil)
+obj2:SetName("screen")
 
 obj2:PrintMembers()
 
@@ -2881,7 +2882,7 @@ return MObject]]></ProtectedString>
 						<Content name="LinkedSource"><null></null></Content>
 						<string name="Name">MScreen</string>
 						<string name="ScriptGuid">{E113FF64-7C1B-432B-A92B-99BB89843598}</string>
-						<ProtectedString name="Source"><![CDATA[ local MObject = require(script.Parent.MObject)
+						<ProtectedString name="Source"><![CDATA[local MObject = require(script.Parent.MObject)
 local MWidget = require(script.Parent.Parent.MtWidgets.MWidget)
 local _getObjFromId = require(script.Parent.MtCoreFunctions)._getObjFromId
 
@@ -2892,19 +2893,21 @@ local MScreen = {
 	ScrX=1,
 	ScrY=1,
 }
+MScreen = setmetatable(MScreen, MObject)
+MScreen.__index = MObject
 
-MScreen.Init = function(self,plr,parent,_obj)
-	local _obj = MObject.Init(self,parent,_obj)
+function MScreen.Init(plr,parent: MObject)
+	local self = setmetatable(MObject.Init(parent), MScreen)
 
-	_obj.Player = plr or game:GetService("Players").LocalPlayer
+	self.Player = plr or game:GetService("Players").LocalPlayer
 
-	_obj.ScreenGui = Instance.new("ScreenGui")
-	_obj.ScreenGui.Name = _obj.Name
-	_obj.ScreenGui.Parent = _obj.Player:FindFirstChild("PlayerGui")
-	MScreen.SetOverrideTopbar(_obj,true)
-	_obj.ScreenGui.ResetOnSpawn = false
+	self.ScreenGui = Instance.new("ScreenGui")
+	self.ScreenGui.Name = self.Name
+	self.ScreenGui.Parent = self.Player:FindFirstChild("PlayerGui")
+	self:SetOverrideTopbar(true)
+	self.ScreenGui.ResetOnSpawn = false
 
-	return _obj
+	return self
 end
 
 MScreen.SetName = function(self,name)
