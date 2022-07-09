@@ -1449,11 +1449,12 @@ local MObject = require(repstrg.Mt.MtCore.MObject)
 local MScreen = require(repstrg.Mt.MtCore.MScreen)
 
 local obj1 = MObject.Init()
-obj1:SetName("object1")
+obj1.Name = "object"
+obj1.Name = "object2"
 
 obj1:PrintMembers()
 
-local obj2 = MScreen.Init(nil)
+local obj2 = MScreen.Init({FindFirstChild=function()end})
 obj2:SetName("screen")
 
 obj2:PrintMembers()
@@ -2775,9 +2776,9 @@ function MObject.Init(parent,_id) -- new object
 	local self = setmetatable({}, MObject)
 	
 	if _id then
-		self.OBJID = _id
+		rawset(self, "OBJID", _id)
 	else
-		self.OBJID = OBJIDS
+		rawset(self, "OBJID", OBJIDS)
 		OBJIDS += 1
 	end
 
@@ -2789,11 +2790,23 @@ function MObject.Init(parent,_id) -- new object
 end
 
 function MObject:__call(...)
-	return MObject.Init(...)
+	return self.Init(...)
 end
 
 function MObject:__tostring()
 	return self.Name
+end
+
+function MObject:__newindex(key, value)
+	local setter = self["Set"..key]
+	
+	if setter then
+		setter(self,value)
+	elseif not (self[key] and self.__index[key]) or type(value) == "function" then -- if key never existed then create a key
+		rawset(self, key, value)
+	else
+		warn(string.format('Property "%s" is not a member of %s\nTraceback:\n%s', key, self.ClassName, debug.traceback()))
+	end
 end
 
 MObject.FireEvent = function(self,event,...)
@@ -2823,8 +2836,8 @@ MObject.Clone = function(self)
 end
 
 function MObject:SetName(name)
-	self.Name = name
-	self.__name = name
+	rawset(self, "Name",   name)
+	rawset(self, "__name", name)
 end
 
 function MObject:SetParent(parent)
@@ -2834,7 +2847,7 @@ function MObject:SetParent(parent)
 		table.remove(self.Parent.Children,table.find(self.Parent.Children,self))
 	end
 
-	self.Parent = parent
+	rawset(self, "Parent", parent)
 
 	if parent then
 		table.insert(parent.Children,self)
@@ -2894,7 +2907,7 @@ local MScreen = {
 	ScrY=1,
 }
 MScreen = setmetatable(MScreen, MObject)
-MScreen.__index = MObject
+rawset(MScreen,"__index", MScreen)
 
 function MScreen.Init(plr,parent: MObject)
 	local self = setmetatable(MObject.Init(parent), MScreen)
@@ -2951,8 +2964,6 @@ end
 MScreen.SetOverrideTopbar = function(self,override)
 	self.ScreenGui.IgnoreGuiInset = override
 end
-
-MScreen = MObject:Init({},MScreen,-1)
 
 return MScreen]]></ProtectedString>
 						<int64 name="SourceAssetId">-1</int64>
