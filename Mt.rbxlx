@@ -59,6 +59,7 @@
 			<BinaryString name="Tags"></BinaryString>
 			<bool name="TerrainWeldsFixed">true</bool>
 			<bool name="TouchesUseCollisionGroups">false</bool>
+			<token name="UnionsScaleNonuniformly">0</token>
 			<UniqueId name="UniqueId">0b401e85ede42a620247f9fa00019ad8</UniqueId>
 			<OptionalCoordinateFrame name="WorldPivotData">
 				<CFrame>
@@ -81,27 +82,27 @@
 			<Properties>
 				<BinaryString name="AttributesSerialize"></BinaryString>
 				<CoordinateFrame name="CFrame">
-					<X>-84.4647446</X>
-					<Y>79.1612549</Y>
-					<Z>95.9382477</Z>
-					<R00>0.944368005</R00>
-					<R01>-0.193310544</R01>
-					<R02>0.266082972</R02>
+					<X>-38.7727661</X>
+					<Y>21.1391563</Y>
+					<Z>-101.471115</Z>
+					<R00>-0.559310853</R00>
+					<R01>-0.476656705</R01>
+					<R02>0.678210735</R02>
 					<R10>-0</R10>
-					<R11>0.809031606</R11>
-					<R12>0.587765217</R12>
-					<R20>-0.328890741</R20>
-					<R21>-0.555066645</R21>
-					<R22>0.764023483</R22>
+					<R11>0.818148494</R11>
+					<R12>0.575007021</R12>
+					<R20>-0.828958035</R20>
+					<R21>0.321607679</R21>
+					<R22>-0.457599312</R22>
 				</CoordinateFrame>
 				<Ref name="CameraSubject">null</Ref>
 				<token name="CameraType">0</token>
 				<float name="FieldOfView">70</float>
 				<token name="FieldOfViewMode">0</token>
 				<CoordinateFrame name="Focus">
-					<X>-84.9969101</X>
-					<Y>77.9857254</Y>
-					<Z>94.410202</Z>
+					<X>-40.1291885</X>
+					<Y>19.9891415</Y>
+					<Z>-100.555916</Z>
 					<R00>1</R00>
 					<R01>0</R01>
 					<R02>0</R02>
@@ -429,6 +430,48 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 			<UniqueId name="UniqueId">0b401e85ede42a620247f9fa0001b243</UniqueId>
 		</Properties>
 	</Item>
+	<Item class="MaterialService" referent="RBXD2AE9BA1AFB34BBF99D67A6421B9EEC8">
+		<Properties>
+			<string name="AsphaltName">Asphalt</string>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<string name="BasaltName">Basalt</string>
+			<string name="BrickName">Brick</string>
+			<string name="CobblestoneName">Cobblestone</string>
+			<string name="ConcreteName">Concrete</string>
+			<string name="CorrodedMetalName">CorrodedMetal</string>
+			<string name="CrackedLavaName">CrackedLava</string>
+			<string name="DiamondPlateName">DiamondPlate</string>
+			<string name="FabricName">Fabric</string>
+			<string name="FoilName">Foil</string>
+			<string name="GlacierName">Glacier</string>
+			<string name="GraniteName">Granite</string>
+			<string name="GrassName">Grass</string>
+			<string name="GroundName">Ground</string>
+			<string name="IceName">Ice</string>
+			<string name="LeafyGrassName">LeafyGrass</string>
+			<string name="LimestoneName">Limestone</string>
+			<string name="MarbleName">Marble</string>
+			<string name="MetalName">Metal</string>
+			<string name="MudName">Mud</string>
+			<string name="Name">MaterialService</string>
+			<string name="PavementName">Pavement</string>
+			<string name="PebbleName">Pebble</string>
+			<string name="PlasticName">Plastic</string>
+			<string name="RockName">Rock</string>
+			<string name="SaltName">Salt</string>
+			<string name="SandName">Sand</string>
+			<string name="SandstoneName">Sandstone</string>
+			<string name="SlateName">Slate</string>
+			<string name="SmoothPlasticName">SmoothPlastic</string>
+			<string name="SnowName">Snow</string>
+			<int64 name="SourceAssetId">-1</int64>
+			<BinaryString name="Tags"></BinaryString>
+			<UniqueId name="UniqueId">23fc4fa05a1e0eba02d782820001f347</UniqueId>
+			<bool name="Use2022MaterialsXml">false</bool>
+			<string name="WoodName">Wood</string>
+			<string name="WoodPlanksName">WoodPlanks</string>
+		</Properties>
+	</Item>
 	<Item class="PermissionsService" referent="RBX3BEFFE745269441C8201AEF26856FB32">
 		<Properties>
 			<BinaryString name="AttributesSerialize"></BinaryString>
@@ -521,6 +564,475 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 				<BinaryString name="Tags"></BinaryString>
 				<UniqueId name="UniqueId">0b401e85ede42a620247f9fa0001b445</UniqueId>
 			</Properties>
+			<Item class="LocalScript" referent="RBXD5D811BB03F84A618A7E076CB0CDFBD0">
+				<Properties>
+					<BinaryString name="AttributesSerialize"></BinaryString>
+					<bool name="Disabled">true</bool>
+					<Content name="LinkedSource"><null></null></Content>
+					<string name="Name">MtRemotes</string>
+					<token name="RunContext">0</token>
+					<string name="ScriptGuid">{A7C6D0D5-14AA-4B8C-AFE7-FFB33C4115B6}</string>
+					<ProtectedString name="Source"><![CDATA[local remotes = game:GetService("ReplicatedStorage").Mt.Remotes
+local plr = game:GetService("Players").LocalPlayer
+
+remotes.ChangeCursor.Event:Connect(function(cursor: string)
+	local mouse = plr:GetMouse()
+	--print(mouse.Icon)
+	mouse.Icon = cursor
+end)]]></ProtectedString>
+					<int64 name="SourceAssetId">-1</int64>
+					<BinaryString name="Tags"></BinaryString>
+					<UniqueId name="UniqueId">683ee95d122d1fcb0287f927003ae265</UniqueId>
+				</Properties>
+			</Item>
+			<Item class="LocalScript" referent="RBX75556E998ADF425FBD476EA155A6CB37">
+				<Properties>
+					<BinaryString name="AttributesSerialize"></BinaryString>
+					<bool name="Disabled">true</bool>
+					<Content name="LinkedSource"><null></null></Content>
+					<string name="Name">MtWindowTest</string>
+					<token name="RunContext">0</token>
+					<string name="ScriptGuid">{6458014A-116B-482E-8D8B-AE889E404B10}</string>
+					<ProtectedString name="Source"><![CDATA[local repstrg = game:GetService("ReplicatedStorage")
+local plr = game:GetService("Players").LocalPlayer
+
+--game:GetService("UserInputService").MouseIconEnabled = false
+
+local MWindow = require(repstrg.Mt.MtWidgets.MWindow)
+local MWindowManager = require(repstrg.Mt.MtCore.MWindowManager)
+
+game:GetService("StarterGui"):SetCoreGuiEnabled(Enum.CoreGuiType.PlayerList,false)
+
+local screen = MWindowManager()
+print(screen)
+
+function putStuffOnWindow(window,stuff:{GuiObject})
+	for i,v in ipairs(stuff) do
+		v.Parent = window.Content.Frame
+	end
+end
+
+local window = MWindow:Init(screen)
+window:SetName("MainWindow")
+window:SetTitle("window")
+window.Frame.Position = UDim2.fromOffset(0,0)
+putStuffOnWindow(window,script.window:GetChildren())
+
+local dialog = MWindow:Init(screen)
+dialog:SetName("Dialog")
+dialog:SetTitle("dialog")
+putStuffOnWindow(dialog,script.dialog:GetChildren())
+
+local page = MWindow:Init(screen)
+page:SetName("Page")
+page:SetTitle("page")
+putStuffOnWindow(page,script.page:GetChildren())]]></ProtectedString>
+					<int64 name="SourceAssetId">-1</int64>
+					<BinaryString name="Tags"></BinaryString>
+					<UniqueId name="UniqueId">5b19d14ef55ae6bc0249fc2c00162b32</UniqueId>
+				</Properties>
+				<Item class="Folder" referent="RBX765CC3208DEE405799D51C1198BDF0B1">
+					<Properties>
+						<BinaryString name="AttributesSerialize"></BinaryString>
+						<string name="Name">window</string>
+						<int64 name="SourceAssetId">-1</int64>
+						<BinaryString name="Tags"></BinaryString>
+						<UniqueId name="UniqueId">079fd07efd1f4a0a028fc3eb007b8842</UniqueId>
+					</Properties>
+					<Item class="TextButton" referent="RBXF9266655F6FC436D8614CD362E67B082">
+						<Properties>
+							<bool name="Active">true</bool>
+							<Vector2 name="AnchorPoint">
+								<X>0.5</X>
+								<Y>0.5</Y>
+							</Vector2>
+							<BinaryString name="AttributesSerialize"></BinaryString>
+							<bool name="AutoButtonColor">false</bool>
+							<bool name="AutoLocalize">true</bool>
+							<token name="AutomaticSize">0</token>
+							<Color3 name="BackgroundColor3">
+								<R>1</R>
+								<G>1</G>
+								<B>1</B>
+							</Color3>
+							<float name="BackgroundTransparency">0</float>
+							<Color3 name="BorderColor3">
+								<R>0.105882362</R>
+								<G>0.164705887</G>
+								<B>0.207843155</B>
+							</Color3>
+							<token name="BorderMode">0</token>
+							<int name="BorderSizePixel">1</int>
+							<bool name="ClipsDescendants">false</bool>
+							<bool name="Draggable">false</bool>
+							<token name="Font">3</token>
+							<Font name="FontFace">
+								<Family><url>rbxasset://fonts/families/SourceSansPro.json</url></Family>
+								<Weight>400</Weight>
+								<Style>Normal</Style>
+								<CachedFaceId><url>rbxasset://fonts/SourceSansPro-Regular.ttf</url></CachedFaceId>
+							</Font>
+							<int name="LayoutOrder">0</int>
+							<float name="LineHeight">1</float>
+							<int name="MaxVisibleGraphemes">-1</int>
+							<bool name="Modal">false</bool>
+							<string name="Name">Button</string>
+							<Ref name="NextSelectionDown">null</Ref>
+							<Ref name="NextSelectionLeft">null</Ref>
+							<Ref name="NextSelectionRight">null</Ref>
+							<Ref name="NextSelectionUp">null</Ref>
+							<UDim2 name="Position">
+								<XS>0.5</XS>
+								<XO>0</XO>
+								<YS>0.5</YS>
+								<YO>0</YO>
+							</UDim2>
+							<bool name="RichText">true</bool>
+							<Ref name="RootLocalizationTable">null</Ref>
+							<float name="Rotation">0</float>
+							<bool name="Selectable">true</bool>
+							<bool name="Selected">false</bool>
+							<token name="SelectionBehaviorDown">0</token>
+							<token name="SelectionBehaviorLeft">0</token>
+							<token name="SelectionBehaviorRight">0</token>
+							<token name="SelectionBehaviorUp">0</token>
+							<bool name="SelectionGroup">false</bool>
+							<Ref name="SelectionImageObject">null</Ref>
+							<int name="SelectionOrder">0</int>
+							<UDim2 name="Size">
+								<XS>0.550000012</XS>
+								<XO>0</XO>
+								<YS>0.349999994</YS>
+								<YO>0</YO>
+							</UDim2>
+							<token name="SizeConstraint">0</token>
+							<int64 name="SourceAssetId">-1</int64>
+							<token name="Style">0</token>
+							<BinaryString name="Tags"></BinaryString>
+							<string name="Text">bring up cool dialog&lt;br/&gt;ok fine it doesn&apos;t actually do anything</string>
+							<Color3 name="TextColor3">
+								<R>0</R>
+								<G>0</G>
+								<B>0</B>
+							</Color3>
+							<bool name="TextScaled">false</bool>
+							<float name="TextSize">14</float>
+							<Color3 name="TextStrokeColor3">
+								<R>0</R>
+								<G>0</G>
+								<B>0</B>
+							</Color3>
+							<float name="TextStrokeTransparency">1</float>
+							<float name="TextTransparency">0</float>
+							<token name="TextTruncate">0</token>
+							<bool name="TextWrapped">false</bool>
+							<token name="TextXAlignment">2</token>
+							<token name="TextYAlignment">1</token>
+							<UniqueId name="UniqueId">079fd07efd1f4a0a028fc3eb007b7dc2</UniqueId>
+							<bool name="Visible">true</bool>
+							<int name="ZIndex">1</int>
+						</Properties>
+					</Item>
+				</Item>
+				<Item class="Folder" referent="RBX7D150168E114488F9A746495F9B87253">
+					<Properties>
+						<BinaryString name="AttributesSerialize"></BinaryString>
+						<string name="Name">dialog</string>
+						<int64 name="SourceAssetId">-1</int64>
+						<BinaryString name="Tags"></BinaryString>
+						<UniqueId name="UniqueId">079fd07efd1f4a0a028fc3eb007b8874</UniqueId>
+					</Properties>
+					<Item class="TextBox" referent="RBX039ADC18E24743908A66F0123BF93AFD">
+						<Properties>
+							<bool name="Active">true</bool>
+							<Vector2 name="AnchorPoint">
+								<X>0.5</X>
+								<Y>0.5</Y>
+							</Vector2>
+							<BinaryString name="AttributesSerialize"></BinaryString>
+							<bool name="AutoLocalize">true</bool>
+							<token name="AutomaticSize">0</token>
+							<Color3 name="BackgroundColor3">
+								<R>1</R>
+								<G>1</G>
+								<B>1</B>
+							</Color3>
+							<float name="BackgroundTransparency">0</float>
+							<Color3 name="BorderColor3">
+								<R>0.105882362</R>
+								<G>0.164705887</G>
+								<B>0.207843155</B>
+							</Color3>
+							<token name="BorderMode">0</token>
+							<int name="BorderSizePixel">1</int>
+							<bool name="ClearTextOnFocus">true</bool>
+							<bool name="ClipsDescendants">false</bool>
+							<bool name="Draggable">false</bool>
+							<token name="Font">3</token>
+							<Font name="FontFace">
+								<Family><url>rbxasset://fonts/families/SourceSansPro.json</url></Family>
+								<Weight>400</Weight>
+								<Style>Normal</Style>
+								<CachedFaceId><url>rbxasset://fonts/SourceSansPro-Regular.ttf</url></CachedFaceId>
+							</Font>
+							<int name="LayoutOrder">0</int>
+							<float name="LineHeight">1</float>
+							<int name="MaxVisibleGraphemes">-1</int>
+							<bool name="MultiLine">false</bool>
+							<string name="Name">Input</string>
+							<Ref name="NextSelectionDown">null</Ref>
+							<Ref name="NextSelectionLeft">null</Ref>
+							<Ref name="NextSelectionRight">null</Ref>
+							<Ref name="NextSelectionUp">null</Ref>
+							<Color3 name="PlaceholderColor3">
+								<R>0.699999988</R>
+								<G>0.699999988</G>
+								<B>0.699999988</B>
+							</Color3>
+							<string name="PlaceholderText"></string>
+							<UDim2 name="Position">
+								<XS>0.5</XS>
+								<XO>0</XO>
+								<YS>0.5</YS>
+								<YO>0</YO>
+							</UDim2>
+							<bool name="RichText">false</bool>
+							<Ref name="RootLocalizationTable">null</Ref>
+							<float name="Rotation">0</float>
+							<bool name="Selectable">true</bool>
+							<token name="SelectionBehaviorDown">0</token>
+							<token name="SelectionBehaviorLeft">0</token>
+							<token name="SelectionBehaviorRight">0</token>
+							<token name="SelectionBehaviorUp">0</token>
+							<bool name="SelectionGroup">false</bool>
+							<Ref name="SelectionImageObject">null</Ref>
+							<int name="SelectionOrder">0</int>
+							<bool name="ShowNativeInput">true</bool>
+							<UDim2 name="Size">
+								<XS>0.5</XS>
+								<XO>0</XO>
+								<YS>0.100000001</YS>
+								<YO>0</YO>
+							</UDim2>
+							<token name="SizeConstraint">0</token>
+							<int64 name="SourceAssetId">-1</int64>
+							<BinaryString name="Tags"></BinaryString>
+							<string name="Text"></string>
+							<Color3 name="TextColor3">
+								<R>0</R>
+								<G>0</G>
+								<B>0</B>
+							</Color3>
+							<bool name="TextEditable">true</bool>
+							<bool name="TextScaled">false</bool>
+							<float name="TextSize">14</float>
+							<Color3 name="TextStrokeColor3">
+								<R>0</R>
+								<G>0</G>
+								<B>0</B>
+							</Color3>
+							<float name="TextStrokeTransparency">1</float>
+							<float name="TextTransparency">0</float>
+							<token name="TextTruncate">0</token>
+							<bool name="TextWrapped">false</bool>
+							<token name="TextXAlignment">2</token>
+							<token name="TextYAlignment">1</token>
+							<UniqueId name="UniqueId">079fd07efd1f4a0a028fc3eb00797433</UniqueId>
+							<bool name="Visible">true</bool>
+							<int name="ZIndex">1</int>
+						</Properties>
+					</Item>
+					<Item class="TextLabel" referent="RBX83636F57CEF64F70BDC71FC8BB214083">
+						<Properties>
+							<bool name="Active">false</bool>
+							<Vector2 name="AnchorPoint">
+								<X>0.5</X>
+								<Y>0.5</Y>
+							</Vector2>
+							<BinaryString name="AttributesSerialize"></BinaryString>
+							<bool name="AutoLocalize">true</bool>
+							<token name="AutomaticSize">0</token>
+							<Color3 name="BackgroundColor3">
+								<R>1</R>
+								<G>1</G>
+								<B>1</B>
+							</Color3>
+							<float name="BackgroundTransparency">0</float>
+							<Color3 name="BorderColor3">
+								<R>0.105882362</R>
+								<G>0.164705887</G>
+								<B>0.207843155</B>
+							</Color3>
+							<token name="BorderMode">0</token>
+							<int name="BorderSizePixel">0</int>
+							<bool name="ClipsDescendants">false</bool>
+							<bool name="Draggable">false</bool>
+							<token name="Font">3</token>
+							<Font name="FontFace">
+								<Family><url>rbxasset://fonts/families/SourceSansPro.json</url></Family>
+								<Weight>400</Weight>
+								<Style>Normal</Style>
+								<CachedFaceId><url>rbxasset://fonts/SourceSansPro-Regular.ttf</url></CachedFaceId>
+							</Font>
+							<int name="LayoutOrder">0</int>
+							<float name="LineHeight">1</float>
+							<int name="MaxVisibleGraphemes">-1</int>
+							<string name="Name">Label</string>
+							<Ref name="NextSelectionDown">null</Ref>
+							<Ref name="NextSelectionLeft">null</Ref>
+							<Ref name="NextSelectionRight">null</Ref>
+							<Ref name="NextSelectionUp">null</Ref>
+							<UDim2 name="Position">
+								<XS>0.5</XS>
+								<XO>0</XO>
+								<YS>0.200000003</YS>
+								<YO>0</YO>
+							</UDim2>
+							<bool name="RichText">false</bool>
+							<Ref name="RootLocalizationTable">null</Ref>
+							<float name="Rotation">0</float>
+							<bool name="Selectable">false</bool>
+							<token name="SelectionBehaviorDown">0</token>
+							<token name="SelectionBehaviorLeft">0</token>
+							<token name="SelectionBehaviorRight">0</token>
+							<token name="SelectionBehaviorUp">0</token>
+							<bool name="SelectionGroup">false</bool>
+							<Ref name="SelectionImageObject">null</Ref>
+							<int name="SelectionOrder">0</int>
+							<UDim2 name="Size">
+								<XS>0.5</XS>
+								<XO>0</XO>
+								<YS>0.100000001</YS>
+								<YO>0</YO>
+							</UDim2>
+							<token name="SizeConstraint">0</token>
+							<int64 name="SourceAssetId">-1</int64>
+							<BinaryString name="Tags"></BinaryString>
+							<string name="Text">are the windows cool?</string>
+							<Color3 name="TextColor3">
+								<R>0</R>
+								<G>0</G>
+								<B>0</B>
+							</Color3>
+							<bool name="TextScaled">false</bool>
+							<float name="TextSize">14</float>
+							<Color3 name="TextStrokeColor3">
+								<R>0</R>
+								<G>0</G>
+								<B>0</B>
+							</Color3>
+							<float name="TextStrokeTransparency">1</float>
+							<float name="TextTransparency">0</float>
+							<token name="TextTruncate">0</token>
+							<bool name="TextWrapped">false</bool>
+							<token name="TextXAlignment">2</token>
+							<token name="TextYAlignment">1</token>
+							<UniqueId name="UniqueId">079fd07efd1f4a0a028fc3eb007975c2</UniqueId>
+							<bool name="Visible">true</bool>
+							<int name="ZIndex">1</int>
+						</Properties>
+					</Item>
+				</Item>
+				<Item class="Folder" referent="RBXA05C35BF82F5425F9519DEAA47A780E9">
+					<Properties>
+						<BinaryString name="AttributesSerialize"></BinaryString>
+						<string name="Name">page</string>
+						<int64 name="SourceAssetId">-1</int64>
+						<BinaryString name="Tags"></BinaryString>
+						<UniqueId name="UniqueId">079fd07efd1f4a0a028fc3eb007b88c6</UniqueId>
+					</Properties>
+					<Item class="TextLabel" referent="RBX1E3EA31A990141258C648D08DB495D4A">
+						<Properties>
+							<bool name="Active">false</bool>
+							<Vector2 name="AnchorPoint">
+								<X>0</X>
+								<Y>0</Y>
+							</Vector2>
+							<BinaryString name="AttributesSerialize"></BinaryString>
+							<bool name="AutoLocalize">true</bool>
+							<token name="AutomaticSize">0</token>
+							<Color3 name="BackgroundColor3">
+								<R>1</R>
+								<G>1</G>
+								<B>1</B>
+							</Color3>
+							<float name="BackgroundTransparency">0</float>
+							<Color3 name="BorderColor3">
+								<R>0.105882362</R>
+								<G>0.164705887</G>
+								<B>0.207843155</B>
+							</Color3>
+							<token name="BorderMode">0</token>
+							<int name="BorderSizePixel">0</int>
+							<bool name="ClipsDescendants">false</bool>
+							<bool name="Draggable">false</bool>
+							<token name="Font">3</token>
+							<Font name="FontFace">
+								<Family><url>rbxasset://fonts/families/SourceSansPro.json</url></Family>
+								<Weight>400</Weight>
+								<Style>Normal</Style>
+								<CachedFaceId><url>rbxasset://fonts/SourceSansPro-Regular.ttf</url></CachedFaceId>
+							</Font>
+							<int name="LayoutOrder">0</int>
+							<float name="LineHeight">1</float>
+							<int name="MaxVisibleGraphemes">-1</int>
+							<string name="Name">TextLabel</string>
+							<Ref name="NextSelectionDown">null</Ref>
+							<Ref name="NextSelectionLeft">null</Ref>
+							<Ref name="NextSelectionRight">null</Ref>
+							<Ref name="NextSelectionUp">null</Ref>
+							<UDim2 name="Position">
+								<XS>0</XS>
+								<XO>0</XO>
+								<YS>0</YS>
+								<YO>0</YO>
+							</UDim2>
+							<bool name="RichText">true</bool>
+							<Ref name="RootLocalizationTable">null</Ref>
+							<float name="Rotation">0</float>
+							<bool name="Selectable">false</bool>
+							<token name="SelectionBehaviorDown">0</token>
+							<token name="SelectionBehaviorLeft">0</token>
+							<token name="SelectionBehaviorRight">0</token>
+							<token name="SelectionBehaviorUp">0</token>
+							<bool name="SelectionGroup">false</bool>
+							<Ref name="SelectionImageObject">null</Ref>
+							<int name="SelectionOrder">0</int>
+							<UDim2 name="Size">
+								<XS>1</XS>
+								<XO>0</XO>
+								<YS>1</YS>
+								<YO>0</YO>
+							</UDim2>
+							<token name="SizeConstraint">0</token>
+							<int64 name="SourceAssetId">-1</int64>
+							<BinaryString name="Tags"></BinaryString>
+							<string name="Text"> this paragraph is&lt;br/&gt;not so big&lt;br/&gt;i wish i could write something longer</string>
+							<Color3 name="TextColor3">
+								<R>0</R>
+								<G>0</G>
+								<B>0</B>
+							</Color3>
+							<bool name="TextScaled">false</bool>
+							<float name="TextSize">14</float>
+							<Color3 name="TextStrokeColor3">
+								<R>0</R>
+								<G>0</G>
+								<B>0</B>
+							</Color3>
+							<float name="TextStrokeTransparency">1</float>
+							<float name="TextTransparency">0</float>
+							<token name="TextTruncate">0</token>
+							<bool name="TextWrapped">false</bool>
+							<token name="TextXAlignment">0</token>
+							<token name="TextYAlignment">0</token>
+							<UniqueId name="UniqueId">079fd07efd1f4a0a028fc3eb007b8309</UniqueId>
+							<bool name="Visible">true</bool>
+							<int name="ZIndex">1</int>
+						</Properties>
+					</Item>
+				</Item>
+			</Item>
 		</Item>
 		<Item class="StarterCharacterScripts" referent="RBX3A07D90B2FAD4148B7E14B1228EF9AB4">
 			<Properties>
@@ -558,7 +1070,7 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 				<BinaryString name="AttributesSerialize"></BinaryString>
 				<bool name="AutoLocalize">true</bool>
 				<int name="DisplayOrder">0</int>
-				<bool name="Enabled">true</bool>
+				<bool name="Enabled">false</bool>
 				<bool name="IgnoreGuiInset">true</bool>
 				<string name="Name">extra</string>
 				<bool name="ResetOnSpawn">true</bool>
@@ -573,7 +1085,193 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 				<UniqueId name="UniqueId">5b19d14ef55ae6bc0249fc2c00162b57</UniqueId>
 				<token name="ZIndexBehavior">1</token>
 			</Properties>
-			<Item class="TextBox" referent="RBXAC8788089B7946F7A165143A91AC9E7E">
+			<Item class="Frame" referent="RBXFFA8F02128794C359BE9CEA60804BB3B">
+				<Properties>
+					<bool name="Active">false</bool>
+					<Vector2 name="AnchorPoint">
+						<X>0</X>
+						<Y>0</Y>
+					</Vector2>
+					<BinaryString name="AttributesSerialize"></BinaryString>
+					<bool name="AutoLocalize">true</bool>
+					<token name="AutomaticSize">0</token>
+					<Color3 name="BackgroundColor3">
+						<R>1</R>
+						<G>1</G>
+						<B>1</B>
+					</Color3>
+					<float name="BackgroundTransparency">0</float>
+					<Color3 name="BorderColor3">
+						<R>0.105882362</R>
+						<G>0.164705887</G>
+						<B>0.207843155</B>
+					</Color3>
+					<token name="BorderMode">0</token>
+					<int name="BorderSizePixel">1</int>
+					<bool name="ClipsDescendants">false</bool>
+					<bool name="Draggable">false</bool>
+					<int name="LayoutOrder">0</int>
+					<string name="Name">Frame</string>
+					<Ref name="NextSelectionDown">null</Ref>
+					<Ref name="NextSelectionLeft">null</Ref>
+					<Ref name="NextSelectionRight">null</Ref>
+					<Ref name="NextSelectionUp">null</Ref>
+					<UDim2 name="Position">
+						<XS>0</XS>
+						<XO>0</XO>
+						<YS>0</YS>
+						<YO>0</YO>
+					</UDim2>
+					<Ref name="RootLocalizationTable">null</Ref>
+					<float name="Rotation">0</float>
+					<bool name="Selectable">false</bool>
+					<token name="SelectionBehaviorDown">0</token>
+					<token name="SelectionBehaviorLeft">0</token>
+					<token name="SelectionBehaviorRight">0</token>
+					<token name="SelectionBehaviorUp">0</token>
+					<bool name="SelectionGroup">false</bool>
+					<Ref name="SelectionImageObject">null</Ref>
+					<int name="SelectionOrder">0</int>
+					<UDim2 name="Size">
+						<XS>0</XS>
+						<XO>438</XO>
+						<YS>0</YS>
+						<YO>268</YO>
+					</UDim2>
+					<token name="SizeConstraint">0</token>
+					<int64 name="SourceAssetId">-1</int64>
+					<token name="Style">0</token>
+					<BinaryString name="Tags"></BinaryString>
+					<UniqueId name="UniqueId">079fd07efd1f4a0a028fc3eb0079727f</UniqueId>
+					<bool name="Visible">true</bool>
+					<int name="ZIndex">1</int>
+				</Properties>
+			</Item>
+			<Item class="Frame" referent="RBX171C6DF7F1D64B52A29E8B8739411435">
+				<Properties>
+					<bool name="Active">false</bool>
+					<Vector2 name="AnchorPoint">
+						<X>0</X>
+						<Y>0</Y>
+					</Vector2>
+					<BinaryString name="AttributesSerialize"></BinaryString>
+					<bool name="AutoLocalize">true</bool>
+					<token name="AutomaticSize">0</token>
+					<Color3 name="BackgroundColor3">
+						<R>1</R>
+						<G>1</G>
+						<B>1</B>
+					</Color3>
+					<float name="BackgroundTransparency">0</float>
+					<Color3 name="BorderColor3">
+						<R>0.105882362</R>
+						<G>0.164705887</G>
+						<B>0.207843155</B>
+					</Color3>
+					<token name="BorderMode">0</token>
+					<int name="BorderSizePixel">1</int>
+					<bool name="ClipsDescendants">false</bool>
+					<bool name="Draggable">false</bool>
+					<int name="LayoutOrder">0</int>
+					<string name="Name">Frame</string>
+					<Ref name="NextSelectionDown">null</Ref>
+					<Ref name="NextSelectionLeft">null</Ref>
+					<Ref name="NextSelectionRight">null</Ref>
+					<Ref name="NextSelectionUp">null</Ref>
+					<UDim2 name="Position">
+						<XS>0.425619841</XS>
+						<XO>0</XO>
+						<YS>0</YS>
+						<YO>0</YO>
+					</UDim2>
+					<Ref name="RootLocalizationTable">null</Ref>
+					<float name="Rotation">0</float>
+					<bool name="Selectable">false</bool>
+					<token name="SelectionBehaviorDown">0</token>
+					<token name="SelectionBehaviorLeft">0</token>
+					<token name="SelectionBehaviorRight">0</token>
+					<token name="SelectionBehaviorUp">0</token>
+					<bool name="SelectionGroup">false</bool>
+					<Ref name="SelectionImageObject">null</Ref>
+					<int name="SelectionOrder">0</int>
+					<UDim2 name="Size">
+						<XS>0</XS>
+						<XO>438</XO>
+						<YS>0</YS>
+						<YO>268</YO>
+					</UDim2>
+					<token name="SizeConstraint">0</token>
+					<int64 name="SourceAssetId">-1</int64>
+					<token name="Style">0</token>
+					<BinaryString name="Tags"></BinaryString>
+					<UniqueId name="UniqueId">079fd07efd1f4a0a028fc3eb007b7c46</UniqueId>
+					<bool name="Visible">true</bool>
+					<int name="ZIndex">1</int>
+				</Properties>
+			</Item>
+			<Item class="Frame" referent="RBX8B99948CC92F46D1BEEA39EA239F3EB2">
+				<Properties>
+					<bool name="Active">false</bool>
+					<Vector2 name="AnchorPoint">
+						<X>0</X>
+						<Y>0</Y>
+					</Vector2>
+					<BinaryString name="AttributesSerialize"></BinaryString>
+					<bool name="AutoLocalize">true</bool>
+					<token name="AutomaticSize">0</token>
+					<Color3 name="BackgroundColor3">
+						<R>1</R>
+						<G>1</G>
+						<B>1</B>
+					</Color3>
+					<float name="BackgroundTransparency">0</float>
+					<Color3 name="BorderColor3">
+						<R>0.105882362</R>
+						<G>0.164705887</G>
+						<B>0.207843155</B>
+					</Color3>
+					<token name="BorderMode">0</token>
+					<int name="BorderSizePixel">1</int>
+					<bool name="ClipsDescendants">false</bool>
+					<bool name="Draggable">false</bool>
+					<int name="LayoutOrder">0</int>
+					<string name="Name">Frame</string>
+					<Ref name="NextSelectionDown">null</Ref>
+					<Ref name="NextSelectionLeft">null</Ref>
+					<Ref name="NextSelectionRight">null</Ref>
+					<Ref name="NextSelectionUp">null</Ref>
+					<UDim2 name="Position">
+						<XS>0</XS>
+						<XO>0</XO>
+						<YS>0.537132978</YS>
+						<YO>0</YO>
+					</UDim2>
+					<Ref name="RootLocalizationTable">null</Ref>
+					<float name="Rotation">0</float>
+					<bool name="Selectable">false</bool>
+					<token name="SelectionBehaviorDown">0</token>
+					<token name="SelectionBehaviorLeft">0</token>
+					<token name="SelectionBehaviorRight">0</token>
+					<token name="SelectionBehaviorUp">0</token>
+					<bool name="SelectionGroup">false</bool>
+					<Ref name="SelectionImageObject">null</Ref>
+					<int name="SelectionOrder">0</int>
+					<UDim2 name="Size">
+						<XS>0</XS>
+						<XO>438</XO>
+						<YS>0</YS>
+						<YO>268</YO>
+					</UDim2>
+					<token name="SizeConstraint">0</token>
+					<int64 name="SourceAssetId">-1</int64>
+					<token name="Style">0</token>
+					<BinaryString name="Tags"></BinaryString>
+					<UniqueId name="UniqueId">079fd07efd1f4a0a028fc3eb007b828d</UniqueId>
+					<bool name="Visible">true</bool>
+					<int name="ZIndex">1</int>
+				</Properties>
+			</Item>
+			<Item class="TextBox" referent="RBXD9CF01E03B094EBA97349E6DC0CFC967">
 				<Properties>
 					<bool name="Active">true</bool>
 					<Vector2 name="AnchorPoint">
@@ -600,7 +1298,12 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 					<bool name="ClipsDescendants">false</bool>
 					<bool name="Draggable">false</bool>
 					<token name="Font">3</token>
-					<Font name="FontFace"></Font>
+					<Font name="FontFace">
+						<Family><url>rbxasset://fonts/families/SourceSansPro.json</url></Family>
+						<Weight>400</Weight>
+						<Style>Normal</Style>
+						<CachedFaceId><url>rbxasset://fonts/SourceSansPro-Regular.ttf</url></CachedFaceId>
+					</Font>
 					<int name="LayoutOrder">0</int>
 					<float name="LineHeight">1</float>
 					<int name="MaxVisibleGraphemes">-1</int>
@@ -663,11 +1366,11 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 					<bool name="TextWrapped">true</bool>
 					<token name="TextXAlignment">0</token>
 					<token name="TextYAlignment">1</token>
-					<UniqueId name="UniqueId">7cb338ab5f2bec590297895100029c4e</UniqueId>
+					<UniqueId name="UniqueId">56aefadec790aa6202e855180002d40a</UniqueId>
 					<bool name="Visible">true</bool>
 					<int name="ZIndex">1</int>
 				</Properties>
-				<Item class="ImageButton" referent="RBX3DB4E1E27CBE476683EFBC0A9408A13C">
+				<Item class="ImageButton" referent="RBX025216464C2548B08C9B084D9F799FC8">
 					<Properties>
 						<bool name="Active">true</bool>
 						<Vector2 name="AnchorPoint">
@@ -763,12 +1466,12 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 							<YS>1</YS>
 							<YO>0</YO>
 						</UDim2>
-						<UniqueId name="UniqueId">7cb338ab5f2bec59029789510002a2ff</UniqueId>
+						<UniqueId name="UniqueId">56aefadec790aa6202e855180002d408</UniqueId>
 						<bool name="Visible">true</bool>
 						<int name="ZIndex">1</int>
 					</Properties>
 				</Item>
-				<Item class="ImageButton" referent="RBX77B398E64D104A038AE0B108877ECE1D">
+				<Item class="ImageButton" referent="RBX608BCF63B88A4DB4890675724CFA7C6A">
 					<Properties>
 						<bool name="Active">true</bool>
 						<Vector2 name="AnchorPoint">
@@ -864,7 +1567,7 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 							<YS>1</YS>
 							<YO>0</YO>
 						</UDim2>
-						<UniqueId name="UniqueId">7cb338ab5f2bec59029789510002a495</UniqueId>
+						<UniqueId name="UniqueId">56aefadec790aa6202e855180002d409</UniqueId>
 						<bool name="Visible">true</bool>
 						<int name="ZIndex">1</int>
 					</Properties>
@@ -1039,6 +1742,36 @@ gcLgc4RKxr21zq2UlJSM]]></BinaryString>
 			<BinaryString name="Tags"></BinaryString>
 			<UniqueId name="UniqueId">0b401e85ede42a620247f9fa0001b275</UniqueId>
 		</Properties>
+		<Item class="Script" referent="RBX051175A96F30476CA060C6FB0E0702B2">
+			<Properties>
+				<BinaryString name="AttributesSerialize"></BinaryString>
+				<bool name="Disabled">false</bool>
+				<Content name="LinkedSource"><null></null></Content>
+				<string name="Name">MtObjectTest</string>
+				<token name="RunContext">0</token>
+				<string name="ScriptGuid">{31C12EE3-55B0-4EF6-9438-8CFB85B43254}</string>
+				<ProtectedString name="Source"><![CDATA[local repstrg = game:GetService("ReplicatedStorage")
+local MObject = require(repstrg.Mt.MtCore.MObject)
+local MScreen = require(repstrg.Mt.MtCore.MScreen)
+
+local obj1 = MObject.Init()
+obj1.Name = "object"
+obj1.Name = "object2"
+
+obj1:PrintMembers()
+
+local obj2 = MScreen.Init({FindFirstChild=function()end})
+obj2:SetName("screen")
+
+obj2:PrintMembers()
+
+print("obj1:"..obj1.Name)
+print("obj2:"..obj2.Name)]]></ProtectedString>
+				<int64 name="SourceAssetId">-1</int64>
+				<BinaryString name="Tags"></BinaryString>
+				<UniqueId name="UniqueId">23fc4fa05a1e0eba02d782820002bbc5</UniqueId>
+			</Properties>
+		</Item>
 	</Item>
 	<Item class="ServerStorage" referent="RBXE7257D1F3B1B43B09B79686BF6001896">
 		<Properties>
@@ -1106,194 +1839,6 @@ return mtwidgets]]></ProtectedString>
 					<BinaryString name="Tags"></BinaryString>
 					<UniqueId name="UniqueId">05c44930bd9fb73402486df700201f5d</UniqueId>
 				</Properties>
-				<Item class="ModuleScript" referent="RBX129DD68AEA6D42E1AAEE3E0A367DD743">
-					<Properties>
-						<BinaryString name="AttributesSerialize"></BinaryString>
-						<Content name="LinkedSource"><null></null></Content>
-						<string name="Name">MWidget</string>
-						<string name="ScriptGuid">{6C7FCB0E-3E63-4CEB-A66E-534210256E09}</string>
-						<ProtectedString name="Source"><![CDATA[local repstrg = game:GetService("ReplicatedStorage")
-local MObject = require(repstrg.Mt.MtCore.MObject)
-local uis = game:GetService("UserInputService")
-
-local MWidget = {
-	ClassName = "MWidget", -- See Mt.MtCore.MObject
-	Name = "widget",       -- ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^
-}
-
-MWidget.Init = function(self,parent,_obj)
-	local _obj = MObject.Init(self,parent,_obj)
-
-	_obj.Frame = Instance.new("Frame")
-	_obj.Frame.Name = _obj.Name
-	_obj.Frame.BorderSizePixel = 0
-	_obj.Frame.BackgroundColor3 = Color3.new(1,1,1)
-
-	MWidget.SetSizeLimit(_obj,
-		Vector2.new(10,10),
-		Vector2.new(3000,3000)
-	)
-	MWidget.SetSize(_obj,Vector2.new(325,325))
-
-	return _obj
-end
-
-MWidget.LimitCoordinate = function(self,coor:Vector2,min:Vector2,max:Vector2): Vector2
-	min=min or self:GetMinimumSize()
-	max=max or self:GetMaximumSize()
-	
-	if coor.X > max.X then coor = Vector2.new(max.X,coor.Y) end
-	if coor.Y > max.Y then coor = Vector2.new(coor.X,max.Y) end
-	
-	if coor.X < min.X then coor = Vector2.new(min.X,coor.Y) end
-	if coor.Y < min.Y then coor = Vector2.new(coor.X,min.Y) end
-	
-	return coor
-end
-
-MWidget.SetSize = function(self,newsize:Vector2)
-	local limitedsize = self:LimitCoordinate(newsize)
-	local currentScale: Vector2 = self:GetSizeScale()
-	self.Frame.Size = UDim2.new(
-		currentScale.X,
-		limitedsize.X,
-		currentScale.Y,
-		limitedsize.Y
-	)
-end
-
-MWidget.Resize = MWidget.SetSize
-
-MWidget.SetSizeFromScale = function(self,newscale:Vector2)
-	local screenSize = self.Screen:GetScreenSize()
-	self:SetSize(Vector2.new(newscale.X*screenSize.X,newscale.Y*screenSize.Y))
-end
-
-MWidget.Rescale = MWidget.SetSizeFromScale
-
-MWidget.SetPosition = function(self,newpos:Vector2)
-	self.Frame.Position = UDim2.fromOffset(newpos.X,newpos.Y)
-end
-
-MWidget.GoTo = MWidget.SetPosition
-MWidget.Move = MWidget.SetPosition
-
-MWidget.SetPositionFromScale = function(self,newscale:Vector2)
-	local screenSize = self.Screen:GetScreenSize()
-	self:SetPosition(Vector2.new(newscale.X*screenSize.X,newscale.Y*screenSize.Y))
-end
-
-MWidget.GetSizeScale = function(self): Vector2
-	return Vector2.new(self.Frame.Size.X.Scale,self.Frame.Size.Y.Scale)
-end
-
-MWidget.SetSizeLimit = function(self,min:Vector2,max:Vector2)
-	self.MinSize = min
-	self.MaxSize = max
-end
-
-MWidget.SetMinimumSize = function(self,size:Vector2)
-	self:SetSizeLimit(size,self.MaxSize)
-end
-
-MWidget.SetMinimumWidth= function(self,width:number)
-	self:SetMinimumSize(Vector2.new(
-		width,
-		self.MinSize.Y
-	))
-end
-
-MWidget.SetMinimumHeight=function(self,height:number)
-	self:SetMinimumSize(Vector2.new(
-		self.MinSize.X,
-		height
-	))
-end
-
-MWidget.SetMaximumSize = function(self,size:Vector2)
-	self:SetSizeLimit(self.MinSize,size)
-end
-
-MWidget.SetMaximumWidth= function(self,width:number)
-	self:SetMaximumSize(Vector2.new(
-		width,
-		self.MinSize.Y
-	))
-end
-
-MWidget.SetMaxmimumHeight=function(self,height:number)
-	self:SetMaximumSize(Vector2.new(
-		self.MaxSize.X,
-		height
-	))
-end
-
-MWidget.GetMaximumWidth=function(self): number
-	return self.MaxSize.X
-end
-
-MWidget.GetMinimumWidth=function(self): number
-	return self.MinSize.X
-end
-
-MWidget.GetMaximumHeight=function(self): number
-	return self.MaxSize.Y
-end
-
-MWidget.GetMinimumHeight=function(self): number
-	return self.MinSize.Y
-end
-
-MWidget.GetMinimumSize=function(self): Vector2
-	return self.MinSize
-end
-
-MWidget.GetMaximumSize=function(self): Vector2
-	return self.MaxSize
-end
-
-MWidget.GetSizeLimit=function(self): Rect
-	return Rect.new(self:GetMinimumSize(),self:GetMaximumSize())
-end
-
-MWidget.SetName = function(self,name)
-	self.Frame.Name = name
-	MObject.SetName(self,name)
-end
-
-MWidget.SetHidden = function(self,hidden)
-	self.Frame.Visible = not hidden
-end
-
-MWidget.IsPointTouchingArea = function(self,point: Vector2,areaPos: UDim2,areaSize: UDim2): boolean
-	local px = point.X
-	local py = point.Y
-	local apx = areaPos.X.Offset
-	local apy = areaPos.Y.Offset
-	local asx = areaSize.X.Offset
-	local asy = areaSize.X.Offset
-	
-	return 
-		(px >= apx-asx and px <= (apx + asx)) and
-		(py >= apy-asy and py <= (apy + asy))
-end
-
-MWidget.IsPointInsideWidget = function(self,point:Vector2): boolean
-	self:PointTouchingArea(point,self.Frame.AbsolutePosition,self.Frame.AbsoluteSize)
-end
-
-MWidget.IsBeingHovered = function(self):boolean
-	self:IsPointInsideWidget(uis:GetMouseLocation())
-end
-
-MWidget = MObject:Init({},MWidget,-1)
-
-return MWidget]]></ProtectedString>
-						<int64 name="SourceAssetId">-1</int64>
-						<BinaryString name="Tags"></BinaryString>
-						<UniqueId name="UniqueId">05c44930bd9fb73402486df700201f98</UniqueId>
-					</Properties>
-				</Item>
 				<Item class="ModuleScript" referent="RBXB48A27957CA544C7A4E050E6BB3E3915">
 					<Properties>
 						<BinaryString name="AttributesSerialize"></BinaryString>
@@ -1321,21 +1866,23 @@ local MWindow = {
 	WindowInteractionState = MtEnum.WindowInteractionState.None, -- Window interaction state (string (enum)) (Read-only)
 	Maximized = false, -- Is maximized? (boolean) (Read-only)
 }
+MWindow = setmetatable(MWindow, MWidget)
+rawset(MWindow, "__index", MWindow)
 
-MWindow.Init = function(self,screen,_obj)
-	local _obj = MWidget.Init(self,screen,_obj)
+MWindow.Init = function(self,screen)
+	local self = setmetatable(MWidget.Init(self,screen), MWindow)
 
-	_obj.Interacted=Instance.new("BindableEvent")
-	_obj.Resizing = Instance.new("BindableEvent")
-	_obj.Moving   = Instance.new("BindableEvent")
+	self.Interacted=Instance.new("BindableEvent")
+	self.Resizing = Instance.new("BindableEvent")
+	self.Moving   = Instance.new("BindableEvent")
 	
-	_obj.Screen = screen
-	MWindow.InitGui(_obj)
-	_obj.Screen:AddWidget(_obj)
+	self.Screen = screen
+	MWindow.InitGui(self)
+	self.Screen:AddWidget(self)
 	
-	--MWindow.InitWindowFunctionality(_obj)
+	--MWindow.InitWindowFunctionality(self)
 	
-	return _obj
+	return self
 end
 
 function MWindow.InitGui(self)
@@ -1385,8 +1932,6 @@ MWindow.SetTitle = function(self,title)
 	self.Title = title
 	self.TitleLabel.Text = self.Title
 end
-
-local MWindow = MWidget:Init({},MWindow)
 
 return MWindow]]></ProtectedString>
 						<int64 name="SourceAssetId">-1</int64>
@@ -1518,7 +2063,12 @@ return MWindow]]></ProtectedString>
 								<bool name="ClipsDescendants">false</bool>
 								<bool name="Draggable">false</bool>
 								<token name="Font">3</token>
-								<Font name="FontFace"></Font>
+								<Font name="FontFace">
+									<Family><url>rbxasset://fonts/families/SourceSansPro.json</url></Family>
+									<Weight>400</Weight>
+									<Style>Normal</Style>
+									<CachedFaceId><url>rbxasset://fonts/SourceSansPro-Regular.ttf</url></CachedFaceId>
+								</Font>
 								<int name="LayoutOrder">1</int>
 								<float name="LineHeight">1</float>
 								<int name="MaxVisibleGraphemes">-1</int>
@@ -2030,6 +2580,7 @@ return MWindow]]></ProtectedString>
 						<string name="Name">MWindowResizeRegion</string>
 						<string name="ScriptGuid">{4B0E1833-342E-48B8-9103-F78E30D9A98B}</string>
 						<ProtectedString name="Source"><![CDATA[local repstrg = game:GetService("ReplicatedStorage")
+local changeCursor = repstrg.Mt.Remotes.ChangeCursor
 local MObject  = require(repstrg.Mt.MtCore.MObject)
 local MtEnum  = require(repstrg.Mt.MtCore.MtEnum)
 local _getMouseButton1Pressed = require(repstrg.Mt.MtCore.MtCoreFunctions)._getMouseButton1Pressed
@@ -2065,78 +2616,80 @@ local MWindowResizeRegion = {
 	Name = "ResizeRegion",
 	ClassName = "MWindowResizeRegion",
 }
+MWindowResizeRegion = setmetatable(MWindowResizeRegion, MObject)
+rawset(MWindowResizeRegion, "__index", MWindowResizeRegion)
 
-MWindowResizeRegion.Init = function(self,x,y,side,sx,sy,osx,osy,window,_obj)
+MWindowResizeRegion.Init = function(self,x,y,side,sx,sy,osx,osy,window)
 	if window.ClassName ~= "MWindow" then
 		error("Mt error: MWindowResizeRegions must be parented to an MWindow.")
 	end
 	
-	local _obj = MObject.Init(self,window,_obj)
-	_obj.Resizing    = Instance.new("BindableEvent")
-	_obj.ResizeEnded = Instance.new("BindableEvent")
-	_obj.ResizeBegan = Instance.new("BindableEvent")
+	local self = setmetatable(MObject.Init(self,window), MWindowResizeRegion)
+	self.Resizing    = Instance.new("BindableEvent")
+	self.ResizeEnded = Instance.new("BindableEvent")
+	self.ResizeBegan = Instance.new("BindableEvent")
 	
-	_obj.Window = window
+	self.Window = window
 
-	if not _obj.Window.Frame:FindFirstChild("resizeRegions") then
-		_obj.ResizeRegionsFolder = Instance.new("Folder")
-		_obj.ResizeRegionsFolder.Parent = _obj.Window.Frame
-		_obj.ResizeRegionsFolder.Name = "resizeRegions"
+	if not self.Window.Frame:FindFirstChild("resizeRegions") then
+		self.ResizeRegionsFolder = Instance.new("Folder")
+		self.ResizeRegionsFolder.Parent = self.Window.Frame
+		self.ResizeRegionsFolder.Name = "resizeRegions"
 	else
-		_obj.ResizeRegionsFolder = _obj.Window.Frame.resizeRegions
+		self.ResizeRegionsFolder = self.Window.Frame.resizeRegions
 	end
 
-	if not _obj.ResizeRegionsFolder:FindFirstChild("Dragging") then
-		_obj.DraggingValue = Instance.new("ObjectValue")
-		_obj.DraggingValue.Parent = _obj.ResizeRegionsFolder
-		_obj.DraggingValue.Name = "Dragging"
+	if not self.ResizeRegionsFolder:FindFirstChild("Dragging") then
+		self.DraggingValue = Instance.new("ObjectValue")
+		self.DraggingValue.Parent = self.ResizeRegionsFolder
+		self.DraggingValue.Name = "Dragging"
 	else
-		_obj.DraggingValue = _obj.ResizeRegionsFolder.Dragging
+		self.DraggingValue = self.ResizeRegionsFolder.Dragging
 	end
 
 	osx = osx or 0
 	osy = osy or 0
 
-	_obj.Region = Instance.new("Frame")
-	_obj.Region.Parent = _obj.ResizeRegionsFolder
-	_obj.Region.Name = side.._obj.Name
-	_obj.Region.BackgroundTransparency = 1
-	_obj.Region.BorderSizePixel = 0
-	_obj.Region.BorderColor3 = Color3.new(0,1,0)
-	_obj.Region.Position = UDim2.fromScale(x,y)
-	_obj.Region.Size = UDim2.new(sx,osx,sy,osy)
+	self.Region = Instance.new("Frame")
+	self.Region.Parent = self.ResizeRegionsFolder
+	self.Region.Name = side..self.Name
+	self.Region.BackgroundTransparency = 1
+	self.Region.BorderSizePixel = 0
+	self.Region.BorderColor3 = Color3.new(0,1,0)
+	self.Region.Position = UDim2.fromScale(x,y)
+	self.Region.Size = UDim2.new(sx,osx,sy,osy)
 	
-	_obj.XRay = script.XRay:Clone()
-	MWindowResizeRegion.SetXRayEnabled(_obj,false)
-	_obj.XRay.Parent = _obj.Region
+	self.XRay = script.XRay:Clone()
+	MWindowResizeRegion.SetXRayEnabled(self,false)
+	self.XRay.Parent = self.Region
 
-	_obj.Cursor = cursors[side]
+	self.Cursor = cursors[side]
 	
-	_obj.Region.MouseEnter:Connect(function()
-		if MWindowResizeRegion.CanChangeCursor(_obj) then
+	self.Region.MouseEnter:Connect(function()
+		if MWindowResizeRegion.CanChangeCursor(self) then
 			local mouse = plr:GetMouse()
-			MtMouseController:ChangeCursor(_obj.Cursor)
+			MtMouseController:ChangeCursor(self.Cursor)
 		end
 	end)
 
-	_obj.Region.MouseLeave:Connect(function()
-		if MWindowResizeRegion.CanChangeCursor(_obj) then
+	self.Region.MouseLeave:Connect(function()
+		if MWindowResizeRegion.CanChangeCursor(self) then
 			local mouse = plr:GetMouse()
 			MtMouseController:ResetCursor()
 		end
 	end)
 
-	_obj.Region.InputBegan:Connect(function(input)
+	self.Region.InputBegan:Connect(function(input)
 		if input.UserInputType == Enum.UserInputType.MouseButton1 then
 			local clickLocation = uis:GetMouseLocation()
-			local wx=_obj.Window.Frame.Position.X.Offset
-			local wy=_obj.Window.Frame.Position.Y.Offset
-			local wsx=_obj.Window.Frame.Size.X.Offset
-			local wsy=_obj.Window.Frame.Size.Y.Offset
+			local wx=self.Window.Frame.Position.X.Offset
+			local wy=self.Window.Frame.Position.Y.Offset
+			local wsx=self.Window.Frame.Size.X.Offset
+			local wsy=self.Window.Frame.Size.Y.Offset
 			local imx=clickLocation.X
 			local imy=clickLocation.Y
 
-			_obj.DraggingValue.Value = _obj.Region
+			self.DraggingValue.Value = self.Region
 			local sidex=MtEnum.ResizeSide.None
 			local sidey=MtEnum.ResizeSide.None
 
@@ -2147,9 +2700,9 @@ MWindowResizeRegion.Init = function(self,x,y,side,sx,sy,osx,osy,window,_obj)
 				if math.abs(imy-(wy+wsy))<5 then sidey=MtEnum.ResizeSide.Bottom end
 			end
 			
-			_obj.ResizeBegan:Fire()
+			self.ResizeBegan:Fire()
 			
-			while _getMouseButton1Pressed(uis:GetMouseButtonsPressed()) and _obj.Window.Screen.WindowBeingInteracted do
+			while _getMouseButton1Pressed(uis:GetMouseButtonsPressed()) and self.Window.Screen.WindowBeingInteracted do
 				local location = uis:GetMouseLocation()
 				local mx=location.X
 				local my=location.Y
@@ -2184,13 +2737,13 @@ MWindowResizeRegion.Init = function(self,x,y,side,sx,sy,osx,osy,window,_obj)
 				----- Check if the y < min y 
 				------ if yes then do nothing
 				
-				local newsize = _obj.Window:LimitCoordinate(Vector2.new(nsx,nsy),Vector2.new(0,0))
-				if newsize == _obj.Window:LimitCoordinate(newsize) then
-					_obj.Window:SetPosition(Vector2.new(nx,ny))
+				local newsize = self.Window:LimitCoordinate(Vector2.new(nsx,nsy),Vector2.new(0,0))
+				if newsize == self.Window:LimitCoordinate(newsize) then
+					self.Window:SetPosition(Vector2.new(nx,ny))
 				end
-				_obj.Window:SetSize(newsize)
+				self.Window:SetSize(newsize)
 
-				_obj.Resizing:Fire(_obj.Window.Frame.Size,_obj.Window.Frame.Position,location)
+				self.Resizing:Fire(self.Window.Frame.Size,self.Window.Frame.Position,location)
 				MtMouseController:ChangeCursor(MWindowResizeRegion.GetCursorFromResizeSide(sidex,sidey))
 
 				task.wait(.025)
@@ -2198,15 +2751,15 @@ MWindowResizeRegion.Init = function(self,x,y,side,sx,sy,osx,osy,window,_obj)
 			end
 
 			MtMouseController:ResetCursor()
-			_obj.DraggingValue.Value = nil
+			self.DraggingValue.Value = nil
 			
-			_obj.ResizeEnded:Fire()
+			self.ResizeEnded:Fire()
 		end
 	end)
 	
-	--MWindowResizeRegion.SetXRayEnabled(_obj,true)
+	--MWindowResizeRegion.SetXRayEnabled(self,true)
 
-	return _obj
+	return self
 end
 
 MWindowResizeRegion.CanChangeCursor = function(self): boolean
@@ -2229,8 +2782,6 @@ MWindowResizeRegion.GetCursorFromResizeSide = function(x:number,y:number):string
 	if x==y then return "rbxasset://textures/StudioUIEditor/icon_resize3.png" end -- diagonal north-east
 	if x~=y then return "rbxasset://textures/StudioUIEditor/icon_resize1.png" end -- diagonal north-west
 end
-
-MWindowResizeRegion = MObject:Init({},MWindowResizeRegion,-1)
 
 return MWindowResizeRegion]]></ProtectedString>
 						<int64 name="SourceAssetId">-1</int64>
@@ -2256,6 +2807,1139 @@ return MWindowResizeRegion]]></ProtectedString>
 							<UniqueId name="UniqueId">11014c28a2288ea7028eebe90046145e</UniqueId>
 						</Properties>
 					</Item>
+				</Item>
+				<Item class="ModuleScript" referent="RBXCC8E430A5714469E9AA84B8D6873FFBA">
+					<Properties>
+						<BinaryString name="AttributesSerialize"></BinaryString>
+						<Content name="LinkedSource"><null></null></Content>
+						<string name="Name">MProgressBar</string>
+						<string name="ScriptGuid">{84533514-0FD2-4718-8D24-7F8B6CAB21E0}</string>
+						<ProtectedString name="Source"><![CDATA[local repstrg = game:GetService("ReplicatedStorage")
+local MWidget = require(repstrg.Mt.MtWidgets.MWidget)
+local MtEnum = require(repstrg.Mt.MtCore.MtEnum)
+local ts = game:GetService("TweenService")
+
+local MProgressBar = {
+	ClassName = "MProgressBar", -- See Mt.MtCore.MObject
+	Name = "progressbar",       -- ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^
+	
+	Progress = 0,
+	Format = "{p}%",
+	
+	Min = 0,
+	Max = 100,
+	
+	FillingOrientation = MtEnum.Orientation.Horizontal,
+	FillingInverted = false,
+	
+	Bool2Bin={[false]=0, [true]=1},
+	Enum2FillingGradRotation = {
+		[MtEnum.Orientation.Horizontal] = -90,
+		[MtEnum.Orientation.Vertical]   =  0 ,
+	},
+	Enum2FillingUndefGradRotation = {
+		[MtEnum.Orientation.Horizontal] = 0  ,
+		[MtEnum.Orientation.Vertical]   = -90,
+	},
+}
+MProgressBar = setmetatable(MProgressBar, MWidget)
+rawset(MProgressBar, "__index", MProgressBar)
+
+function MProgressBar.Init(self,parent)
+	local self = setmetatable(MWidget.Init(self,parent), MProgressBar)
+	self.Frame:Destroy()
+	
+	local clone = script.progressbar:Clone()
+	self.Filling = clone.filling
+	self.Label = clone.label
+	self.Gradient = self.Filling.Gradient
+	self.UndefGradient = clone.filling.UndefinedGradient
+	self.Frame = clone
+	
+	self.UndefTweenGoal = {Offset = Vector2.new(1,0)}
+	self.UndefTween = ts:Create(
+		self.UndefGradient,
+		TweenInfo.new(
+			3,
+			Enum.EasingStyle.Quad,
+			Enum.EasingDirection.InOut,
+			0,
+			true
+		),
+		self.UndefTweenGoal
+	)
+	
+	self.DragUndefGradCoro = coroutine.create(function()
+		MProgressBar.DragUndefGradient(self)
+	end)
+	
+	MProgressBar.SetProgress(self,24)
+
+	return self
+end
+
+function MProgressBar.GetFormattedText(self,progress:number,format:string): string
+	if self:GetUndefinedProgress() then
+		progress = "?"
+	else
+		progress = tostring(progress) or tostring(self:GetProgress())
+	end
+	
+	format = format or self:GetFormat()
+	
+	return string.gsub(format,"{p}",progress)
+end
+
+function MProgressBar.GetLimitedProgress(self,progress:number,min:number,max:number): number
+	progress = progress or self:GetProgress()
+	min = min or self.Min
+	max = max or self.Max
+	
+	if progress < min then
+		return min
+	elseif progress > max then
+		return max
+	else
+		return progress
+	end
+end
+
+local function _returnNeg(n:number,yes:boolean): number
+	if yes then return -n end
+	return n
+end
+
+function MProgressBar.GetFillingSize(self,orientation:string,inverted:boolean,progress:number,max:number): UDim2
+	orientation = orientation or self:GetFillingOrientation()
+	inverted = inverted or self:GetFillingInverted()
+	progress = progress or self:GetProgress()
+	max = max or self.Max
+	
+	local ns1 = _returnNeg(progress/max,inverted)
+	local ns2 = _returnNeg(1,inverted)
+	
+	if orientation == MtEnum.Orientation.Vertical then
+		return UDim2.fromScale(ns2,ns1)
+	else
+		return UDim2.fromScale(ns1,ns2)
+	end
+end
+
+function MProgressBar.SetProgress(self,progress:number)
+	progress = progress or self:GetProgress()
+	
+	if self.Progress ~= false then
+		local limitedProgress = self:GetLimitedProgress(progress)
+		self.Progress = limitedProgress
+		self.Filling.Size = self:GetFillingSize()
+		self.Label.Text = self:GetFormattedText(limitedProgress)
+	end
+end
+
+function MProgressBar.GetProgress(self): number
+	return self.Progress~=false and self.Progress or 0 -- progress if progress~=false else 0
+end
+
+function MProgressBar.SetUndefGradOffset(self,offset:number)
+	offset = _returnNeg(offset,self:GetFillingInverted())
+	if self:GetFillingOrientation() == MtEnum.Orientation.Vertical then
+		self.UndefGradient.Offset = Vector2.new(0,offset)
+	else
+		self.UndefGradient.Offset = Vector2.new(offset,0)
+	end
+end
+
+function MProgressBar.DragUndefGradient(self)
+	while self.Progress == false do
+		for i = -1,1,0.05 do
+			self:SetUndefGradOffset(i)
+			task.wait(0.025)
+		end
+		--[[
+		for i = 1,-1,0.05 do
+			self:SetUndefGradOffset(i)
+			task.wait(0.1)
+		end
+		]]
+	end
+end
+
+function MProgressBar.SetUndefinedProgress(self,undefined:boolean)
+	self.UndefGradient.Enabled = undefined
+	self.Gradient.Enabled = not undefined
+	
+	if not undefined then
+		self.Progress = 0 -- this will stop the drag undef grad coroutine
+		self:SetProgress(0)
+	else
+		self.Progress = false
+		self.Filling.Size = UDim2.fromScale(1,1)
+		self.Label.Text = self:GetFormattedText()
+		coroutine.resume(self.DragUndefGradCoro)
+	end
+end
+
+function MProgressBar.GetUndefinedProgress(self): boolean
+	-- returns if progress is undefined
+	return self.Progress == false
+end
+
+function MProgressBar.SetFormat(self,format:string)
+	self.Label.Text = self:GetFormattedText(self:GetProgress(),format)
+	self.Format = format
+end
+
+function MProgressBar.GetFormat(self): string
+	return self.Format
+end
+
+function MProgressBar.SetLabelVisibility(self,visible:boolean)
+	self.Label.Visible = visible
+end
+
+function MProgressBar.GetLabelVisibility(self): boolean
+	return self.Label.Visible
+end
+
+function MProgressBar.SetLabelAlignment(self,alignment:Enum.TextXAlignment)
+	self.Label.TextXAlignment = alignment
+end
+
+function MProgressBar.GetLabelAlignment(self): Enum.TextXAlignment
+	return self.Label.TextXAlignment
+end
+
+function MProgressBar.SetFillingOrientation(self,orientation:string)
+	if not self:GetUndefinedProgress() then
+		self.Filling.Size = self:GetFillingSize(orientation)
+	end
+	
+	self.Gradient.Rotation = self.Enum2FillingGradRotation[orientation]
+	self.UndefGradient.Rotation = self.Enum2FillingUndefGradRotation[orientation]
+	self.FillingOrientation = orientation
+end
+
+function MProgressBar.GetFillingOrientation(self): string
+	return self.FillingOrientation
+end
+
+function MProgressBar.SetFillingInverted(self,inverted:boolean)
+	self.FillingInverted = inverted
+	if not self:GetUndefinedProgress() then
+		local newpos = self.Bool2Bin[inverted]
+		self.Filling.Position = UDim2.fromScale(newpos,newpos)
+		self.Filling.Size = self:GetFillingSize()
+	end
+end
+
+function MProgressBar.GetFillingInverted(self): boolean
+	return self.FillingInverted
+end
+
+function MProgressBar.SetMaximum(self,max:number)
+	self.Max = max
+	self:SetProgress()
+end
+
+function MProgressBar.SetMinimum(self,min:number)
+	self.Min = min
+	self:SetProgress()
+end
+
+function MProgressBar.GetMaximum(self): number
+	return self.Max
+end
+
+function MProgressBar.GetMinimum(self): number
+	return self.Min
+end
+
+function MProgressBar.SetProgressLimit(self,min:number,max:number)
+	self:SetMinimum(min)
+	self:SetMaximum(max)
+end
+
+function MProgressBar.GetProgressLimit(self): (number,number)
+	return self:GetMinimum(), self:GetMaximum()
+end
+
+return MProgressBar]]></ProtectedString>
+						<int64 name="SourceAssetId">-1</int64>
+						<BinaryString name="Tags"></BinaryString>
+						<UniqueId name="UniqueId">4b78783951982c7702dac31d001c2780</UniqueId>
+					</Properties>
+					<Item class="Frame" referent="RBX83E55F571AFA419397CF5DA2A7C76137">
+						<Properties>
+							<bool name="Active">false</bool>
+							<Vector2 name="AnchorPoint">
+								<X>0</X>
+								<Y>0</Y>
+							</Vector2>
+							<BinaryString name="AttributesSerialize"></BinaryString>
+							<bool name="AutoLocalize">true</bool>
+							<token name="AutomaticSize">0</token>
+							<Color3 name="BackgroundColor3">
+								<R>0.313725501</R>
+								<G>0.313725501</G>
+								<B>0.313725501</B>
+							</Color3>
+							<float name="BackgroundTransparency">0</float>
+							<Color3 name="BorderColor3">
+								<R>0.105882362</R>
+								<G>0.164705887</G>
+								<B>0.207843155</B>
+							</Color3>
+							<token name="BorderMode">0</token>
+							<int name="BorderSizePixel">1</int>
+							<bool name="ClipsDescendants">true</bool>
+							<bool name="Draggable">false</bool>
+							<int name="LayoutOrder">0</int>
+							<string name="Name">progressbar</string>
+							<Ref name="NextSelectionDown">null</Ref>
+							<Ref name="NextSelectionLeft">null</Ref>
+							<Ref name="NextSelectionRight">null</Ref>
+							<Ref name="NextSelectionUp">null</Ref>
+							<UDim2 name="Position">
+								<XS>0</XS>
+								<XO>0</XO>
+								<YS>0</YS>
+								<YO>0</YO>
+							</UDim2>
+							<Ref name="RootLocalizationTable">null</Ref>
+							<float name="Rotation">0</float>
+							<bool name="Selectable">false</bool>
+							<token name="SelectionBehaviorDown">0</token>
+							<token name="SelectionBehaviorLeft">0</token>
+							<token name="SelectionBehaviorRight">0</token>
+							<token name="SelectionBehaviorUp">0</token>
+							<bool name="SelectionGroup">false</bool>
+							<Ref name="SelectionImageObject">null</Ref>
+							<int name="SelectionOrder">0</int>
+							<UDim2 name="Size">
+								<XS>0</XS>
+								<XO>276</XO>
+								<YS>0</YS>
+								<YO>40</YO>
+							</UDim2>
+							<token name="SizeConstraint">0</token>
+							<int64 name="SourceAssetId">-1</int64>
+							<token name="Style">0</token>
+							<BinaryString name="Tags"></BinaryString>
+							<UniqueId name="UniqueId">4b78783951982c7702dac31d001c277c</UniqueId>
+							<bool name="Visible">true</bool>
+							<int name="ZIndex">1</int>
+						</Properties>
+						<Item class="UIStroke" referent="RBXA47FF0B3FCCF41ED8C54E901DAA28CC0">
+							<Properties>
+								<token name="ApplyStrokeMode">0</token>
+								<BinaryString name="AttributesSerialize"></BinaryString>
+								<Color3 name="Color">
+									<R>0</R>
+									<G>0</G>
+									<B>0</B>
+								</Color3>
+								<bool name="Enabled">true</bool>
+								<token name="LineJoinMode">0</token>
+								<string name="Name">UIStroke</string>
+								<int64 name="SourceAssetId">-1</int64>
+								<BinaryString name="Tags"></BinaryString>
+								<float name="Thickness">5</float>
+								<float name="Transparency">0</float>
+								<UniqueId name="UniqueId">4b78783951982c7702dac31d001c2789</UniqueId>
+							</Properties>
+						</Item>
+						<Item class="UICorner" referent="RBX91982BF7A1BC44DE96C832DAC322CEFC">
+							<Properties>
+								<BinaryString name="AttributesSerialize"></BinaryString>
+								<UDim name="CornerRadius">
+									<S>0</S>
+									<O>2</O>
+								</UDim>
+								<string name="Name">UICorner</string>
+								<int64 name="SourceAssetId">-1</int64>
+								<BinaryString name="Tags"></BinaryString>
+								<UniqueId name="UniqueId">4b78783951982c7702dac31d001c2783</UniqueId>
+							</Properties>
+						</Item>
+						<Item class="Frame" referent="RBX90EDBF4F063E4918B487DFF547E9F31B">
+							<Properties>
+								<bool name="Active">false</bool>
+								<Vector2 name="AnchorPoint">
+									<X>0</X>
+									<Y>0</Y>
+								</Vector2>
+								<BinaryString name="AttributesSerialize"></BinaryString>
+								<bool name="AutoLocalize">true</bool>
+								<token name="AutomaticSize">0</token>
+								<Color3 name="BackgroundColor3">
+									<R>1</R>
+									<G>1</G>
+									<B>1</B>
+								</Color3>
+								<float name="BackgroundTransparency">0</float>
+								<Color3 name="BorderColor3">
+									<R>0.105882362</R>
+									<G>0.164705887</G>
+									<B>0.207843155</B>
+								</Color3>
+								<token name="BorderMode">0</token>
+								<int name="BorderSizePixel">0</int>
+								<bool name="ClipsDescendants">false</bool>
+								<bool name="Draggable">false</bool>
+								<int name="LayoutOrder">0</int>
+								<string name="Name">filling</string>
+								<Ref name="NextSelectionDown">null</Ref>
+								<Ref name="NextSelectionLeft">null</Ref>
+								<Ref name="NextSelectionRight">null</Ref>
+								<Ref name="NextSelectionUp">null</Ref>
+								<UDim2 name="Position">
+									<XS>0</XS>
+									<XO>0</XO>
+									<YS>0</YS>
+									<YO>0</YO>
+								</UDim2>
+								<Ref name="RootLocalizationTable">null</Ref>
+								<float name="Rotation">0</float>
+								<bool name="Selectable">false</bool>
+								<token name="SelectionBehaviorDown">0</token>
+								<token name="SelectionBehaviorLeft">0</token>
+								<token name="SelectionBehaviorRight">0</token>
+								<token name="SelectionBehaviorUp">0</token>
+								<bool name="SelectionGroup">false</bool>
+								<Ref name="SelectionImageObject">null</Ref>
+								<int name="SelectionOrder">0</int>
+								<UDim2 name="Size">
+									<XS>0</XS>
+									<XO>2</XO>
+									<YS>1</YS>
+									<YO>0</YO>
+								</UDim2>
+								<token name="SizeConstraint">0</token>
+								<int64 name="SourceAssetId">-1</int64>
+								<token name="Style">0</token>
+								<BinaryString name="Tags"></BinaryString>
+								<UniqueId name="UniqueId">4b78783951982c7702dac31d001c277d</UniqueId>
+								<bool name="Visible">true</bool>
+								<int name="ZIndex">1</int>
+							</Properties>
+							<Item class="UIStroke" referent="RBX85CA42AB5E184F5491D4253EE5F04B13">
+								<Properties>
+									<token name="ApplyStrokeMode">0</token>
+									<BinaryString name="AttributesSerialize"></BinaryString>
+									<Color3 name="Color">
+										<R>0</R>
+										<G>0.333333343</G>
+										<B>0</B>
+									</Color3>
+									<bool name="Enabled">false</bool>
+									<token name="LineJoinMode">0</token>
+									<string name="Name">UIStroke</string>
+									<int64 name="SourceAssetId">-1</int64>
+									<BinaryString name="Tags"></BinaryString>
+									<float name="Thickness">5</float>
+									<float name="Transparency">0</float>
+									<UniqueId name="UniqueId">4b78783951982c7702dac31d001c278a</UniqueId>
+								</Properties>
+							</Item>
+							<Item class="UIGradient" referent="RBXB365D56384CA4B6D9158C794C15EADDE">
+								<Properties>
+									<BinaryString name="AttributesSerialize"></BinaryString>
+									<ColorSequence name="Color">0 0.333333 1 0 0 1 0.607843 1 0.411765 0 </ColorSequence>
+									<bool name="Enabled">true</bool>
+									<string name="Name">Gradient</string>
+									<Vector2 name="Offset">
+										<X>0</X>
+										<Y>0</Y>
+									</Vector2>
+									<float name="Rotation">-90</float>
+									<int64 name="SourceAssetId">-1</int64>
+									<BinaryString name="Tags"></BinaryString>
+									<NumberSequence name="Transparency">0 0 0 1 0 0 </NumberSequence>
+									<UniqueId name="UniqueId">4b78783951982c7702dac31d001c2786</UniqueId>
+								</Properties>
+							</Item>
+							<Item class="UIGradient" referent="RBX2CB0F8A538E445B9AFC5CF9D0B8CA0A3">
+								<Properties>
+									<BinaryString name="AttributesSerialize"></BinaryString>
+									<ColorSequence name="Color">0 0.313726 0.313726 0.313726 0 0.499168 0.333333 1 0 0 1 0.313726 0.313726 0.313726 0 </ColorSequence>
+									<bool name="Enabled">true</bool>
+									<string name="Name">UndefinedGradient</string>
+									<Vector2 name="Offset">
+										<X>0</X>
+										<Y>0</Y>
+									</Vector2>
+									<float name="Rotation">0</float>
+									<int64 name="SourceAssetId">-1</int64>
+									<BinaryString name="Tags"></BinaryString>
+									<NumberSequence name="Transparency">0 0 0 1 0 0 </NumberSequence>
+									<UniqueId name="UniqueId">4b78783951982c7702dac31d001c2787</UniqueId>
+								</Properties>
+							</Item>
+						</Item>
+						<Item class="TextLabel" referent="RBX42DD32D4A8A146F68B63A006BAD2D934">
+							<Properties>
+								<bool name="Active">false</bool>
+								<Vector2 name="AnchorPoint">
+									<X>0</X>
+									<Y>0</Y>
+								</Vector2>
+								<BinaryString name="AttributesSerialize"></BinaryString>
+								<bool name="AutoLocalize">true</bool>
+								<token name="AutomaticSize">0</token>
+								<Color3 name="BackgroundColor3">
+									<R>1</R>
+									<G>1</G>
+									<B>1</B>
+								</Color3>
+								<float name="BackgroundTransparency">1</float>
+								<Color3 name="BorderColor3">
+									<R>0.105882362</R>
+									<G>0.164705887</G>
+									<B>0.207843155</B>
+								</Color3>
+								<token name="BorderMode">0</token>
+								<int name="BorderSizePixel">1</int>
+								<bool name="ClipsDescendants">false</bool>
+								<bool name="Draggable">false</bool>
+								<token name="Font">4</token>
+								<Font name="FontFace">
+									<Family><url>rbxasset://fonts/families/SourceSansPro.json</url></Family>
+									<Weight>700</Weight>
+									<Style>Normal</Style>
+									<CachedFaceId><url>rbxasset://fonts/SourceSansPro-Bold.ttf</url></CachedFaceId>
+								</Font>
+								<int name="LayoutOrder">0</int>
+								<float name="LineHeight">1</float>
+								<int name="MaxVisibleGraphemes">-1</int>
+								<string name="Name">label</string>
+								<Ref name="NextSelectionDown">null</Ref>
+								<Ref name="NextSelectionLeft">null</Ref>
+								<Ref name="NextSelectionRight">null</Ref>
+								<Ref name="NextSelectionUp">null</Ref>
+								<UDim2 name="Position">
+									<XS>0</XS>
+									<XO>0</XO>
+									<YS>0</YS>
+									<YO>0</YO>
+								</UDim2>
+								<bool name="RichText">false</bool>
+								<Ref name="RootLocalizationTable">null</Ref>
+								<float name="Rotation">0</float>
+								<bool name="Selectable">false</bool>
+								<token name="SelectionBehaviorDown">0</token>
+								<token name="SelectionBehaviorLeft">0</token>
+								<token name="SelectionBehaviorRight">0</token>
+								<token name="SelectionBehaviorUp">0</token>
+								<bool name="SelectionGroup">false</bool>
+								<Ref name="SelectionImageObject">null</Ref>
+								<int name="SelectionOrder">0</int>
+								<UDim2 name="Size">
+									<XS>1</XS>
+									<XO>0</XO>
+									<YS>1</YS>
+									<YO>0</YO>
+								</UDim2>
+								<token name="SizeConstraint">0</token>
+								<int64 name="SourceAssetId">-1</int64>
+								<BinaryString name="Tags"></BinaryString>
+								<string name="Text">24%</string>
+								<Color3 name="TextColor3">
+									<R>1</R>
+									<G>1</G>
+									<B>1</B>
+								</Color3>
+								<bool name="TextScaled">true</bool>
+								<float name="TextSize">14</float>
+								<Color3 name="TextStrokeColor3">
+									<R>0</R>
+									<G>0</G>
+									<B>0</B>
+								</Color3>
+								<float name="TextStrokeTransparency">0</float>
+								<float name="TextTransparency">0</float>
+								<token name="TextTruncate">0</token>
+								<bool name="TextWrapped">true</bool>
+								<token name="TextXAlignment">2</token>
+								<token name="TextYAlignment">1</token>
+								<UniqueId name="UniqueId">4b78783951982c7702dac31d001c2781</UniqueId>
+								<bool name="Visible">true</bool>
+								<int name="ZIndex">1</int>
+							</Properties>
+							<Item class="UIStroke" referent="RBX94E7D5E015B94E6483A6C426F58D244B">
+								<Properties>
+									<token name="ApplyStrokeMode">0</token>
+									<BinaryString name="AttributesSerialize"></BinaryString>
+									<Color3 name="Color">
+										<R>0</R>
+										<G>0</G>
+										<B>0</B>
+									</Color3>
+									<bool name="Enabled">true</bool>
+									<token name="LineJoinMode">0</token>
+									<string name="Name">UIStroke</string>
+									<int64 name="SourceAssetId">-1</int64>
+									<BinaryString name="Tags"></BinaryString>
+									<float name="Thickness">2</float>
+									<float name="Transparency">0</float>
+									<UniqueId name="UniqueId">4b78783951982c7702dac31d001c278b</UniqueId>
+								</Properties>
+							</Item>
+						</Item>
+					</Item>
+					<Item class="Frame" referent="RBX4C999B2573534168858C39452A4B0273">
+						<Properties>
+							<bool name="Active">false</bool>
+							<Vector2 name="AnchorPoint">
+								<X>0</X>
+								<Y>0</Y>
+							</Vector2>
+							<BinaryString name="AttributesSerialize"></BinaryString>
+							<bool name="AutoLocalize">true</bool>
+							<token name="AutomaticSize">0</token>
+							<Color3 name="BackgroundColor3">
+								<R>0.313725501</R>
+								<G>0.313725501</G>
+								<B>0.313725501</B>
+							</Color3>
+							<float name="BackgroundTransparency">0</float>
+							<Color3 name="BorderColor3">
+								<R>0.105882362</R>
+								<G>0.164705887</G>
+								<B>0.207843155</B>
+							</Color3>
+							<token name="BorderMode">0</token>
+							<int name="BorderSizePixel">1</int>
+							<bool name="ClipsDescendants">true</bool>
+							<bool name="Draggable">false</bool>
+							<int name="LayoutOrder">0</int>
+							<string name="Name">undefinedprogressbar</string>
+							<Ref name="NextSelectionDown">null</Ref>
+							<Ref name="NextSelectionLeft">null</Ref>
+							<Ref name="NextSelectionRight">null</Ref>
+							<Ref name="NextSelectionUp">null</Ref>
+							<UDim2 name="Position">
+								<XS>0.0500000007</XS>
+								<XO>0</XO>
+								<YS>0.150000006</YS>
+								<YO>0</YO>
+							</UDim2>
+							<Ref name="RootLocalizationTable">null</Ref>
+							<float name="Rotation">0</float>
+							<bool name="Selectable">false</bool>
+							<token name="SelectionBehaviorDown">0</token>
+							<token name="SelectionBehaviorLeft">0</token>
+							<token name="SelectionBehaviorRight">0</token>
+							<token name="SelectionBehaviorUp">0</token>
+							<bool name="SelectionGroup">false</bool>
+							<Ref name="SelectionImageObject">null</Ref>
+							<int name="SelectionOrder">0</int>
+							<UDim2 name="Size">
+								<XS>0</XS>
+								<XO>276</XO>
+								<YS>0</YS>
+								<YO>40</YO>
+							</UDim2>
+							<token name="SizeConstraint">0</token>
+							<int64 name="SourceAssetId">-1</int64>
+							<token name="Style">0</token>
+							<BinaryString name="Tags"></BinaryString>
+							<UniqueId name="UniqueId">4b78783951982c7702dac31d001c277e</UniqueId>
+							<bool name="Visible">true</bool>
+							<int name="ZIndex">1</int>
+						</Properties>
+						<Item class="UIStroke" referent="RBX53F87286A69F46518016D751C5CA2A67">
+							<Properties>
+								<token name="ApplyStrokeMode">0</token>
+								<BinaryString name="AttributesSerialize"></BinaryString>
+								<Color3 name="Color">
+									<R>0</R>
+									<G>0</G>
+									<B>0</B>
+								</Color3>
+								<bool name="Enabled">true</bool>
+								<token name="LineJoinMode">0</token>
+								<string name="Name">UIStroke</string>
+								<int64 name="SourceAssetId">-1</int64>
+								<BinaryString name="Tags"></BinaryString>
+								<float name="Thickness">5</float>
+								<float name="Transparency">0</float>
+								<UniqueId name="UniqueId">4b78783951982c7702dac31d001c278c</UniqueId>
+							</Properties>
+						</Item>
+						<Item class="UICorner" referent="RBX9397471067404823846AFDA29EA3DE6A">
+							<Properties>
+								<BinaryString name="AttributesSerialize"></BinaryString>
+								<UDim name="CornerRadius">
+									<S>0</S>
+									<O>2</O>
+								</UDim>
+								<string name="Name">UICorner</string>
+								<int64 name="SourceAssetId">-1</int64>
+								<BinaryString name="Tags"></BinaryString>
+								<UniqueId name="UniqueId">4b78783951982c7702dac31d001c2784</UniqueId>
+							</Properties>
+						</Item>
+						<Item class="Frame" referent="RBX26C82250CC444BEFB2E41A0600D7F012">
+							<Properties>
+								<bool name="Active">false</bool>
+								<Vector2 name="AnchorPoint">
+									<X>0</X>
+									<Y>0</Y>
+								</Vector2>
+								<BinaryString name="AttributesSerialize"></BinaryString>
+								<bool name="AutoLocalize">true</bool>
+								<token name="AutomaticSize">0</token>
+								<Color3 name="BackgroundColor3">
+									<R>1</R>
+									<G>1</G>
+									<B>1</B>
+								</Color3>
+								<float name="BackgroundTransparency">0</float>
+								<Color3 name="BorderColor3">
+									<R>0.105882354</R>
+									<G>0.164705887</G>
+									<B>0.20784314</B>
+								</Color3>
+								<token name="BorderMode">0</token>
+								<int name="BorderSizePixel">0</int>
+								<bool name="ClipsDescendants">false</bool>
+								<bool name="Draggable">false</bool>
+								<int name="LayoutOrder">0</int>
+								<string name="Name">filling</string>
+								<Ref name="NextSelectionDown">null</Ref>
+								<Ref name="NextSelectionLeft">null</Ref>
+								<Ref name="NextSelectionRight">null</Ref>
+								<Ref name="NextSelectionUp">null</Ref>
+								<UDim2 name="Position">
+									<XS>-0.5</XS>
+									<XO>0</XO>
+									<YS>0</YS>
+									<YO>0</YO>
+								</UDim2>
+								<Ref name="RootLocalizationTable">null</Ref>
+								<float name="Rotation">0</float>
+								<bool name="Selectable">false</bool>
+								<token name="SelectionBehaviorDown">0</token>
+								<token name="SelectionBehaviorLeft">0</token>
+								<token name="SelectionBehaviorRight">0</token>
+								<token name="SelectionBehaviorUp">0</token>
+								<bool name="SelectionGroup">false</bool>
+								<Ref name="SelectionImageObject">null</Ref>
+								<int name="SelectionOrder">0</int>
+								<UDim2 name="Size">
+									<XS>0</XS>
+									<XO>225</XO>
+									<YS>1</YS>
+									<YO>0</YO>
+								</UDim2>
+								<token name="SizeConstraint">0</token>
+								<int64 name="SourceAssetId">-1</int64>
+								<token name="Style">0</token>
+								<BinaryString name="Tags"></BinaryString>
+								<UniqueId name="UniqueId">4b78783951982c7702dac31d001c277f</UniqueId>
+								<bool name="Visible">true</bool>
+								<int name="ZIndex">1</int>
+							</Properties>
+							<Item class="UICorner" referent="RBX37CE96463E2D4A1B9A59E9B262839632">
+								<Properties>
+									<BinaryString name="AttributesSerialize"></BinaryString>
+									<UDim name="CornerRadius">
+										<S>0</S>
+										<O>2</O>
+									</UDim>
+									<string name="Name">UICorner</string>
+									<int64 name="SourceAssetId">-1</int64>
+									<BinaryString name="Tags"></BinaryString>
+									<UniqueId name="UniqueId">4b78783951982c7702dac31d001c2785</UniqueId>
+								</Properties>
+							</Item>
+							<Item class="UIStroke" referent="RBXC836566C5B504A8D8638C77A2CE64E9E">
+								<Properties>
+									<token name="ApplyStrokeMode">0</token>
+									<BinaryString name="AttributesSerialize"></BinaryString>
+									<Color3 name="Color">
+										<R>0</R>
+										<G>0.333333343</G>
+										<B>0</B>
+									</Color3>
+									<bool name="Enabled">false</bool>
+									<token name="LineJoinMode">0</token>
+									<string name="Name">UIStroke</string>
+									<int64 name="SourceAssetId">-1</int64>
+									<BinaryString name="Tags"></BinaryString>
+									<float name="Thickness">5</float>
+									<float name="Transparency">0</float>
+									<UniqueId name="UniqueId">4b78783951982c7702dac31d001c278d</UniqueId>
+								</Properties>
+							</Item>
+							<Item class="UIGradient" referent="RBX041CC2BDE2334B39B33E2ABBEDDEB831">
+								<Properties>
+									<BinaryString name="AttributesSerialize"></BinaryString>
+									<ColorSequence name="Color">0 0.313726 0.313726 0.313726 0 0.499168 0.333333 1 0 0 1 0.313726 0.313726 0.313726 0 </ColorSequence>
+									<bool name="Enabled">true</bool>
+									<string name="Name">UIGradient</string>
+									<Vector2 name="Offset">
+										<X>0</X>
+										<Y>0</Y>
+									</Vector2>
+									<float name="Rotation">0</float>
+									<int64 name="SourceAssetId">-1</int64>
+									<BinaryString name="Tags"></BinaryString>
+									<NumberSequence name="Transparency">0 0 0 1 0 0 </NumberSequence>
+									<UniqueId name="UniqueId">4b78783951982c7702dac31d001c2788</UniqueId>
+								</Properties>
+							</Item>
+						</Item>
+						<Item class="TextLabel" referent="RBXE9A814F3FA2B40DCA98DEBA684F509FC">
+							<Properties>
+								<bool name="Active">false</bool>
+								<Vector2 name="AnchorPoint">
+									<X>0</X>
+									<Y>0</Y>
+								</Vector2>
+								<BinaryString name="AttributesSerialize"></BinaryString>
+								<bool name="AutoLocalize">true</bool>
+								<token name="AutomaticSize">0</token>
+								<Color3 name="BackgroundColor3">
+									<R>1</R>
+									<G>1</G>
+									<B>1</B>
+								</Color3>
+								<float name="BackgroundTransparency">1</float>
+								<Color3 name="BorderColor3">
+									<R>0.105882362</R>
+									<G>0.164705887</G>
+									<B>0.207843155</B>
+								</Color3>
+								<token name="BorderMode">0</token>
+								<int name="BorderSizePixel">1</int>
+								<bool name="ClipsDescendants">false</bool>
+								<bool name="Draggable">false</bool>
+								<token name="Font">3</token>
+								<Font name="FontFace">
+									<Family><url>rbxasset://fonts/families/SourceSansPro.json</url></Family>
+									<Weight>400</Weight>
+									<Style>Normal</Style>
+									<CachedFaceId><url>rbxasset://fonts/SourceSansPro-Regular.ttf</url></CachedFaceId>
+								</Font>
+								<int name="LayoutOrder">0</int>
+								<float name="LineHeight">1</float>
+								<int name="MaxVisibleGraphemes">-1</int>
+								<string name="Name">label</string>
+								<Ref name="NextSelectionDown">null</Ref>
+								<Ref name="NextSelectionLeft">null</Ref>
+								<Ref name="NextSelectionRight">null</Ref>
+								<Ref name="NextSelectionUp">null</Ref>
+								<UDim2 name="Position">
+									<XS>0</XS>
+									<XO>0</XO>
+									<YS>0</YS>
+									<YO>0</YO>
+								</UDim2>
+								<bool name="RichText">false</bool>
+								<Ref name="RootLocalizationTable">null</Ref>
+								<float name="Rotation">0</float>
+								<bool name="Selectable">false</bool>
+								<token name="SelectionBehaviorDown">0</token>
+								<token name="SelectionBehaviorLeft">0</token>
+								<token name="SelectionBehaviorRight">0</token>
+								<token name="SelectionBehaviorUp">0</token>
+								<bool name="SelectionGroup">false</bool>
+								<Ref name="SelectionImageObject">null</Ref>
+								<int name="SelectionOrder">0</int>
+								<UDim2 name="Size">
+									<XS>1</XS>
+									<XO>0</XO>
+									<YS>1</YS>
+									<YO>0</YO>
+								</UDim2>
+								<token name="SizeConstraint">0</token>
+								<int64 name="SourceAssetId">-1</int64>
+								<BinaryString name="Tags"></BinaryString>
+								<string name="Text">24%</string>
+								<Color3 name="TextColor3">
+									<R>1</R>
+									<G>1</G>
+									<B>1</B>
+								</Color3>
+								<bool name="TextScaled">true</bool>
+								<float name="TextSize">14</float>
+								<Color3 name="TextStrokeColor3">
+									<R>0</R>
+									<G>0</G>
+									<B>0</B>
+								</Color3>
+								<float name="TextStrokeTransparency">0</float>
+								<float name="TextTransparency">0</float>
+								<token name="TextTruncate">0</token>
+								<bool name="TextWrapped">true</bool>
+								<token name="TextXAlignment">2</token>
+								<token name="TextYAlignment">1</token>
+								<UniqueId name="UniqueId">4b78783951982c7702dac31d001c2782</UniqueId>
+								<bool name="Visible">false</bool>
+								<int name="ZIndex">1</int>
+							</Properties>
+							<Item class="UIStroke" referent="RBX96C13CE434F8429BBB7E1C1F1DD4C747">
+								<Properties>
+									<token name="ApplyStrokeMode">0</token>
+									<BinaryString name="AttributesSerialize"></BinaryString>
+									<Color3 name="Color">
+										<R>0</R>
+										<G>0</G>
+										<B>0</B>
+									</Color3>
+									<bool name="Enabled">true</bool>
+									<token name="LineJoinMode">0</token>
+									<string name="Name">UIStroke</string>
+									<int64 name="SourceAssetId">-1</int64>
+									<BinaryString name="Tags"></BinaryString>
+									<float name="Thickness">2</float>
+									<float name="Transparency">0</float>
+									<UniqueId name="UniqueId">4b78783951982c7702dac31d001c278e</UniqueId>
+								</Properties>
+							</Item>
+						</Item>
+					</Item>
+				</Item>
+				<Item class="ModuleScript" referent="RBXF9EEF7C74C8C4F44A209FE98AF55CA4A">
+					<Properties>
+						<BinaryString name="AttributesSerialize"></BinaryString>
+						<Content name="LinkedSource"><null></null></Content>
+						<string name="Name">MWidget</string>
+						<string name="ScriptGuid">{E51D6FC4-95AF-4394-8156-5E9214B4BFBF}</string>
+						<ProtectedString name="Source"><![CDATA[local repstrg = game:GetService("ReplicatedStorage")
+local MObject = require(repstrg.Mt.MtCore.MObject)
+local uis = game:GetService("UserInputService")
+
+local MWidget = {
+	ClassName = "MWidget", -- See Mt.MtCore.MObject
+	Name = "widget",       -- ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^
+	
+	Size = {X=0,Y=0},
+	Position = {X=0,Y=0}
+}
+MWidget = setmetatable(MWidget, MObject)
+rawset(MWidget, "__index", MWidget)
+
+MWidget.Init = function(self,parent)
+	local self = MObject.Init(self,parent)
+
+	self.Frame = Instance.new("Frame")
+	self.Frame.Name = self.Name
+	self.Frame.BorderSizePixel = 0
+	self.Frame.BackgroundColor3 = Color3.new(1,1,1)
+
+	MWidget.SetSizeLimit(self,
+		Vector2.new(10,10),
+		Vector2.new(3000,3000)
+	)
+	MWidget.SetSize(self,Vector2.new(325,325))
+
+	return self
+end
+
+function MWidget.IsCoordinateBelowMax(self,coor:Vector2,max:Vector2): boolean
+	max=max or self:GetMaximumSize()
+	return coor.X < max.X and coor.Y < max.Y
+end
+
+function MWidget.IsCoordinateAboveMin(self,coor:Vector2,min:Vector2): boolean
+	min=min or self:GetMinimumSize()
+	return coor.X > min.X and coor.Y > min.Y
+end
+
+MWidget.CalcLimitedSize = function(self,coor:Vector2,min:Vector2,max:Vector2): (Vector2, boolean)
+	min=min or self:GetMinimumSize()
+	max=max or self:GetMaximumSize()
+	
+	local newX=coor.X
+	local newY=coor.Y
+	
+	if coor.X > max.X then newX=max.X end
+	if coor.Y > max.Y then newY=max.Y end
+	
+	if coor.X < min.X then newX=min.X end
+	if coor.Y < min.Y then newY=min.Y end
+	
+	if coor.X==newX and coor.Y==newY then
+		return coor, false
+	else
+		return Vector2.new(newX,newY), true
+	end
+	
+end
+
+function MWidget.GetVector2FromUDim2Offset(udim2:UDim2): Vector2
+	-- static function
+	return Vector2.new(udim2.X.Offset,udim2.Y.Offset)
+end
+
+MWidget.ChangeSize = function(self, deltaX, deltaY ,anchor: boolean): boolean
+	local nsx=self.Size.X+deltaX
+	local nsy=self.Size.Y+deltaY
+	self:SetSize(Vector2.new(nsx,nsy),anchor)
+end
+
+MWidget.SetSize= function(self,newsize:Vector2,anchor: boolean): boolean
+	anchor=anchor or false
+	local oldSize = table.clone(self.Size)
+	local limitedsize, onlimit = self:CalcLimitedSize(newsize)
+	local currentScale: Vector2 = self:GetSizeScale()
+	
+	self.Size.X, self.Size.Y = limitedsize.X, limitedsize.Y
+	self.Frame.Size = UDim2.new(
+		currentScale.X,
+		limitedsize.X,
+		currentScale.Y,
+		limitedsize.Y
+	)
+	if anchor then
+		self:SetPosition(Vector2.new(self.Position.X+(oldSize.X-self.Size.X),self.Position.Y+(oldSize.Y-self.Size.Y)))	
+	end
+	 
+	--print (onlimit ,self.Size.X,oldSize.X)
+	--return not(onlimit and self.Size.X==oldSize.X )
+	return not(onlimit)
+end
+
+
+
+
+MWidget.Resize = MWidget.SetSize
+
+function MWidget.GetSize(self): {}
+	--return self.Frame.AbsoluteSize
+	return self.Size
+end
+
+MWidget.SetSizeFromScale = function(self,newscale:Vector2)
+	local screenSize = self.Screen:GetScreenSize()
+	self:SetSize(Vector2.new(newscale.X*screenSize.X,newscale.Y*screenSize.Y))
+end
+
+MWidget.Rescale = MWidget.SetSizeFromScale
+
+MWidget.SetPosition = function(self,newpos:Vector2)
+	self.Frame.Position = UDim2.fromOffset(newpos.X,newpos.Y)
+	self.Position.X, self.Position.Y = newpos.X, newpos.Y
+end
+
+MWidget.GoTo = MWidget.SetPosition
+MWidget.Move = MWidget.SetPosition
+
+MWidget.SetPositionFromScale = function(self,newscale:Vector2)
+	local screenSize = self.Screen:GetScreenSize()
+	self:SetPosition(Vector2.new(newscale.X*screenSize.X,newscale.Y*screenSize.Y))
+end
+
+MWidget.GetSizeScale = function(self): Vector2
+	return Vector2.new(self.Frame.Size.X.Scale,self.Frame.Size.Y.Scale)
+end
+
+MWidget.SetSizeLimit = function(self,min:Vector2,max:Vector2)
+	self.MinSize = min
+	self.MaxSize = max
+end
+
+MWidget.SetMinimumSize = function(self,size:Vector2)
+	self:SetSizeLimit(size,self.MaxSize)
+end
+
+MWidget.SetMinimumWidth= function(self,width:number)
+	self:SetMinimumSize(Vector2.new(
+		width,
+		self.MinSize.Y
+	))
+end
+
+MWidget.SetMinimumHeight=function(self,height:number)
+	self:SetMinimumSize(Vector2.new(
+		self.MinSize.X,
+		height
+	))
+end
+
+MWidget.SetMaximumSize = function(self,size:Vector2)
+	self:SetSizeLimit(self.MinSize,size)
+end
+
+MWidget.SetMaximumWidth= function(self,width:number)
+	self:SetMaximumSize(Vector2.new(
+		width,
+		self.MinSize.Y
+	))
+end
+
+MWidget.SetMaxmimumHeight=function(self,height:number)
+	self:SetMaximumSize(Vector2.new(
+		self.MaxSize.X,
+		height
+	))
+end
+
+MWidget.GetMaximumWidth=function(self): number
+	return self.MaxSize.X
+end
+
+MWidget.GetMinimumWidth=function(self): number
+	return self.MinSize.X
+end
+
+MWidget.GetMaximumHeight=function(self): number
+	return self.MaxSize.Y
+end
+
+MWidget.GetMinimumHeight=function(self): number
+	return self.MinSize.Y
+end
+
+MWidget.GetMinimumSize=function(self): Vector2
+	return self.MinSize
+end
+
+MWidget.GetMaximumSize=function(self): Vector2
+	return self.MaxSize
+end
+
+MWidget.GetSizeLimit=function(self): Rect
+	return Rect.new(self:GetMinimumSize(),self:GetMaximumSize())
+end
+
+MWidget.SetName = function(self,name)
+	self.Frame.Name = name
+	MObject.SetName(self,name)
+end
+
+MWidget.SetHidden = function(self,hidden)
+	self.Frame.Visible = not hidden
+end
+
+MWidget.IsPointTouchingArea = function(self,point: Vector2,areaPos: UDim2,areaSize: UDim2): boolean
+	local px = point.X
+	local py = point.Y
+	local apx = areaPos.X.Offset
+	local apy = areaPos.Y.Offset
+	local asx = areaSize.X.Offset
+	local asy = areaSize.X.Offset
+	
+	return 
+		(px >= apx-asx and px <= (apx + asx)) and
+		(py >= apy-asy and py <= (apy + asy))
+end
+
+MWidget.IsPointInsideWidget = function(self,point:Vector2): boolean
+	self:PointTouchingArea(point,self.Frame.AbsolutePosition,self.Frame.AbsoluteSize)
+end
+
+MWidget.IsBeingHovered = function(self):boolean
+	self:IsPointInsideWidget(uis:GetMouseLocation())
+end
+
+return MWidget]]></ProtectedString>
+						<int64 name="SourceAssetId">-1</int64>
+						<BinaryString name="Tags"></BinaryString>
+						<UniqueId name="UniqueId">4b78783951982c7702dac31d001c27d9</UniqueId>
+					</Properties>
 				</Item>
 			</Item>
 			<Item class="ModuleScript" referent="RBXF2A4ECEF2BD7426C8EB12741360379F8">
@@ -2323,6 +4007,7 @@ local OBJIDS = 0
 local MObject = {
 	-- Properties (Read-only (use their functions))
 	Name = "object", -- Object name (string)
+	__name = "object",
 	ClassName = "MObject", -- Object class name (string)
 	OBJID = 0,
 	Parent = {}, -- Object parent (MObject)
@@ -2334,34 +4019,45 @@ local MObject = {
 	-- Events (Read-only)
 	Destroyed = Instance.new("BindableEvent"), -- Fires when the object is destroyed
 }
+MObject.__index = MObject
 
--- Functions
-MObject.Init = function(self,parent,_obj,_id)
+-- Methods
+function MObject.Init(parent,_id) -- new object
 	-- Creates object and returns it
-
-	_obj = _obj or {}
-	setmetatable(_obj, self)
-	self.__index = self
-
-	for k,v in pairs(self) do
-		if not _keyInTableExists(_obj,k) then
-			_obj[k] = v
-		end
-	end
+	local self = setmetatable({}, MObject)
 	
 	if _id then
-		_obj.OBJID = _id
+		rawset(self, "OBJID", _id)
 	else
-		_obj.OBJID = OBJIDS
+		rawset(self, "OBJID", OBJIDS)
 		OBJIDS += 1
 	end
 
-	parent = parent or {}
-	MObject.SetParent(_obj,parent)
+	self:SetParent(parent)
 	
-	_storeObj(_obj)
+	_storeObj(self)
 
-	return _obj
+	return self
+end
+
+function MObject:__call(...)
+	return self.Init(...)
+end
+
+function MObject:__tostring()
+	return self.Name
+end
+
+function MObject:__newindex(key, value)
+	local setter = self["Set"..key]
+	
+	if setter then
+		setter(self,value)
+	elseif not (self[key] and self.__index[key]) or type(value) == "function" then -- if key never existed then create a key
+		rawset(self, key, value)
+	else
+		error(string.format('Property "%s" is not a member of %s\nTraceback:\n%s', key, self.ClassName, debug.traceback()))
+	end
 end
 
 MObject.FireEvent = function(self,event,...)
@@ -2390,29 +4086,26 @@ MObject.Clone = function(self)
 	return self
 end
 
-MObject.SetName = function(self,name)
-	self.Name = name
+function MObject:SetName(name)
+	rawset(self, "Name",   name)
+	rawset(self, "__name", name)
 end
 
-MObject.SetParent = function(self,parent)
+function MObject:SetParent(parent)
 	-- Sets parent for the object
 
-	parent = parent or {}
-
-	if self.Parent == {} then
+	if self.Parent and self.Parent == {} then
 		table.remove(self.Parent.Children,table.find(self.Parent.Children,self))
 	end
 
-	self.Parent = parent
+	rawset(self, "Parent", parent)
 
-	if parent == {} then
+	if parent then
 		table.insert(parent.Children,self)
 	end
-
-	return nil
 end
 
-MObject.FindFirstChild = function(self,child)
+function MObject:FindFirstChild(child)
 	-- Finds the inputted child in the object's children list and returns it
 
 	for i,v in ipairs(self.Children) do
@@ -2424,12 +4117,20 @@ MObject.FindFirstChild = function(self,child)
 	return nil
 end
 
-MObject.PrintMembers = function(self)
+function MObject:PrintMembers()
 	-- Prints all members of the metatable and their types
 
 	print(self.Name.."'s members:")
 	for k,v in pairs(self) do
-		print(k..": "..typeof(v).." = "..tostring(v))
+		if not string.match(k,"__") then
+			print(k..": "..typeof(v).." = "..tostring(v))
+		end
+	end
+	
+	for k,v in pairs(MObject) do
+		if not _keyInTableExists(self, k) and not string.match(k,"__") then
+			print(k..": "..typeof(v).." = "..tostring(v))
+		end
 	end
 end
 
@@ -2445,7 +4146,7 @@ return MObject]]></ProtectedString>
 						<Content name="LinkedSource"><null></null></Content>
 						<string name="Name">MScreen</string>
 						<string name="ScriptGuid">{E113FF64-7C1B-432B-A92B-99BB89843598}</string>
-						<ProtectedString name="Source"><![CDATA[ local MObject = require(script.Parent.MObject)
+						<ProtectedString name="Source"><![CDATA[local MObject = require(script.Parent.MObject)
 local MWidget = require(script.Parent.Parent.MtWidgets.MWidget)
 local _getObjFromId = require(script.Parent.MtCoreFunctions)._getObjFromId
 
@@ -2456,19 +4157,21 @@ local MScreen = {
 	ScrX=1,
 	ScrY=1,
 }
+MScreen = setmetatable(MScreen, MObject)
+rawset(MScreen,"__index", MScreen)
 
-MScreen.Init = function(self,plr,parent,_obj)
-	local _obj = MObject.Init(self,parent,_obj)
+function MScreen.Init(plr,parent: MObject)
+	local self = setmetatable(MObject.Init(parent), MScreen)
 
-	_obj.Player = plr or game:GetService("Players").LocalPlayer
+	self.Player = plr or game:GetService("Players").LocalPlayer
 
-	_obj.ScreenGui = Instance.new("ScreenGui")
-	_obj.ScreenGui.Name = _obj.Name
-	_obj.ScreenGui.Parent = _obj.Player:FindFirstChild("PlayerGui")
-	MScreen.SetOverrideTopbar(_obj,true)
-	_obj.ScreenGui.ResetOnSpawn = false
+	self.ScreenGui = Instance.new("ScreenGui")
+	self.ScreenGui.Name = self.Name
+	self.ScreenGui.Parent = self.Player:FindFirstChild("PlayerGui")
+	self:SetOverrideTopbar(true)
+	self.ScreenGui.ResetOnSpawn = false
 
-	return _obj
+	return self
 end
 
 MScreen.SetName = function(self,name)
@@ -2512,8 +4215,6 @@ end
 MScreen.SetOverrideTopbar = function(self,override)
 	self.ScreenGui.IgnoreGuiInset = override
 end
-
-MScreen = MObject:Init({},MScreen,-1)
 
 return MScreen]]></ProtectedString>
 						<int64 name="SourceAssetId">-1</int64>
@@ -2585,12 +4286,112 @@ return MtEnum]]></ProtectedString>
 						<UniqueId name="UniqueId">1fb9260fbeb8d7670258d1710006e58c</UniqueId>
 					</Properties>
 				</Item>
-				<Item class="ModuleScript" referent="RBX74A9D3926FA648F0A195E64CFF8598A4">
+				<Item class="ModuleScript" referent="RBXF0D8D3ABC201486E901C640A5924E650">
+					<Properties>
+						<BinaryString name="AttributesSerialize"></BinaryString>
+						<Content name="LinkedSource"><null></null></Content>
+						<string name="Name">MtCoreFunctions</string>
+						<string name="ScriptGuid">{F70202B2-6C88-4E15-8BB2-A0D5EE289272}</string>
+						<ProtectedString name="Source"><![CDATA[local funcs = {}
+function funcs._dictKeys(t)
+	local keyset={}
+	local n=0
+
+	for k,v in pairs(t) do
+		n=n+1
+		table.insert(keyset,n,k)
+	end
+
+	return keyset
+end
+function funcs._keyInTableExists(t,k)
+	return table.find(funcs._dictKeys(t),k) ~= nil
+end
+function funcs:_inherit(a,b)
+	-- Includes properties and functions from object b to object a, used for inheritance, except it's not used at all
+
+	for k,v in pairs(b) do
+		if not a[k] then a[k] = v end
+	end
+
+	return a
+end
+
+function funcs._getMouseButton1Pressed(pressedButtons)
+	-- get left button pressed, used in many scripts, thats why it's here
+	
+	
+	if not pressedButtons or #pressedButtons==0 then
+		return false
+	end
+	--print(debug.traceback().."\n"..tostring(table.unpack(pressedButtons)))
+	for i,button in ipairs(pressedButtons) do
+		if button.UserInputType == Enum.UserInputType.MouseButton1 then return true end
+	end
+	return false
+end
+
+local OBJS = {}
+function funcs._storeObj(obj)
+	local id = obj.OBJID
+	if id ~= -1 then
+		OBJS[id] = obj
+	end
+end
+function funcs._getObjFromId(id)
+	return OBJS[id]
+end
+return funcs]]></ProtectedString>
+						<int64 name="SourceAssetId">-1</int64>
+						<BinaryString name="Tags"></BinaryString>
+						<UniqueId name="UniqueId">66fbffa5fa0aab38027702e20006304d</UniqueId>
+					</Properties>
+				</Item>
+				<Item class="ModuleScript" referent="RBX2A437FA800DB47D5B81931359490E34D">
+					<Properties>
+						<BinaryString name="AttributesSerialize"></BinaryString>
+						<Content name="LinkedSource"><null></null></Content>
+						<string name="Name">MtMouseController</string>
+						<string name="ScriptGuid">{3C027CF8-11D2-42A6-BA8E-E523E83EC614}</string>
+						<ProtectedString name="Source"><![CDATA[repeat task.wait() until game:IsLoaded()
+local plr = game:GetService("Players").LocalPlayer
+if not plr then error("Mt error: MtMouseController must be required by the client!") end
+local mouse = plr:GetMouse()
+
+local MtMouseController = {}
+
+local cursor = ""
+
+
+game:GetService("RunService").RenderStepped:Connect(function()
+	mouse.Icon=cursor
+end)
+
+function MtMouseController:GetCursor(): string
+	return cursor
+end
+
+function MtMouseController:ChangeCursor(icon: string)
+	icon=icon or ""
+	cursor=icon
+end
+
+function MtMouseController:ResetCursor()
+	MtMouseController:ChangeCursor()
+end
+
+return MtMouseController]]></ProtectedString>
+						<int64 name="SourceAssetId">-1</int64>
+						<BinaryString name="Tags"></BinaryString>
+						<UniqueId name="UniqueId">11014c28a2288ea7028eebe900029785</UniqueId>
+					</Properties>
+				</Item>
+				<Item class="ModuleScript" referent="RBX23C12C112205411BA9293ED490F2445D">
 					<Properties>
 						<BinaryString name="AttributesSerialize"></BinaryString>
 						<Content name="LinkedSource"><null></null></Content>
 						<string name="Name">MWindowManager</string>
-						<string name="ScriptGuid">{5B2151AF-CC1E-4E89-A573-18E369841E89}</string>
+						<string name="ScriptGuid">{C3D46337-6823-4BAB-B056-CDDB6AFEEB45}</string>
 						<ProtectedString name="Source"><![CDATA[local MScreen = require(script.Parent.MScreen)
 local MWidget = require(script.Parent.Parent.MtWidgets.MWidget)
 local MWindowResizeRegion = require(script.Parent.Parent.MtWidgets.MWindowResizeRegion)
@@ -2599,21 +4400,24 @@ local _getMouseButton1Pressed = require(script.Parent.MtCoreFunctions)._getMouse
 local _getObjFromId = require(script.Parent.MtCoreFunctions)._getObjFromId
 local uis = game:GetService("UserInputService")
 local rs = game:GetService("RunService")
+local MtMouseController = require(script.Parent.MtMouseController)
 
 local MWindowManager = {
 	Name = "windowmanager",
 	ClassName = "MWindowManager",
 	WindowBeingInteracted = false
 }
+MWindowManager = setmetatable(MWindowManager, MScreen)
+rawset(MWindowManager,"__index", MWindowManager)
 
 MWindowManager.Init = function(self,plr,parent,_obj)
-	local _obj = MScreen.Init(self,plr,parent,_obj)
+	local self = MScreen.Init(self,plr,parent,_obj)
 	
-	_obj.WindowMoved = Instance.new("BindableEvent")
-	_obj.WindowResized = Instance.new("BindableEvent")
-	_obj.WindowInteracted = Instance.new("BindableEvent")
+	self.WindowMoved = Instance.new("BindableEvent")
+	self.WindowResized = Instance.new("BindableEvent")
+	self.WindowInteracted = Instance.new("BindableEvent")
 	
-	return _obj
+	return self
 end
 
 MWindowManager.InitResize = function(self,window)
@@ -2633,6 +4437,7 @@ MWindowManager.InitResize = function(self,window)
 		v.ResizeBegan.Event:Connect(function()
 			self:ToggleWindowBeingInteractedState()
 			window.WindowInteractionState = MtEnum.WindowInteractionState.Resizing
+			self:StartResizingWindow(window,v)
 		end)
 
 		v.ResizeEnded.Event:Connect(function()
@@ -2644,7 +4449,7 @@ end
 
 MWindowManager.ToggleWindowBeingInteractedState = function(self)
 	self.WindowBeingInteracted = not self.WindowBeingInteracted
-	print(self.WindowBeingInteracted)
+	--print(self.WindowBeingInteracted)
 end
 
 MWindowManager.InitWindowFunctionality = function(self,window)
@@ -2764,6 +4569,90 @@ function MWindowManager.StartMovingWindow(self,window)
 	self:ToggleWindowBeingInteractedState()
 end
 
+function MWindowManager.GetVector2FromUDim2Offset(udim2:UDim2): Vector2
+	-- static function
+	return Vector2.new(udim2.X.Offset,udim2.Y.Offset)
+end
+
+function MWindowManager.StartResizingWindow(self,window,region)
+	local cl=uis:GetMouseLocation()
+	local wp=window.GetVector2FromUDim2Offset(window.Frame.Position)
+	local ws=window.GetVector2FromUDim2Offset(window.Frame.Size)
+	
+	local sidex,sidey = self.GetResizeSidesFromLocation(cl,wp,ws)
+
+	region.DraggingValue.Value = region.Region
+
+	while _getMouseButton1Pressed(uis:GetMouseButtonsPressed()) and self.WindowBeingInteracted do
+		
+		local ml = uis:GetMouseLocation()
+		local inc = Vector2.new(ml.X-cl.X,ml.Y-cl.Y)
+		
+		local nsx,nsy
+		if sidex==MtEnum.ResizeSide.None then
+			nsx=ws.X
+		end
+		if sidex==MtEnum.ResizeSide.Left then
+			nsx=ws.X-(inc.X)
+		end
+		if sidex==MtEnum.ResizeSide.Right then
+			nsx=ws.X+(inc.X)
+		end
+		if sidey==MtEnum.ResizeSide.None then
+			nsy=ws.Y
+		end
+		if sidey==MtEnum.ResizeSide.Top then 
+			nsy=ws.Y-(inc.Y)
+		end
+		if sidey==MtEnum.ResizeSide.Bottom then
+			nsy=ws.Y+(inc.Y)
+		end
+
+		window:SetSize(Vector2.new(nsx,nsy),sidex==MtEnum.ResizeSide.Left or sidey==MtEnum.ResizeSide.Top)
+				
+		region.Resizing:Fire(window.Frame.Size,window.Frame.Position,ml)
+		MtMouseController:ChangeCursor(self.GetCursorFromResizeSide(sidex,sidey))
+
+		task.wait(.025)
+
+		
+	end
+
+	MtMouseController:ResetCursor()
+	region.DraggingValue.Value = nil
+
+	region.ResizeEnded:Fire()
+end
+
+function MWindowManager.GetResizeSidesFromLocation(click:Vector2, winPos:Vector2, winSize:Vector2, regThickness:number): (string, string)
+	-- static function
+	
+	regThickness = regThickness or 5 -- resize region thickness
+	
+	local sidex=MtEnum.ResizeSide.None
+	local sidey=MtEnum.ResizeSide.None
+	
+	if math.abs(click.X-winPos.X)<regThickness then sidex=MtEnum.ResizeSide.Left end
+	if math.abs(click.X-(winPos.X+winSize.X))<regThickness then sidex=MtEnum.ResizeSide.Right end
+	if math.abs(click.Y-winPos.Y)<regThickness then sidey=MtEnum.ResizeSide.Top end
+	if math.abs(click.Y-(winPos.Y+winSize.Y))<regThickness then sidey=MtEnum.ResizeSide.Bottom end
+	
+	return sidex,sidey
+end
+
+function MWindowManager.GetCursorFromResizeSide(x:number,y:number):string
+	-- static function
+	-- haha no x and y aren't coordinates they're MtEnum.ResizeSide enums.
+
+	if x==0 and y==0 then return "" end -- none
+
+	if x~=0 and y==0 then return "rbxasset://textures/StudioUIEditor/icon_resize2.png" end -- horizontal
+	if y~=0 and x==0 then return "rbxasset://textures/StudioUIEditor/icon_resize4.png" end -- vertical
+
+	if x==y then return "rbxasset://textures/StudioUIEditor/icon_resize3.png" end -- diagonal north-east
+	if x~=y then return "rbxasset://textures/StudioUIEditor/icon_resize1.png" end -- diagonal north-west
+end
+
 function MWindowManager.TriggerInteraction(self,window)
 	self:ToggleWindowBeingInteractedState()
 	window.Interacted:Fire()
@@ -2821,107 +4710,7 @@ MWindowManager = MScreen:Init(nil,{},MWindowManager)
 return MWindowManager]]></ProtectedString>
 						<int64 name="SourceAssetId">-1</int64>
 						<BinaryString name="Tags"></BinaryString>
-						<UniqueId name="UniqueId">66fbffa5fa0aab38027702e200044834</UniqueId>
-					</Properties>
-				</Item>
-				<Item class="ModuleScript" referent="RBXF0D8D3ABC201486E901C640A5924E650">
-					<Properties>
-						<BinaryString name="AttributesSerialize"></BinaryString>
-						<Content name="LinkedSource"><null></null></Content>
-						<string name="Name">MtCoreFunctions</string>
-						<string name="ScriptGuid">{F70202B2-6C88-4E15-8BB2-A0D5EE289272}</string>
-						<ProtectedString name="Source"><![CDATA[local funcs = {}
-function funcs._dictKeys(t)
-	local keyset={}
-	local n=0
-
-	for k,v in pairs(t) do
-		n=n+1
-		table.insert(keyset,n,k)
-	end
-
-	return keyset
-end
-function funcs._keyInTableExists(t,k)
-	return table.find(funcs._dictKeys(t),k) ~= nil
-end
-function funcs:_inherit(a,b)
-	-- Includes properties and functions from object b to object a, used for inheritance, except it's not used at all
-
-	for k,v in pairs(b) do
-		if not a[k] then a[k] = v end
-	end
-
-	return a
-end
-
-function funcs._getMouseButton1Pressed(pressedButtons)
-	-- get left button pressed, used in many scripts, thats why it's here
-	
-	
-	if not pressedButtons or #pressedButtons==0 then
-		return false
-	end
-	--print(debug.traceback().."\n"..tostring(table.unpack(pressedButtons)))
-	for i,button in ipairs(pressedButtons) do
-		if button.UserInputType == Enum.UserInputType.MouseButton1 then return true end
-	end
-	return false
-end
-
-local OBJS = {}
-function funcs._storeObj(obj)
-	local id = obj.OBJID
-	if id ~= -1 then
-		OBJS[id] = obj
-	end
-end
-function funcs._getObjFromId(id)
-	return OBJS[id]
-end
-return funcs]]></ProtectedString>
-						<int64 name="SourceAssetId">-1</int64>
-						<BinaryString name="Tags"></BinaryString>
-						<UniqueId name="UniqueId">66fbffa5fa0aab38027702e20006304d</UniqueId>
-					</Properties>
-				</Item>
-				<Item class="ModuleScript" referent="RBX2A437FA800DB47D5B81931359490E34D">
-					<Properties>
-						<BinaryString name="AttributesSerialize"></BinaryString>
-						<Content name="LinkedSource"><null></null></Content>
-						<string name="Name">MtMouseController</string>
-						<string name="ScriptGuid">{3C027CF8-11D2-42A6-BA8E-E523E83EC614}</string>
-						<ProtectedString name="Source"><![CDATA[repeat task.wait() until game:IsLoaded()
-local plr = game:GetService("Players").LocalPlayer
-if not plr then error("Mt error: MtMouseController must be required by the client!") end
-local mouse = plr:GetMouse()
-
-local MtMouseController = {}
-
-local cursor = ""
-
-
-game:GetService("RunService").RenderStepped:Connect(function()
-	mouse.Icon=cursor
-end)
-
-function MtMouseController:GetCursor(): string
-	return cursor
-end
-
-function MtMouseController:ChangeCursor(icon: string)
-	icon=icon or ""
-	cursor=icon
-end
-
-function MtMouseController:ResetCursor()
-	MtMouseController:ChangeCursor()
-end
-
-return MtMouseController]]></ProtectedString>
-						<int64 name="SourceAssetId">-1</int64>
-						<BinaryString name="Tags"></BinaryString>
-						<UniqueId name="UniqueId">11014c28a2288ea7028eebe900029785</UniqueId>
+						<UniqueId name="UniqueId">4b78783951982c7702dac31d001c27b6</UniqueId>
 					</Properties>
 				</Item>
 			</Item>
@@ -2931,6 +4720,7 @@ return MtMouseController]]></ProtectedString>
 					<bool name="Disabled">true</bool>
 					<Content name="LinkedSource"><null></null></Content>
 					<string name="Name">About</string>
+					<token name="RunContext">0</token>
 					<string name="ScriptGuid">{BF5775B2-25FE-4381-85DD-F7E0988FB689}</string>
 					<ProtectedString name="Source"><![CDATA[--[[
 
@@ -2957,12 +4747,40 @@ MObject
 					<BinaryString name="Tags"></BinaryString>
 					<UniqueId name="UniqueId">29dccafe008ad55d024f65f0004d4b41</UniqueId>
 				</Properties>
+				<Item class="LocalScript" referent="RBXE7252F10F8564D658091418D2335F575">
+					<Properties>
+						<BinaryString name="AttributesSerialize"></BinaryString>
+						<bool name="Disabled">false</bool>
+						<Content name="LinkedSource"><null></null></Content>
+						<string name="Name">MtWindowTest</string>
+						<token name="RunContext">0</token>
+						<string name="ScriptGuid">{8BF522F9-887D-43EB-9400-D32749AB7991}</string>
+						<ProtectedString name="Source"><![CDATA[local repstrg = game:GetService("ReplicatedStorage")
+
+local MWindow = require(repstrg.Mt.MtWidgets.MWindow)
+local MScreen = require(repstrg.Mt.MtCore.MScreen)
+local tbm = require(repstrg.Mt["3rd-party"].Icon)
+local plr = game:GetService("Players").LocalPlayer
+
+game:GetService("StarterGui"):SetCoreGuiEnabled(Enum.CoreGuiType.PlayerList,false)
+
+local screen = MScreen:Init()
+
+local window = MWindow:Init(screen)
+window:SetName("MainWindow")
+window:SetTitle("window")]]></ProtectedString>
+						<int64 name="SourceAssetId">-1</int64>
+						<BinaryString name="Tags"></BinaryString>
+						<UniqueId name="UniqueId">29dccafe008ad55d024f65f0004d4b78</UniqueId>
+					</Properties>
+				</Item>
 				<Item class="Script" referent="RBXE8E97DDC698F4A57A388C2D0C58CE005">
 					<Properties>
 						<BinaryString name="AttributesSerialize"></BinaryString>
 						<bool name="Disabled">false</bool>
 						<Content name="LinkedSource"><null></null></Content>
 						<string name="Name">MtObjectMngTest</string>
+						<token name="RunContext">0</token>
 						<string name="ScriptGuid">{5DFD374C-1DC4-426C-8343-1EFE2C8FFEF8}</string>
 						<ProtectedString name="Source"><![CDATA[repstrg = game:GetService("ReplicatedStorage")
 
@@ -2992,432 +4810,6 @@ end]]></ProtectedString>
 						<UniqueId name="UniqueId">05c44930bd9fb73402486df700026eaf</UniqueId>
 					</Properties>
 				</Item>
-				<Item class="LocalScript" referent="RBX3DC2D2C34E4043A082CA599616F5E75B">
-					<Properties>
-						<BinaryString name="AttributesSerialize"></BinaryString>
-						<bool name="Disabled">false</bool>
-						<Content name="LinkedSource"><null></null></Content>
-						<string name="Name">MtWindowTest</string>
-						<string name="ScriptGuid">{7B0D130B-DD0C-4C03-A6F1-7C1FC1660315}</string>
-						<ProtectedString name="Source"><![CDATA[local repstrg = game:GetService("ReplicatedStorage")
-local plr = game:GetService("Players").LocalPlayer
-
---game:GetService("UserInputService").MouseIconEnabled = false
-
-local MWindow = require(repstrg.Mt.MtWidgets.MWindow)
-local MWindowManager = require(repstrg.Mt.MtCore.MWindowManager)
-
-game:GetService("StarterGui"):SetCoreGuiEnabled(Enum.CoreGuiType.PlayerList,false)
-
-local screen = MWindowManager:Init()
-
-function putStuffOnWindow(window,stuff:{GuiObject})
-	for i,v in ipairs(stuff) do
-		v.Parent = window.Content.Frame
-	end
-end
-
-local window = MWindow:Init(screen)
-window:SetName("MainWindow")
-window:SetTitle("window")
-window.Frame.Position = UDim2.fromOffset(0,0)
-putStuffOnWindow(window,script.window:GetChildren())
-
-local dialog = MWindow:Init(screen)
-dialog:SetName("Dialog")
-dialog:SetTitle("dialog")
-putStuffOnWindow(dialog,script.dialog:GetChildren())
-
-local page = MWindow:Init(screen)
-page:SetName("Page")
-page:SetTitle("page")
-putStuffOnWindow(page,script.page:GetChildren())]]></ProtectedString>
-						<int64 name="SourceAssetId">-1</int64>
-						<BinaryString name="Tags"></BinaryString>
-						<UniqueId name="UniqueId">7cb338ab5f2bec59029789510002991a</UniqueId>
-					</Properties>
-					<Item class="Folder" referent="RBXB0A98DB01515439BBA02DEE9CD06EA10">
-						<Properties>
-							<BinaryString name="AttributesSerialize"></BinaryString>
-							<string name="Name">window</string>
-							<int64 name="SourceAssetId">-1</int64>
-							<BinaryString name="Tags"></BinaryString>
-							<UniqueId name="UniqueId">7cb338ab5f2bec590297895100029917</UniqueId>
-						</Properties>
-						<Item class="TextButton" referent="RBX816D70F2ACDE4044A96D09387EE22BF7">
-							<Properties>
-								<bool name="Active">true</bool>
-								<Vector2 name="AnchorPoint">
-									<X>0.5</X>
-									<Y>0.5</Y>
-								</Vector2>
-								<BinaryString name="AttributesSerialize"></BinaryString>
-								<bool name="AutoButtonColor">false</bool>
-								<bool name="AutoLocalize">true</bool>
-								<token name="AutomaticSize">0</token>
-								<Color3 name="BackgroundColor3">
-									<R>1</R>
-									<G>1</G>
-									<B>1</B>
-								</Color3>
-								<float name="BackgroundTransparency">0</float>
-								<Color3 name="BorderColor3">
-									<R>0.105882362</R>
-									<G>0.164705887</G>
-									<B>0.207843155</B>
-								</Color3>
-								<token name="BorderMode">0</token>
-								<int name="BorderSizePixel">1</int>
-								<bool name="ClipsDescendants">false</bool>
-								<bool name="Draggable">false</bool>
-								<token name="Font">3</token>
-								<Font name="FontFace"></Font>
-								<int name="LayoutOrder">0</int>
-								<float name="LineHeight">1</float>
-								<int name="MaxVisibleGraphemes">-1</int>
-								<bool name="Modal">false</bool>
-								<string name="Name">Button</string>
-								<Ref name="NextSelectionDown">null</Ref>
-								<Ref name="NextSelectionLeft">null</Ref>
-								<Ref name="NextSelectionRight">null</Ref>
-								<Ref name="NextSelectionUp">null</Ref>
-								<UDim2 name="Position">
-									<XS>0.5</XS>
-									<XO>0</XO>
-									<YS>0.5</YS>
-									<YO>0</YO>
-								</UDim2>
-								<bool name="RichText">true</bool>
-								<Ref name="RootLocalizationTable">null</Ref>
-								<float name="Rotation">0</float>
-								<bool name="Selectable">true</bool>
-								<bool name="Selected">false</bool>
-								<token name="SelectionBehaviorDown">0</token>
-								<token name="SelectionBehaviorLeft">0</token>
-								<token name="SelectionBehaviorRight">0</token>
-								<token name="SelectionBehaviorUp">0</token>
-								<bool name="SelectionGroup">false</bool>
-								<Ref name="SelectionImageObject">null</Ref>
-								<int name="SelectionOrder">0</int>
-								<UDim2 name="Size">
-									<XS>0.550000012</XS>
-									<XO>0</XO>
-									<YS>0.349999994</YS>
-									<YO>0</YO>
-								</UDim2>
-								<token name="SizeConstraint">0</token>
-								<int64 name="SourceAssetId">-1</int64>
-								<token name="Style">0</token>
-								<BinaryString name="Tags"></BinaryString>
-								<string name="Text">bring up cool dialog&lt;br/&gt;ok fine it doesn&apos;t actually do anything</string>
-								<Color3 name="TextColor3">
-									<R>0</R>
-									<G>0</G>
-									<B>0</B>
-								</Color3>
-								<bool name="TextScaled">false</bool>
-								<float name="TextSize">14</float>
-								<Color3 name="TextStrokeColor3">
-									<R>0</R>
-									<G>0</G>
-									<B>0</B>
-								</Color3>
-								<float name="TextStrokeTransparency">1</float>
-								<float name="TextTransparency">0</float>
-								<token name="TextTruncate">0</token>
-								<bool name="TextWrapped">false</bool>
-								<token name="TextXAlignment">2</token>
-								<token name="TextYAlignment">1</token>
-								<UniqueId name="UniqueId">7cb338ab5f2bec59029789510002991c</UniqueId>
-								<bool name="Visible">true</bool>
-								<int name="ZIndex">1</int>
-							</Properties>
-						</Item>
-					</Item>
-					<Item class="Folder" referent="RBXBBEC3789C2494291A0CA32976DBCB3E9">
-						<Properties>
-							<BinaryString name="AttributesSerialize"></BinaryString>
-							<string name="Name">dialog</string>
-							<int64 name="SourceAssetId">-1</int64>
-							<BinaryString name="Tags"></BinaryString>
-							<UniqueId name="UniqueId">7cb338ab5f2bec590297895100029918</UniqueId>
-						</Properties>
-						<Item class="TextBox" referent="RBX882A6615E9DB42F7A9643847ECD7E795">
-							<Properties>
-								<bool name="Active">true</bool>
-								<Vector2 name="AnchorPoint">
-									<X>0.5</X>
-									<Y>0.5</Y>
-								</Vector2>
-								<BinaryString name="AttributesSerialize"></BinaryString>
-								<bool name="AutoLocalize">true</bool>
-								<token name="AutomaticSize">0</token>
-								<Color3 name="BackgroundColor3">
-									<R>1</R>
-									<G>1</G>
-									<B>1</B>
-								</Color3>
-								<float name="BackgroundTransparency">0</float>
-								<Color3 name="BorderColor3">
-									<R>0.105882362</R>
-									<G>0.164705887</G>
-									<B>0.207843155</B>
-								</Color3>
-								<token name="BorderMode">0</token>
-								<int name="BorderSizePixel">1</int>
-								<bool name="ClearTextOnFocus">true</bool>
-								<bool name="ClipsDescendants">false</bool>
-								<bool name="Draggable">false</bool>
-								<token name="Font">3</token>
-								<Font name="FontFace"></Font>
-								<int name="LayoutOrder">0</int>
-								<float name="LineHeight">1</float>
-								<int name="MaxVisibleGraphemes">-1</int>
-								<bool name="MultiLine">false</bool>
-								<string name="Name">Input</string>
-								<Ref name="NextSelectionDown">null</Ref>
-								<Ref name="NextSelectionLeft">null</Ref>
-								<Ref name="NextSelectionRight">null</Ref>
-								<Ref name="NextSelectionUp">null</Ref>
-								<Color3 name="PlaceholderColor3">
-									<R>0.699999988</R>
-									<G>0.699999988</G>
-									<B>0.699999988</B>
-								</Color3>
-								<string name="PlaceholderText"></string>
-								<UDim2 name="Position">
-									<XS>0.5</XS>
-									<XO>0</XO>
-									<YS>0.5</YS>
-									<YO>0</YO>
-								</UDim2>
-								<bool name="RichText">false</bool>
-								<Ref name="RootLocalizationTable">null</Ref>
-								<float name="Rotation">0</float>
-								<bool name="Selectable">true</bool>
-								<token name="SelectionBehaviorDown">0</token>
-								<token name="SelectionBehaviorLeft">0</token>
-								<token name="SelectionBehaviorRight">0</token>
-								<token name="SelectionBehaviorUp">0</token>
-								<bool name="SelectionGroup">false</bool>
-								<Ref name="SelectionImageObject">null</Ref>
-								<int name="SelectionOrder">0</int>
-								<bool name="ShowNativeInput">true</bool>
-								<UDim2 name="Size">
-									<XS>0.5</XS>
-									<XO>0</XO>
-									<YS>0.100000001</YS>
-									<YO>0</YO>
-								</UDim2>
-								<token name="SizeConstraint">0</token>
-								<int64 name="SourceAssetId">-1</int64>
-								<BinaryString name="Tags"></BinaryString>
-								<string name="Text"></string>
-								<Color3 name="TextColor3">
-									<R>0</R>
-									<G>0</G>
-									<B>0</B>
-								</Color3>
-								<bool name="TextEditable">true</bool>
-								<bool name="TextScaled">false</bool>
-								<float name="TextSize">14</float>
-								<Color3 name="TextStrokeColor3">
-									<R>0</R>
-									<G>0</G>
-									<B>0</B>
-								</Color3>
-								<float name="TextStrokeTransparency">1</float>
-								<float name="TextTransparency">0</float>
-								<token name="TextTruncate">0</token>
-								<bool name="TextWrapped">false</bool>
-								<token name="TextXAlignment">2</token>
-								<token name="TextYAlignment">1</token>
-								<UniqueId name="UniqueId">7cb338ab5f2bec59029789510002991b</UniqueId>
-								<bool name="Visible">true</bool>
-								<int name="ZIndex">1</int>
-							</Properties>
-						</Item>
-						<Item class="TextLabel" referent="RBXD173AC5E575449B48C29EEFF56681617">
-							<Properties>
-								<bool name="Active">false</bool>
-								<Vector2 name="AnchorPoint">
-									<X>0.5</X>
-									<Y>0.5</Y>
-								</Vector2>
-								<BinaryString name="AttributesSerialize"></BinaryString>
-								<bool name="AutoLocalize">true</bool>
-								<token name="AutomaticSize">0</token>
-								<Color3 name="BackgroundColor3">
-									<R>1</R>
-									<G>1</G>
-									<B>1</B>
-								</Color3>
-								<float name="BackgroundTransparency">0</float>
-								<Color3 name="BorderColor3">
-									<R>0.105882362</R>
-									<G>0.164705887</G>
-									<B>0.207843155</B>
-								</Color3>
-								<token name="BorderMode">0</token>
-								<int name="BorderSizePixel">0</int>
-								<bool name="ClipsDescendants">false</bool>
-								<bool name="Draggable">false</bool>
-								<token name="Font">3</token>
-								<Font name="FontFace"></Font>
-								<int name="LayoutOrder">0</int>
-								<float name="LineHeight">1</float>
-								<int name="MaxVisibleGraphemes">-1</int>
-								<string name="Name">Label</string>
-								<Ref name="NextSelectionDown">null</Ref>
-								<Ref name="NextSelectionLeft">null</Ref>
-								<Ref name="NextSelectionRight">null</Ref>
-								<Ref name="NextSelectionUp">null</Ref>
-								<UDim2 name="Position">
-									<XS>0.5</XS>
-									<XO>0</XO>
-									<YS>0.200000003</YS>
-									<YO>0</YO>
-								</UDim2>
-								<bool name="RichText">false</bool>
-								<Ref name="RootLocalizationTable">null</Ref>
-								<float name="Rotation">0</float>
-								<bool name="Selectable">false</bool>
-								<token name="SelectionBehaviorDown">0</token>
-								<token name="SelectionBehaviorLeft">0</token>
-								<token name="SelectionBehaviorRight">0</token>
-								<token name="SelectionBehaviorUp">0</token>
-								<bool name="SelectionGroup">false</bool>
-								<Ref name="SelectionImageObject">null</Ref>
-								<int name="SelectionOrder">0</int>
-								<UDim2 name="Size">
-									<XS>0.5</XS>
-									<XO>0</XO>
-									<YS>0.100000001</YS>
-									<YO>0</YO>
-								</UDim2>
-								<token name="SizeConstraint">0</token>
-								<int64 name="SourceAssetId">-1</int64>
-								<BinaryString name="Tags"></BinaryString>
-								<string name="Text">are the windows cool?</string>
-								<Color3 name="TextColor3">
-									<R>0</R>
-									<G>0</G>
-									<B>0</B>
-								</Color3>
-								<bool name="TextScaled">false</bool>
-								<float name="TextSize">14</float>
-								<Color3 name="TextStrokeColor3">
-									<R>0</R>
-									<G>0</G>
-									<B>0</B>
-								</Color3>
-								<float name="TextStrokeTransparency">1</float>
-								<float name="TextTransparency">0</float>
-								<token name="TextTruncate">0</token>
-								<bool name="TextWrapped">false</bool>
-								<token name="TextXAlignment">2</token>
-								<token name="TextYAlignment">1</token>
-								<UniqueId name="UniqueId">7cb338ab5f2bec59029789510002991d</UniqueId>
-								<bool name="Visible">true</bool>
-								<int name="ZIndex">1</int>
-							</Properties>
-						</Item>
-					</Item>
-					<Item class="Folder" referent="RBXE4768B333EBA4B3B8FFB133E262649A8">
-						<Properties>
-							<BinaryString name="AttributesSerialize"></BinaryString>
-							<string name="Name">page</string>
-							<int64 name="SourceAssetId">-1</int64>
-							<BinaryString name="Tags"></BinaryString>
-							<UniqueId name="UniqueId">7cb338ab5f2bec590297895100029919</UniqueId>
-						</Properties>
-						<Item class="TextLabel" referent="RBX3625D173AC8841BAA7F24E39202D8B68">
-							<Properties>
-								<bool name="Active">false</bool>
-								<Vector2 name="AnchorPoint">
-									<X>0</X>
-									<Y>0</Y>
-								</Vector2>
-								<BinaryString name="AttributesSerialize"></BinaryString>
-								<bool name="AutoLocalize">true</bool>
-								<token name="AutomaticSize">0</token>
-								<Color3 name="BackgroundColor3">
-									<R>1</R>
-									<G>1</G>
-									<B>1</B>
-								</Color3>
-								<float name="BackgroundTransparency">0</float>
-								<Color3 name="BorderColor3">
-									<R>0.105882362</R>
-									<G>0.164705887</G>
-									<B>0.207843155</B>
-								</Color3>
-								<token name="BorderMode">0</token>
-								<int name="BorderSizePixel">0</int>
-								<bool name="ClipsDescendants">false</bool>
-								<bool name="Draggable">false</bool>
-								<token name="Font">3</token>
-								<Font name="FontFace"></Font>
-								<int name="LayoutOrder">0</int>
-								<float name="LineHeight">1</float>
-								<int name="MaxVisibleGraphemes">-1</int>
-								<string name="Name">TextLabel</string>
-								<Ref name="NextSelectionDown">null</Ref>
-								<Ref name="NextSelectionLeft">null</Ref>
-								<Ref name="NextSelectionRight">null</Ref>
-								<Ref name="NextSelectionUp">null</Ref>
-								<UDim2 name="Position">
-									<XS>0</XS>
-									<XO>0</XO>
-									<YS>0</YS>
-									<YO>0</YO>
-								</UDim2>
-								<bool name="RichText">true</bool>
-								<Ref name="RootLocalizationTable">null</Ref>
-								<float name="Rotation">0</float>
-								<bool name="Selectable">false</bool>
-								<token name="SelectionBehaviorDown">0</token>
-								<token name="SelectionBehaviorLeft">0</token>
-								<token name="SelectionBehaviorRight">0</token>
-								<token name="SelectionBehaviorUp">0</token>
-								<bool name="SelectionGroup">false</bool>
-								<Ref name="SelectionImageObject">null</Ref>
-								<int name="SelectionOrder">0</int>
-								<UDim2 name="Size">
-									<XS>1</XS>
-									<XO>0</XO>
-									<YS>1</YS>
-									<YO>0</YO>
-								</UDim2>
-								<token name="SizeConstraint">0</token>
-								<int64 name="SourceAssetId">-1</int64>
-								<BinaryString name="Tags"></BinaryString>
-								<string name="Text"> this paragraph is&lt;br/&gt;not so big&lt;br/&gt;i wish i could write something longer</string>
-								<Color3 name="TextColor3">
-									<R>0</R>
-									<G>0</G>
-									<B>0</B>
-								</Color3>
-								<bool name="TextScaled">false</bool>
-								<float name="TextSize">14</float>
-								<Color3 name="TextStrokeColor3">
-									<R>0</R>
-									<G>0</G>
-									<B>0</B>
-								</Color3>
-								<float name="TextStrokeTransparency">1</float>
-								<float name="TextTransparency">0</float>
-								<token name="TextTruncate">0</token>
-								<bool name="TextWrapped">false</bool>
-								<token name="TextXAlignment">0</token>
-								<token name="TextYAlignment">0</token>
-								<UniqueId name="UniqueId">7cb338ab5f2bec59029789510002991e</UniqueId>
-								<bool name="Visible">true</bool>
-								<int name="ZIndex">1</int>
-							</Properties>
-						</Item>
-					</Item>
-				</Item>
 			</Item>
 			<Item class="Folder" referent="RBX0E2B4F7237BE43029DC560A5C08FBB10">
 				<Properties>
@@ -3436,6 +4828,15 @@ putStuffOnWindow(page,script.page:GetChildren())]]></ProtectedString>
 					<BinaryString name="Tags"></BinaryString>
 					<UniqueId name="UniqueId">683ee95d122d1fcb0287f927003ae213</UniqueId>
 				</Properties>
+				<Item class="BindableEvent" referent="RBX05D8D651EAB64F17BB153B8C3DC027DE">
+					<Properties>
+						<BinaryString name="AttributesSerialize"></BinaryString>
+						<string name="Name">ChangeCursor</string>
+						<int64 name="SourceAssetId">-1</int64>
+						<BinaryString name="Tags"></BinaryString>
+						<UniqueId name="UniqueId">683ee95d122d1fcb0287f927003ae255</UniqueId>
+					</Properties>
+				</Item>
 			</Item>
 		</Item>
 	</Item>
