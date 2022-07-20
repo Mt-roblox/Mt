@@ -82,27 +82,27 @@
 			<Properties>
 				<BinaryString name="AttributesSerialize"></BinaryString>
 				<CoordinateFrame name="CFrame">
-					<X>-195.025513</X>
-					<Y>28.0680141</Y>
-					<Z>-129.069443</Z>
-					<R00>-0.955332339</R00>
-					<R01>0.040107429</R01>
-					<R02>0.292799413</R02>
+					<X>-151.715057</X>
+					<Y>41.4328918</Y>
+					<Z>-181.816376</Z>
+					<R00>-0.493952453</R00>
+					<R01>-0.858784437</R01>
+					<R02>0.13601692</R02>
 					<R10>-0</R10>
-					<R11>0.990748405</R11>
-					<R12>-0.135711923</R12>
-					<R20>-0.295533568</R20>
-					<R21>-0.129649982</R21>
-					<R22>-0.946494043</R22>
+					<R11>0.156433195</R11>
+					<R12>0.987688661</R12>
+					<R20>-0.869489014</R20>
+					<R21>0.48787123</R21>
+					<R22>-0.0772705525</R22>
 				</CoordinateFrame>
 				<Ref name="CameraSubject">null</Ref>
 				<token name="CameraType">0</token>
 				<float name="FieldOfView">70</float>
 				<token name="FieldOfViewMode">0</token>
 				<CoordinateFrame name="Focus">
-					<X>-195.611115</X>
-					<Y>28.3394394</Y>
-					<Z>-127.176445</Z>
+					<X>-151.987091</X>
+					<Y>39.4575157</Y>
+					<Z>-181.661835</Z>
 					<R00>1</R00>
 					<R01>0</R01>
 					<R02>0</R02>
@@ -3481,7 +3481,8 @@ return MWidget]]></ProtectedString>
 						<Content name="LinkedSource"><null></null></Content>
 						<string name="Name">MSpinBox</string>
 						<string name="ScriptGuid">{C66A5253-EE5E-430B-969B-9F8BE66CCF97}</string>
-						<ProtectedString name="Source"><![CDATA[local MWidget = require(game.ReplicatedStorage.Mt.MtWidgets.MWidget)
+						<ProtectedString name="Source"><![CDATA[local uis = game:GetService("UserInputService")
+local MWidget = require(game.ReplicatedStorage.Mt.MtWidgets.MWidget)
 
 local MSpinBox = {
 	Name = "spinbox",
@@ -3499,16 +3500,58 @@ function MSpinBox.Init(parent)
 	
 	self.Frame = script.spinbox:Clone()
 	self.Input = self.Frame.input
-	self.UpBtn = self.Frame.up
-	self.DwBtn = self.Frame.down
+	self.UpBtn = self:InitButton(self.Frame.up)
+	self.DwBtn = self:InitButton(self.Frame.down)
 	
 	self.Input:GetPropertyChangedSignal("Text"):Connect(function()
 		self:SetValue(tonumber(self.Input.Text))
 	end)
-	self.UpBtn.MouseButton1Down:Connect(function() self:IncValue(1 ) end)
-	self.DwBtn.MouseButton1Down:Connect(function() self:IncValue(-1) end)
+	uis.InputBegan:Connect(function(inputObj: InputObject)
+		if self.Input:IsFocused() then
+			if inputObj.UserInputType == Enum.UserInputType.Keyboard then
+				local inc = 0
+				if inputObj.KeyCode == Enum.KeyCode.Up then inc = 1 end
+				if inputObj.KeyCode == Enum.KeyCode.Down then inc = -1 end
+				
+				self:IncWhile(
+					inc,
+					function() return uis:IsKeyDown(inputObj.KeyCode) end,
+					0.04
+				)
+			elseif inputObj.UserInputType == Enum.UserInputType.MouseWheel then
+				self:IncValue(if inputObj.Position.Z==1 then 1 else -1)
+			end
+		end
+	end)
 	
 	return self
+end
+
+function MSpinBox:InitButton(button: GuiButton): GuiButton
+	button.MouseButton1Down:Connect(function()
+		button:SetAttribute("_PRESSED", true)
+		
+		self:IncWhile(
+			button:GetAttribute("INC"),
+			function()
+				return button:GetAttribute("_PRESSED")
+			end,
+			0.1
+		)
+	end)
+	
+	button.MouseButton1Up:Connect(function() button:SetAttribute("_PRESSED", false) end)
+	
+	return button
+end
+
+function MSpinBox:IncWhile(inc: number, whileCondition: () -> boolean, interval: number)
+	self:IncValue(inc)
+	task.wait(.5)
+	while whileCondition() do
+		self:IncValue(inc)
+		task.wait(interval)
+	end
 end
 
 function MSpinBox:GetLimitedValue(value:number,min:number,max:number): number
@@ -3527,7 +3570,7 @@ end
 
 function MSpinBox:SetValue(value: number)
 	rawset(self, "Value", self:GetLimitedValue(value))
-	self.Input.Text = tostring(value)
+	self.Input.Text = tostring(self.Value)
 end
 
 function MSpinBox:GetValue(): number
@@ -3711,7 +3754,7 @@ return MSpinBox]]></ProtectedString>
 									<X>0</X>
 									<Y>0</Y>
 								</Vector2>
-								<BinaryString name="AttributesSerialize"></BinaryString>
+								<BinaryString name="AttributesSerialize">AgAAAAMAAABJTkMFAAAAAAgAAABfUFJFU1NFRAMA</BinaryString>
 								<bool name="AutoButtonColor">true</bool>
 								<bool name="AutoLocalize">true</bool>
 								<token name="AutomaticSize">0</token>
@@ -3812,7 +3855,7 @@ return MSpinBox]]></ProtectedString>
 									<X>0</X>
 									<Y>0</Y>
 								</Vector2>
-								<BinaryString name="AttributesSerialize"></BinaryString>
+								<BinaryString name="AttributesSerialize">AgAAAAMAAABJTkMGAAAAAAAA8D8IAAAAX1BSRVNTRUQDAA==</BinaryString>
 								<bool name="AutoButtonColor">true</bool>
 								<bool name="AutoLocalize">true</bool>
 								<token name="AutomaticSize">0</token>
