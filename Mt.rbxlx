@@ -3754,7 +3754,7 @@ return MSpinBox]]></ProtectedString>
 									<X>0</X>
 									<Y>0</Y>
 								</Vector2>
-								<BinaryString name="AttributesSerialize">AgAAAAMAAABJTkMFAAAAAAgAAABfUFJFU1NFRAMA</BinaryString>
+								<BinaryString name="AttributesSerialize">AgAAAAMAAABJTkMGAAAAAAAA8L8IAAAAX1BSRVNTRUQDAA==</BinaryString>
 								<bool name="AutoButtonColor">true</bool>
 								<bool name="AutoLocalize">true</bool>
 								<token name="AutomaticSize">0</token>
