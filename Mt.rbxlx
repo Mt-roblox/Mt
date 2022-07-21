@@ -2153,12 +2153,12 @@ local MWindowResizeRegion = {
 MWindowResizeRegion = setmetatable(MWindowResizeRegion, MObject)
 rawset(MWindowResizeRegion, "__index", MWindowResizeRegion)
 
-MWindowResizeRegion.Init = function(self,x,y,side,sx,sy,osx,osy,window)
+MWindowResizeRegion.Init = function(x,y,side,sx,sy,osx,osy,window)
 	if window.ClassName ~= "MWindow" then
 		error("Mt error: MWindowResizeRegions must be parented to an MWindow.")
 	end
 	
-	local self = setmetatable(MObject.Init(self,window), MWindowResizeRegion)
+	local self = setmetatable(MObject.Init(window), MWindowResizeRegion)
 	self.Resizing    = Instance.new("BindableEvent")
 	self.ResizeEnded = Instance.new("BindableEvent")
 	self.ResizeBegan = Instance.new("BindableEvent")
@@ -2379,8 +2379,8 @@ local MProgressBar = {
 MProgressBar = setmetatable(MProgressBar, MWidget)
 rawset(MProgressBar, "__index", MProgressBar)
 
-function MProgressBar.Init(self,parent)
-	local self = setmetatable(MWidget.Init(self,parent), MProgressBar)
+function MProgressBar.Init(parent)
+	local self = setmetatable(MWidget.Init(parent), MProgressBar)
 	self.Frame:Destroy()
 	
 	local clone = script.progressbar:Clone()
@@ -4163,6 +4163,8 @@ return MObject]]></ProtectedString>
 local MWidget = require(script.Parent.Parent.MtWidgets.MWidget)
 local _getObjFromId = require(script.Parent.MtCoreFunctions)._getObjFromId
 
+type mobject = typeof(MObject)
+
 local MScreen = {
 	Name = "screen",
 	ClassName = "MScreen",
@@ -4173,7 +4175,7 @@ local MScreen = {
 MScreen = setmetatable(MScreen, MObject)
 rawset(MScreen,"__index", MScreen)
 
-function MScreen.Init(plr,parent: MObject)
+function MScreen.Init(plr,parent: mobject)
 	local self = setmetatable(MObject.Init(parent), MScreen)
 
 	self.Player = plr or game:GetService("Players").LocalPlayer
