@@ -82,18 +82,18 @@
 			<Properties>
 				<BinaryString name="AttributesSerialize"></BinaryString>
 				<CoordinateFrame name="CFrame">
-					<X>-151.715057</X>
-					<Y>41.4328918</Y>
-					<Z>-181.816376</Z>
-					<R00>-0.493952453</R00>
-					<R01>-0.858784437</R01>
-					<R02>0.13601692</R02>
-					<R10>-0</R10>
-					<R11>0.156433195</R11>
-					<R12>0.987688661</R12>
-					<R20>-0.869489014</R20>
-					<R21>0.48787123</R21>
-					<R22>-0.0772705525</R22>
+					<X>-152.884033</X>
+					<Y>40.7323837</Y>
+					<Z>-182.914917</Z>
+					<R00>-0.813155055</R00>
+					<R01>0.371016264</R01>
+					<R02>-0.448470592</R02>
+					<R10>1.49011612e-08</R10>
+					<R11>0.770505607</R11>
+					<R12>0.63743335</R12>
+					<R20>0.582047164</R20>
+					<R21>0.518332124</R21>
+					<R22>-0.626540482</R22>
 				</CoordinateFrame>
 				<Ref name="CameraSubject">null</Ref>
 				<token name="CameraType">0</token>
@@ -3518,9 +3518,12 @@ function MSpinBox.Init(parent)
 					function() return uis:IsKeyDown(inputObj.KeyCode) end,
 					0.04
 				)
-			elseif inputObj.UserInputType == Enum.UserInputType.MouseWheel then
-				self:IncValue(if inputObj.Position.Z==1 then 1 else -1)
 			end
+		end
+	end)
+	uis.InputBegan:Connect(function(inputObj: InputObject)
+		if inputObj.UserInputType == Enum.UserInputType.MouseWheel then
+			self:IncValue(if inputObj.Position.Z==1 then 1 else -1)
 		end
 	end)
 	
